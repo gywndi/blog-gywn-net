@@ -83,6 +83,9 @@
   <link rel="stylesheet" href="{{ "css/syntax.css" | absURL }}" />
   {{- end -}}
   <link rel="stylesheet" href="{{ "css/codeblock.css" | absURL }}" />
+  {{ range .Site.Params.customCSS }}
+  <link rel="stylesheet" href="{{ . | absURL }}">
+  {{ end }}
   
   {{- if .Site.Params.staticman.recaptcha -}}
   <script src='https://www.google.com/recaptcha/api.js'></script>
