@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on gywn&#39;s tech</title>
-    <link>http://localhost:1313/page/</link>
+    <link>//localhost:1313/page/</link>
     <description>Recent content in Pages on gywn&#39;s tech</description>
     <generator>Hugo</generator>
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/page/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About me</title>
-      <link>http://localhost:1313/page/about/</link>
+      <link>//localhost:1313/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
-      <guid>http://localhost:1313/page/about/</guid>
+      <guid>//localhost:1313/page/about/</guid>
       <description>&lt;h2 id=&#34;나-이런사람이야&#34;&gt;나 이런사람이야!&lt;/h2&gt;&#xA;&lt;p&gt;&lt;code&gt;소심해!&lt;/code&gt; &lt;code&gt;자존심이 세!&lt;/code&gt; &lt;code&gt;자신감이 지나쳐!&lt;/code&gt; &lt;code&gt;썰렁해~&lt;/code&gt;  재미있는 얘기 좀 해봐!&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;DB를 좋아하던 개발자가, DBA를 거쳐, 이제는 &lt;code&gt;데이터 엔지니어&lt;/code&gt;로!&lt;/li&gt;&#xA;&lt;li&gt;곰돌마니아였던 시절을 지나, 지금은 효주·효창·효현 바라기인 &lt;code&gt;철부지 아빠&lt;/code&gt;&lt;/li&gt;&#xA;&lt;li&gt;“지르기”가 낙인 엉뚱한 부부의 일원, &lt;code&gt;일단 질러야 산다&lt;/code&gt;&lt;/li&gt;&#xA;&lt;li&gt;만화책부터 웹툰까지 닥치는 대로 흡입하는 &lt;code&gt;이야기 중독자&lt;/code&gt;&lt;/li&gt;&#xA;&lt;li&gt;옥상에 바비큐장을 만들어 놓은 &lt;code&gt;고기 러버&lt;/code&gt;&lt;/li&gt;&#xA;&lt;li&gt;발표 시작 60초 동안은 얼굴 경련 오는 &lt;code&gt;긴장쟁이&lt;/code&gt;, 하지만 끝엔 몸개그로 웃깁니다&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;과거 5년 정도 개발 진입 단계를 거쳐, KTH, 티몬를 거쳐 카카오에 3.5년정도 머물며 진하게 숙성을 하였고, 지금은 카카오뱅크에서 데이터 관련 엔지니어로 여전히 성장하고 있는 엉뚱한 아재입니다.&lt;/p&gt;</description>
     </item>
   </channel>
