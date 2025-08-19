@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HeatWave on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/heatwave/</link>
+    <description>Recent content in HeatWave on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Mon, 23 May 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/heatwave/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL Heatwave를 살펴보았습니다</title>
+      <link>//localhost:1313/2022/05/mysql-heatwave/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2022/05/mysql-heatwave/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;안녕하세요. 너무 오랜만에 글을 올려봅니다. 올해도 벌써 반이 훌쩍지나버렸네요.&lt;/p&gt;&#xA;&lt;p&gt;MySQL을 쓰시는 분들, 아니 &lt;strong&gt;RDBMS를 써오시던 분들의 가장 가려운 부분은 개인적으로 통계 쿼리 수행 속도&lt;/strong&gt;라고 봅니다. 특히나 데이터 사이즈가 하루가 다르게 폭발적으로 증가해가는 상황에서 너무나도 반가운 소식이라고 봅니다. HTAP(Hybrid transactional/analytical processing) 구현이라 하는데..&lt;/p&gt;&#xA;&lt;p&gt;오늘 이 포스팅에서는 서비스 활용 관점으로 Heatwave를 이야기해보도록 하겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;mysql-heatwave는&#34;&gt;MySQL Heatwave는?&lt;/h1&gt;&#xA;&lt;p&gt;Oracle Cloud에서 제공하는 OLAP 분산 클러스터로, MySQL의 InnoDB데이터를 자동으로 Heatwave 클러스터로 동기화하여, 제공하는 스토리지 엔진 플러그인입니다.&#xA;&lt;img src=&#34;https://dev.mysql.com/doc/heatwave/en/images/hw-ml-genai-architecture.png&#34; alt=&#34;Content is described in the surrounding text&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

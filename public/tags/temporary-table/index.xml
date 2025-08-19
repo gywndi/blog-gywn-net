@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Temporary Table on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/temporary-table/</link>
+    <description>Recent content in Temporary Table on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Fri, 15 Jun 2012 06:15:02 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/temporary-table/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL에서 Temporary Table을 활용한 데이터 질의..그 효과는?</title>
+      <link>//localhost:1313/2012/06/mysql-temporary-table-effect/</link>
+      <pubDate>Fri, 15 Jun 2012 06:15:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/06/mysql-temporary-table-effect/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;오늘은 Temporary Table에 관해 포스팅을 하겠습니다. Select및 Update 등을 이따금씩 Temporary Table을 활용하여 수행하는 경우가 있습니다. 동시에 많은 데이터를 일괄 변경하는 것에서는 분명 강점이 있을 것이라 판단되는데, 어떤 상황에서 적절하게 사용하는 것이 좋을까요? 관련 성능 벤치마크 결과를 공개하겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;environment&#34;&gt;&lt;strong&gt;Environment&lt;/strong&gt;&lt;/h1&gt;&#xA;&lt;p&gt;테이블에는 약 1000만 건 데이터가 존재하며, Primary Key외에는 추가 인덱스는 생성하지 않았습니다. 서로 동등하게 빠른 데이터 접근이 가능하다는 가정 하에 PK외 인덱스에서 발생할 수 있는 성능 저하 요소를 배제하기 위해서 입니다.^^&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

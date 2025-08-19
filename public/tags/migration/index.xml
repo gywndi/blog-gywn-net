@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Migration on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/migration/</link>
+    <description>Recent content in Migration on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Sat, 27 Dec 2014 14:16:23 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/migration/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MariaDB의 FederatedX 엔진을 활용한 9억 데이터 이관기</title>
+      <link>//localhost:1313/2014/12/how-to-migrate-100million-with-federatedx/</link>
+      <pubDate>Sat, 27 Dec 2014 14:16:23 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2014/12/how-to-migrate-100million-with-federatedx/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;대용량 로그 테이블은 때로는 서비스에 지대한 영향을 미치기도 합니다. 게다가 이 테이블을 파티셔닝 구성을 해야하는데, 이를 서비스 운영 중인 상태에서 마스터 장비에서 Import하는 것은 사실 대단히 위험한 시도이기도 하죠.&lt;/p&gt;&#xA;&lt;p&gt;이런 상황에서 얼마 전 FederatedX엔진을 활용하여 9억 데이터를 이관한 사례가 있는데, 이에 대해 공유하도록 하겠습니다. ^^&lt;/p&gt;&#xA;&lt;h1 id=&#34;goal&#34;&gt;Goal&lt;/h1&gt;&#xA;&lt;p&gt;9억 건의 데이터를 Import하는 동안 &lt;strong&gt;서비스에는 어떠한 영향도 없어야 하며&lt;/strong&gt;, 구성 후 &lt;strong&gt;어플리케이션 적용 전까지 데이터가 정상적으로 동기화&lt;/strong&gt;되어야 합니다.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;데이터 이동하는 동안 기존 서비스 영향 최소화 및 문제 발생 시 빠른 원복&lt;/li&gt;&#xA;&lt;li&gt;데이터 구성 후 어플리케이션 코드 배포 전까지 데이터 동기화&lt;/li&gt;&#xA;&lt;li&gt;데이터 보관 주기 정책에 따른 유연한 대처&lt;br&gt;&#xA;현재는 삭제 주기가 없으나, 추후 정책에 따라 변경 가능&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;let-me-see&#34;&gt;Let me SEE..&lt;/h1&gt;&#xA;&lt;p&gt;가야할 골이 정해졌으니.. 현재 상황에 대해서 분석을 해봐야겠죠. ㅎㅎ 다음은 DB 사용 현황에 대한 내용입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL에서 테이블 스키마를 “무중단”으로 변경해보자!!</title>
+      <link>//localhost:1313/2012/05/alter-table-without-service-downtime/</link>
+      <pubDate>Tue, 22 May 2012 09:47:10 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/05/alter-table-without-service-downtime/</guid>
+      <description>&lt;h1 id=&#34;MySQLIsolationLevel에따른SQL사용주의사항-Overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL은 단순 쿼리 처리 능력은 탁월하나 테이블 스키마 변경 시에는 상당히 불편합니다. 일단 테이블 스키마 변경 구문을 실행하면 임시 테이블 생성 후 데이터를 복사하고, 데이터를 복사하는 동안에는 테이블에 READ Lock이 발생하여 데이터 변경 작업을 수행하지 못합니다. (Table Lock이 걸리죠.)&lt;/p&gt;&#xA;&lt;p&gt;이 같은 현상은 인덱스, 칼럼 추가/삭제 뿐만 아니라 캐릭터셋 변경 시에도 동일하게 발생합니다. (최근 5.5 버전에서는 인덱스 추가/삭제에서는 임시 테이블을 생성하지 않습니다.)&lt;/p&gt;&#xA;&lt;p&gt;얼마 전 서비스 요구 사항 중 테이블 칼럼을 무중단으로 변경하는 것이 있었는데, 이에 관해 정리 드리겠습니다.^^&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL DB 데이터 이관 자동화 구현하기</title>
+      <link>//localhost:1313/2012/04/mysql_auto_db_migraion/</link>
+      <pubDate>Fri, 27 Apr 2012 07:15:33 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/04/mysql_auto_db_migraion/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;DB를 운영하다 보면, 한 개의 MySQL 인스턴스에 여러 개의 데이터베이스를 모아서 보관하는 경우가 있습니다. 그러면 가끔 DB명이 충돌나는 경우도 발생하죠. 오늘은 Dump/Rename/Import 등 모든 프로세스를 자동화할 수 있는 방안을 제시해 봅니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;요구사항&#34;&gt;요구사항&lt;/h1&gt;&#xA;&lt;p&gt;무조건 자동으로 동작해야 하고, 기억력이 나쁜 제가 나중에 사용하기 쉽게 재사용성도 좋아야한다는 것입니다. 그리고 사용 방법을 잊어도 쉽게 상기할 수 있는 방안도 있어야겠죠.ㅋ (제가 정한 요구사항입니다. ㅋ)&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;모든 프로세스는 자동화되어야 한다.&lt;/li&gt;&#xA;&lt;li&gt;스크립트 수정 없이 재사용이 가능해야 한다.&lt;/li&gt;&#xA;&lt;li&gt;사용 매뉴얼이 있어야 한다.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;자동화-구현&#34;&gt;자동화 구현&lt;/h1&gt;&#xA;&lt;p&gt;프로세스 순서는 다음과 같고 2단계부터는 파이프( | )로 한번에 처리합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>DB Link와 Export/Import를 활용한 데이터 이관 성능 리포트</title>
+      <link>//localhost:1313/2012/04/migration_with_dblink_exp_imp/</link>
+      <pubDate>Fri, 13 Apr 2012 07:41:39 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/04/migration_with_dblink_exp_imp/</guid>
+      <description>&lt;p&gt;안녕하세요. 한동안 MySQL에 빠져 있다가, 최근 Oracle 데이터 이관 작업 도중 재미난 사례 공유 합니다. DB Link를 통한 CTAS(Create Table As Select)와 Export/Import를 통한 데이터 이관 비교입니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;서비스-요구-사항&#34;&gt;서비스 요구 사항&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;서비스 DBMS 버전 : Oracle 9i&lt;/li&gt;&#xA;&lt;li&gt;전체 데이터 파일 사이즈 : 120G (인덱스 포함)&lt;/li&gt;&#xA;&lt;li&gt;타겟 테이블 데이터 사이즈 : 26G (인덱스 제외)&lt;/li&gt;&#xA;&lt;li&gt;네트워크 속도 : 100Mbps (max: 12.5MB/s)&lt;/li&gt;&#xA;&lt;li&gt;일 1회 현재 서비스 데이터 동기화 수행&lt;/li&gt;&#xA;&lt;li&gt;모든 작업은 &lt;code&gt;자동화&lt;/code&gt;하여 운영 이슈 최소화&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;위 환경을 고려하였을 때, 전체 데이터 파일 Copy는 동기화 시간 및 스토리지 낭비 요소가, Archive Log 활용하기에는 운영 이슈가 존재했습니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

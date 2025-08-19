@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>MySQL에서 테이블 스키마를 “무중단”으로 변경해보자!! - </title>
+
+  <meta name="description" content="Overview
+MySQL은 단순 쿼리 처리 능력은 탁월하나 테이블 스키마 변경 시에는 상당히 불편합니다. 일단 테이블 스키마 변경 구문을 실행하면 임시 테이블 생성 후 데이터를 복사하고, 데이터를 복사하는 동안에는 테이블에 READ Lock이 발생하여 데이터 변경 작업을 수행하지 못합니다. (Table Lock이 걸리죠.)
+이 같은 현상은 인덱스, 칼럼 추가/삭제 뿐만 아니라 캐릭터셋 변경 시에도 동일하게 발생합니다. (최근 5.5 버전에서는 인덱스 추가/삭제에서는 임시 테이블을 생성하지 않습니다.)
+얼마 전 서비스 요구 사항 중 테이블 칼럼을 무중단으로 변경하는 것이 있었는데, 이에 관해 정리 드리겠습니다.^^">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/post\/2012\/05\/2012-05-22-alter-table-without-service-downtime\/",
+          "name": "My sql에서 테이블 스키마를 “무중단”으로 변경해보자!!"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "MySQL에서 테이블 스키마를 “무중단”으로 변경해보자!!",
+  "description" : "Overview MySQL은 단순 쿼리 처리 능력은 탁월하나 테이블 스키마 변경 시에는 상당히 불편합니다. 일단 테이블 스키마 변경 구문을 실행하면 임시 테이블 생성 후 데이터를 복사하고, 데이터를 복사하는 동안에는 테이블에 READ Lock이 발생하여 데이터 변경 작업을 수행하지 못합니다. (Table Lock이 걸리죠.)\n이 같은 현상은 인덱스, 칼럼 추가\/삭제 뿐만 아니라 캐릭터셋 변경 시에도 동일하게 발생합니다. (최근 5.5 버전에서는 인덱스 추가\/삭제에서는 임시 테이블을 생성하지 않습니다.)\n얼마 전 서비스 요구 사항 중 테이블 칼럼을 무중단으로 변경하는 것이 있었는데, 이에 관해 정리 드리겠습니다.^^\n",
+  "inLanguage" : "en",
+  "wordCount":  561 ,
+  "datePublished" : "2012-05-22T09:47:10\u002b00:00",
+  "dateModified" : "2012-05-22T09:47:10\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "Alter Table, Migration, MySQL" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/post\/2012\/05\/2012-05-22-alter-table-without-service-downtime\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="MySQL에서 테이블 스키마를 “무중단”으로 변경해보자!!" />
+<meta property="og:description" content="Overview
+MySQL은 단순 쿼리 처리 능력은 탁월하나 테이블 스키마 변경 시에는 상당히 불편합니다. 일단 테이블 스키마 변경 구문을 실행하면 임시 테이블 생성 후 데이터를 복사하고, 데이터를 복사하는 동안에는 테이블에 READ Lock이 발생하여 데이터 변경 작업을 수행하지 못합니다. (Table Lock이 걸리죠.)
+이 같은 현상은 인덱스, 칼럼 추가/삭제 뿐만 아니라 캐릭터셋 변경 시에도 동일하게 발생합니다. (최근 5.5 버전에서는 인덱스 추가/삭제에서는 임시 테이블을 생성하지 않습니다.)
+얼마 전 서비스 요구 사항 중 테이블 칼럼을 무중단으로 변경하는 것이 있었는데, 이에 관해 정리 드리겠습니다.^^">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/post/2012/05/2012-05-22-alter-table-without-service-downtime/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="MySQL에서 테이블 스키마를 “무중단”으로 변경해보자!!" />
+  <meta name="twitter:description" content="Overview
+MySQL은 단순 쿼리 처리 능력은 탁월하나 테이블 스키마 변경 시에는 상당히 불편합니다. 일단 테이블 스키마 변경 구문을 실행하면 임시 테이블 생성 후 데이터를 복사하고, 데이터를 복사하는 동안에는 테이블에 READ Lock이 발생하여 데이터 변경 작업을 수행하지 못합니다. (Table Lock이 걸리죠.)
+이 같은 현상은 인덱스, 칼럼  …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>MySQL에서 테이블 스키마를 “무중단”으로 변경해보자!!</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2012-05-22
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="MySQLIsolationLevel에따른SQL사용주의사항-Overview">Overview</h1>
+<p>MySQL은 단순 쿼리 처리 능력은 탁월하나 테이블 스키마 변경 시에는 상당히 불편합니다. 일단 테이블 스키마 변경 구문을 실행하면 임시 테이블 생성 후 데이터를 복사하고, 데이터를 복사하는 동안에는 테이블에 READ Lock이 발생하여 데이터 변경 작업을 수행하지 못합니다. (Table Lock이 걸리죠.)</p>
+<p>이 같은 현상은 인덱스, 칼럼 추가/삭제 뿐만 아니라 캐릭터셋 변경 시에도 동일하게 발생합니다. (최근 5.5 버전에서는 인덱스 추가/삭제에서는 임시 테이블을 생성하지 않습니다.)</p>
+<p>얼마 전 서비스 요구 사항 중 테이블 칼럼을 무중단으로 변경하는 것이 있었는데, 이에 관해 정리 드리겠습니다.^^</p>
+<h1 id="요구사항">요구사항</h1>
+<p>서비스 요구사항과 개인적인 요구 사항은 다음과 같습니다.</p>
+<ol>
+<li><strong>최대한 서비스 중단 없이 가능해야 함</strong></li>
+<li><strong>테이블에 Lock이 발생하지 말아야 함</strong></li>
+<li><strong>빠르게 구현해야 함(개인 요구 사항)</strong></li>
+<li><strong>재사용 가능해야 함(개인 요구 사항)</strong></li>
+<li><strong>문제 발생 시 복구가 쉬워야 함</strong></li>
+</ol>
+<p>개인적으로 빠르게 적용하는 것과 이와 같은 이슈가 추후 재 발생 시 재사용할 수 있도록 모듈화하자는 것이 목표였습니다.</p>
+<h1 id="대상-테이블-분석">대상 테이블 분석</h1>
+<p>대상 테이블은 다음과 같은 특징이 있었습니다.</p>
+<ol>
+<li><strong>Auto_increment 옵션이 적용되었으며, Primary Key가 존재함</strong></li>
+<li><strong>데이터 변경에는 Insert와 Delete만 발생(Update 없음)</strong></li>
+<li><strong>연관된 프로시저 및 트리거는 없음</strong></li>
+</ol>
+<p>무엇보다 Update가 없기 때문에 조금 더 생각을 심플하게 가져갈 수 있었습니다.</p>
+<h1 id="작업-시나리오">작업 시나리오</h1>
+<!-- raw HTML omitted -->
+<p>트리거로 기존 테이블에 Insert및 Delete 시 변경 분을 별도 테이블에 저장을 합니다. 그리고 임시 테이블을 만들고 해당 테이블에 기존 테이블 데이터를 이관합니다. 물론 임시 테이블에는 원하는 스키마로 변경된 상태겠죠. Import가 마무리되면 트리거에 쌓인 데이터로 변경 분을 적용하고 최종적으로 테이블을 Rename함으로써 프로세스가 마무리됩니다.</p>
+<p>조금더 상세하게 풀자면 다음과 같습니다.</p>
+<ol>
+<li><strong>임시 테이블 생성</strong>
+<ul>
+<li>Insert/Delete 시 변경 사항을 저장할 테이블<br>
+(TAB01_INSERT, TAB01_DELETE)</li>
+<li>데이터를 임시로 저장할 테이블</li>
+</ul>
+</li>
+<li><strong>트리거 생성</strong>
+<ul>
+<li>원본 테이블에 Delete 발생 시 해당 ROW를 임시 테이블에 저장</li>
+<li>원본 테이블에 Insert 발생 시 해당 ROW를 임시 테이블에 저장</li>
+</ul>
+</li>
+<li><strong>원본 테이블 export/import</strong>
+<ul>
+<li>export -&gt; 테이블명 변경 -&gt; import</li>
+<li>SED로 테이블 명을 임시 테이블 명으로 변경</li>
+</ul>
+</li>
+<li><strong>원본 테이블과 임시 테이블 RENAME</strong>
+<ul>
+<li>원본 테이블 : TAB01 -&gt; TAB01_OLD</li>
+<li>임시 테이블 : TAB01_TMP -&gt; TAB01</li>
+</ul>
+</li>
+<li><strong>테이블 변경 분 저장</strong>
+<ul>
+<li>TAB01_INSERT에 저장된 데이터 Insert</li>
+<li>TAB01_DELETE에 저장된 데이터 Delete</li>
+</ul>
+</li>
+<li><strong>트리거, 임시테이블 제거</strong>
+<ul>
+<li>트리거 : Insert트리거, Delete 트리거</li>
+<li>테이블 : TAB01_INSERT, TAB01_DELETE</li>
+</ul>
+</li>
+</ol>
+<p>모든 작업을 어느정도 자동화 구현하기 위해 “작업 스크립트”를 만드는 프로시저와 데이터 이관을 위한 Shell 스크립트를 작성하였습니다.</p>
+<p>Shell 스크립트는 Export와 동시에 SED 명령을 통해 자동으로 테이블 이름을 변경하여 Import하도록 구현하였습니다.</p>
+<p>DB명, 테이블명,  스키마 변경 내용을 다음과 같이 인자 값으로 넘겨서 프로시저를 호출합니다.<br>
+(프로시저 소스는 가장 하단 참조)</p>
+<!-- raw HTML omitted -->
+<p>그러면 아래와 같이 결과가 나오는데 Step1, 2, 3을 순차적으로 실행하면 됩니다. 보기 쉽게 주석을 추가하겠습니다.^^</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>임시 테이블에는 Auto_increment 값을 <!-- raw HTML omitted --><!-- raw HTML omitted -->기존보다 1% 높게 설정<!-- raw HTML omitted --><!-- raw HTML omitted -->하여 테이블명 Swap 후 Primary Key 충돌이 없도록 하였습니다. 그리고 Insert ignore문을 사용하여 Primary Key 중복으로 발생하는 오류는 무시하도록 하였고, 테이블 Rename 후 변경분을 재 적용하는 확인사살도 하였습니다. ^^;;</p>
+<h3 id="shell-스크립트">Shell 스크립트</h3>
+<p>위에서 Step2에서 사용하는 Shell 스크립트는 다음과 같습니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Export 값을 파이프(|)로 sed로 넘기고, sed에서는 테이블명만 정규식으로 바꿔서 최종적으로 Import하는 구문입니다.</p>
+<p>Create Table As Select 혹은 Insert into Select 구문을 사용하지 않은 이유는 <!-- raw HTML omitted -->Redo 로그가 비대해짐에 따라 시스템 부하<!-- raw HTML omitted -->가 따르기 때문입니다. tx_isolation 값을 READ-COMMITTED로 설정하여도 데이터가 전체 들어간 시점에 <!-- raw HTML omitted -->일시적인 테이블 Lock이 발생<!-- raw HTML omitted -->합니다. (트랜잭션을 마무리하는 과정에서 발생하는 Lock입니다.) “<!-- raw HTML omitted -->MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법<!-- raw HTML omitted -->” 을 참고하세요.^^</p>
+<h3 id="프로시저">프로시저</h3>
+<p>단일 테이블이라면 위에 있는 스크립트를 약간만 수정하면 되겠지만, 제 경우는 변경할 테이블이 꽤 많아서 스크립트를 생성하는 프로시저를 아래와 같이 구현하였습니다.</p>
+<p>사실 모든 과정을 Perl 혹은 Java로 구현하면 Step없이 간단했겠지만, DB 접속 서버에 구성하기 위해서는 절차 상 복잡한 부분이 있어서 프로시저로 작성하였습니다. ㅎㅎ</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h1 id="conclusion">Conclusion</h1>
+<p>결과적으로 서비스 영향없이 무중단으로 테이블 스키마를 변경하였습니다. 만약 Update가 있는 경우라면 “INSERT INTO .. ON DUPLICATE KEY UPDATE..” 문을 사용하면 해결 가능하다는 생각이 드네요.^^ 물론 Update 트리거에도 Insert와 동일한 액션이 취해져야 하겠죠.</p>
+<p>서비스 중단없이 DB 스키마를 변경했다는 점에서 큰 의의가 있었네요.^^</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/alter-table/">Alter Table</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/migration/">Migration</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f05%2f2012-05-22-alter-table-without-service-downtime%2f&amp;text=MySQL%ec%97%90%ec%84%9c%20%ed%85%8c%ec%9d%b4%eb%b8%94%20%ec%8a%a4%ed%82%a4%eb%a7%88%eb%a5%bc%20%e2%80%9c%eb%ac%b4%ec%a4%91%eb%8b%a8%e2%80%9d%ec%9c%bc%eb%a1%9c%20%eb%b3%80%ea%b2%bd%ed%95%b4%eb%b3%b4%ec%9e%90%21%21&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2fpost%2f2012%2f05%2f2012-05-22-alter-table-without-service-downtime%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f05%2f2012-05-22-alter-table-without-service-downtime%2f&amp;title=MySQL%ec%97%90%ec%84%9c%20%ed%85%8c%ec%9d%b4%eb%b8%94%20%ec%8a%a4%ed%82%a4%eb%a7%88%eb%a5%bc%20%e2%80%9c%eb%ac%b4%ec%a4%91%eb%8b%a8%e2%80%9d%ec%9c%bc%eb%a1%9c%20%eb%b3%80%ea%b2%bd%ed%95%b4%eb%b3%b4%ec%9e%90%21%21" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f05%2f2012-05-22-alter-table-without-service-downtime%2f&amp;title=MySQL%ec%97%90%ec%84%9c%20%ed%85%8c%ec%9d%b4%eb%b8%94%20%ec%8a%a4%ed%82%a4%eb%a7%88%eb%a5%bc%20%e2%80%9c%eb%ac%b4%ec%a4%91%eb%8b%a8%e2%80%9d%ec%9c%bc%eb%a1%9c%20%eb%b3%80%ea%b2%bd%ed%95%b4%eb%b3%b4%ec%9e%90%21%21" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f05%2f2012-05-22-alter-table-without-service-downtime%2f&amp;title=MySQL%ec%97%90%ec%84%9c%20%ed%85%8c%ec%9d%b4%eb%b8%94%20%ec%8a%a4%ed%82%a4%eb%a7%88%eb%a5%bc%20%e2%80%9c%eb%ac%b4%ec%a4%91%eb%8b%a8%e2%80%9d%ec%9c%bc%eb%a1%9c%20%eb%b3%80%ea%b2%bd%ed%95%b4%eb%b3%b4%ec%9e%90%21%21" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f05%2f2012-05-22-alter-table-without-service-downtime%2f&amp;description=MySQL%ec%97%90%ec%84%9c%20%ed%85%8c%ec%9d%b4%eb%b8%94%20%ec%8a%a4%ed%82%a4%eb%a7%88%eb%a5%bc%20%e2%80%9c%eb%ac%b4%ec%a4%91%eb%8b%a8%e2%80%9d%ec%9c%bc%eb%a1%9c%20%eb%b3%80%ea%b2%bd%ed%95%b4%eb%b3%b4%ec%9e%90%21%21" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/post/2022/05/2022-05-23-mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/post/2021/09/2021-09-07-package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-28-mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-13-make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/post/2021/06/2021-06-21-resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/post/2012/05/2012-05-16-mysql-transaction-isolation-level/" data-toggle="tooltip" data-placement="top" title="MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/post/2012/05/2012-05-25-how_to_shard_big_data_in_tumblr/" data-toggle="tooltip" data-placement="top" title="Tumblr에서는 MySQL로 어떻게 대용량 데이터를 관리하였을까?">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://tech.gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

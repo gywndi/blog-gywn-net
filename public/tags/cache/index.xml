@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cache on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/cache/</link>
+    <description>Recent content in Cache on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Tue, 10 Oct 2023 07:10:35 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/cache/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Apache Ignite로 분산 캐시 만들어보고 싶어요 (1탄)</title>
+      <link>//localhost:1313/2023/10/apache-ignite-as-cache-cluster/</link>
+      <pubDate>Tue, 10 Oct 2023 07:10:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2023/10/apache-ignite-as-cache-cluster/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;안녕하세요. 벌써 일년이 넘는 시간동안 포스팅을 하지 않았네요.&lt;/p&gt;&#xA;&lt;p&gt;그동안 업무적으로 많은 변화도 있던 격동의 시기였던지라, 제 삶의 가장 중요한 요소 중 하나라 생각하던 공유의 가치를 그만 간과하고 말았네요. 물론 포스팅을 멈춘 시간동안 놀지 않고 많은 경험을 쌓아보았습니다.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;오늘은 그중 하나, 인메모리 데이터베이스인 Apache Ignite에 대해 이야기를 해보고자 합니다.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;apache-ignite&#34;&gt;Apache Ignite?&lt;/h1&gt;&#xA;&lt;p&gt;이미 많은 분들이 Ignite 를 사용해보셨을 수도 있겠습니다만, 저는 DBA로 일을 하면서도 늘 제대로된 캐시 용도로 써보고 싶었던 분산 인메모리 데이터베이스가 Apache Ignite입니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

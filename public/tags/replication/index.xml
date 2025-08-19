@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Replication on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/replication/</link>
+    <description>Recent content in Replication on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Fri, 06 Jul 2012 03:19:24 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/replication/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL에서 Replication Driver 사용 시 장애 취약점 리포트</title>
+      <link>//localhost:1313/2012/07/mysql-replication-driver-error-report/</link>
+      <pubDate>Fri, 06 Jul 2012 03:19:24 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/07/mysql-replication-driver-error-report/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL에서 슬레이브 부하 분산을 하는 방안으로 Replication Driver 기능을 제공하는 jdbc 내부적으로 지원합니다. Replication Driver를 사용하면 상당히 간단하게 마스터/슬레이브 활용을 할 수 있고 어느정도의 Failover는 가능합니다.&lt;/p&gt;&#xA;&lt;p&gt;하지만 서비스 적용을 위해 Failover테스트 도중 치명적인 문제점이 발생하였습니다. 관련 포스팅을 하도록 하겠습니다. ^^&lt;/p&gt;&#xA;&lt;h1 id=&#34;사용-방법&#34;&gt;사용 방법&lt;/h1&gt;&#xA;&lt;p&gt;Replication Driver 사용 시 ReadOnly 옵션을 True/False 상태에 따라 마스터/슬레이브 장비를 선택합니다.&lt;/p&gt;&#xA;&lt;p&gt;아래 그림처럼 ReadOnly이 False이면 마스터 장비에 쿼리를 날리고, True이면 슬레이브에 쿼리를 날리는 구조입니다. 그리고 로드발란싱 기능을 사용하면, 슬레이브 서버 부하 분산할 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL Replication 이해(3) – 활용</title>
+      <link>//localhost:1313/2012/03/mysql-replication-3/</link>
+      <pubDate>Sat, 17 Mar 2012 09:19:07 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/03/mysql-replication-3/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL Replication 시리즈 마지막 3탄, 활용에 관한 포스트입니다. 앞 선 시리즈 &lt;a href=&#34;//localhost:1313/2011/12/mysql-replication-1/&#34;&gt;Permanent Link to MySQL Replication 이해(1) – 개념&lt;/a&gt;와 &lt;a href=&#34;//localhost:1313/2012/02/mysql-replication-2/&#34;&gt;Permanent Link to MySQL Replication 이해(2) – 구성&lt;/a&gt;에서 기본적인 개념과 구성을 다뤘다면, 이 자리에서는 실제적으로 어떤 분야에 활용할 수 있는지 설명드리겠습니다.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;Scale Out&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;High Availability&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Data Partitioning&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;자, 그럼 시작해볼까요?&lt;/p&gt;&#xA;&lt;h1 id=&#34;scale-out&#34;&gt;Scale out&lt;/h1&gt;&#xA;&lt;p&gt;MySQL Replication이 가장 많이 활용되는 분야입니다.&lt;br&gt;&#xA;MySQL Replication은 READ관련 Scale out만 가능합니다. 만약 WRITE 이슈가 있다면, MySQL 레벨에서는 Scale out이 불가합니다. 특히나 Replication 운영 시 마스터 트래픽이 과도하게 발생하면, Master와 Slave 간 데이터 동기화 지연 현상이 발생합니다. &lt;a href=&#34;//localhost:1313/2011/12/mysql-three-features/&#34;&gt;Permanent Link: 반드시 알아야할 MySQL 특징 세 가지&lt;/a&gt; 내용을 읽어보시면 이해가 조금더 수훨하겠네요.^^&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL Replication 이해(2) – 구성</title>
+      <link>//localhost:1313/2012/02/mysql-replication-2/</link>
+      <pubDate>Fri, 10 Feb 2012 06:16:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/02/mysql-replication-2/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL Replication 개념에 이어, 이번에는 실 구성에 관한 내용입니다.&lt;br&gt;&#xA;각 서버 구성 방법은 &lt;a href=&#34;//localhost:1313/2011/12/mysql-installation-on-linux/&#34;&gt;리눅스에 MySQL 설치하기&lt;/a&gt; 편을 참고하시기 바랍니다.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;시작에 앞서서 Server_id는 다른 숫자로 설정하세요^^.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Replication 구성은 다음 세 단계를 거쳐서 수행됩니다.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;DB 유저 생성&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;DB 데이터 동기화(셋 중 택 1)&lt;/strong&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;DB Data File Copy&lt;/li&gt;&#xA;&lt;li&gt;MySQL Dump (All Lock)&lt;/li&gt;&#xA;&lt;li&gt;Export/Import (Single Transaction)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;리플리케이션 시작&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;1-db-유저-생성&#34;&gt;1. DB 유저 생성&lt;/h1&gt;&#xA;&lt;p&gt;복제 데이터 전송을 위한 리플리케이션 권한의 DB 유저를 마스터에 생성합니다. 각 슬레이브 IO 쓰레드들은 추가된 DB 유저를 통해 데이터를 받습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL Replication 이해(1) – 개념</title>
+      <link>//localhost:1313/2011/12/mysql-replication-1/</link>
+      <pubDate>Wed, 28 Dec 2011 05:14:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2011/12/mysql-replication-1/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;오늘은 조금더 제너럴한 주제를 가지고 정리를 할까합니다.&lt;br&gt;&#xA;바로 MySQL Replication 입니다. MySQL Community에서 유일하게 HA 또는 분산 구성을 할 수 있는 유일한 기능입니다. 물론 &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.5/en/ha-drbd.html&#34;&gt;MySQL+DRBD 구성&lt;/a&gt;와 같이 HA를 구성하는 방법도 있습니다만, MySQL 제품이 아니므로 스킵~!&lt;/p&gt;&#xA;&lt;p&gt;먼저 Replication에 대해 간략하게 말씀 드리겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;mysql-replication이란&#34;&gt;MySQL Replication이란?&lt;/h1&gt;&#xA;&lt;p&gt;MySQL Replication이란 말 그대로 복제입니다. 영어 사전에 나온 듯한 DNA는 아니지만 데이터를 “물리적으로 다른 서버의 저장 공간” 안에 동일한 데이터를 복사하는 기술이죠.&lt;/p&gt;&#xA;&lt;p&gt;다음 그림은 MySQL Replication을 가장 간단하게 나타낸 그림입니다.  데이터 변경을 마스터 장비에서만 수행하기 때문에 마스터 장애 시에는 전체 노드에 데이터 쓰기 작업이 불가능한 한계가 있습니다.&#xA;&lt;img src=&#34;//localhost:1313/img/2011/12/MySQL-Replicaton-Master-Slave.png&#34; alt=&#34;MySQL Replicaton Master Slave&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

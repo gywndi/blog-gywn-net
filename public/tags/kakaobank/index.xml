@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kakaobank on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/kakaobank/</link>
+    <description>Recent content in Kakaobank on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Wed, 11 Sep 2019 11:52:42 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/kakaobank/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>오픈소스 데이터베이스, 흐르는 은행 데이터에 빨대를 꽂아보다.</title>
+      <link>//localhost:1313/2019/09/ifkakao-kakaobank-uldraman/</link>
+      <pubDate>Wed, 11 Sep 2019 11:52:42 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2019/09/ifkakao-kakaobank-uldraman/</guid>
+      <description>&lt;p&gt;ifkakao 발표 세션 동영상이 떴습니다. 두둥!&lt;/p&gt;&#xA;&lt;h2 id=&#34;오픈소스-데이터베이스-흐르는-은행-데이터에-빨대를-꽂아보다&#34;&gt;오픈소스 데이터베이스, 흐르는 은행 데이터에 빨대를 꽂아보다&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://mk.kakaocdn.net/dn/if-kakao/conf2019/conf_video_2019/1_102_01_m1.mp4&#34;&gt;&lt;img src=&#34;//localhost:1313/img/2019/09/ifkakao-chan.png&#34; alt=&#34;Video Label&#34;&gt;&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;발표 자료는 아래에 있어용! (근데 왜 embed가 안되지.. -_-;)&lt;br&gt;&#xA;자료: &lt;a href=&#34;https://mk.kakaocdn.net/dn/if-kakao/conf2019/%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C_2019/T03-S01.pdf&#34;&gt;오픈소스 데이터베이스 은행데이터에 빨대를 꼽아보다.v.1.1&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

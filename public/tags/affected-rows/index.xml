@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Affected Rows on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/affected-rows/</link>
+    <description>Recent content in Affected Rows on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Mon, 26 Mar 2018 23:45:20 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/affected-rows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL에서 Affected Rows를 병맛나게 활용해보자.</title>
+      <link>//localhost:1313/2018/03/mad-usage-with-mysql-affected-rows/</link>
+      <pubDate>Mon, 26 Mar 2018 23:45:20 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2018/03/mad-usage-with-mysql-affected-rows/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;이제 슬슬 날이 풀려가고 있습니다. 얼어붙은 땅이 녹듯이, 오랜시간 얼어있던 블로그 공간도 잠시마나 녹여볼까 합니다. 사실 지난 &lt;a href=&#34;//localhost:1313/2018/03/pmm-intro/&#34;&gt;PMM 이야기 1편&lt;/a&gt; 이후 2편, 3편 쭉 써야하지만.. 이노무 귀차니즘과 여기저기 산재한 낙서들을 아직 정리하지 못한 탓에.. 쿨럭..&lt;/p&gt;&#xA;&lt;p&gt;사실 오늘 얘기할 내용은 3년도 훨씬 전 내용으로, 블로그로 이미 정리했다고 지금까지 착각을 했던 이야기입니다. 바로 &lt;code&gt;Affected Rows&lt;/code&gt; 값을 활용해서, 다양한 요구 사항을 조금 더 재미있게 풀어보자는 내용이죠.&lt;/p&gt;&#xA;&lt;h1 id=&#34;affected-rows&#34;&gt;Affected Rows?&lt;/h1&gt;&#xA;&lt;p&gt;다들 아시겠지만, Affected Rows는 DML시 실제로 영향을 미친 데이터 Row 수입니다. 보통 update/delete를 날린 후에 몇 건의 데이터가 변경이 되었는지를 CLI툴에서 확인하는 용도로만 제 경우에는 많이 사용하고는 했습니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

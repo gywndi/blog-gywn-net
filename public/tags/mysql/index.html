@@ -1,0 +1,934 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>MySQL - </title>
+
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+
+<meta property="og:title" content="MySQL" />
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/tags/mysql/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="MySQL" />
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="tags-heading">
+              
+                <h1>MySQL</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2022/05/mysql-heatwave/">
+        <h2 class="post-title">MySQL Heatwave를 살펴보았습니다</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2022-05-23
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;13&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>안녕하세요. 너무 오랜만에 글을 올려봅니다. 올해도 벌써 반이 훌쩍지나버렸네요.</p>
+<p>MySQL을 쓰시는 분들, 아니 <strong>RDBMS를 써오시던 분들의 가장 가려운 부분은 개인적으로 통계 쿼리 수행 속도</strong>라고 봅니다. 특히나 데이터 사이즈가 하루가 다르게 폭발적으로 증가해가는 상황에서 너무나도 반가운 소식이라고 봅니다. HTAP(Hybrid transactional/analytical processing) 구현이라 하는데..</p>
+<p>오늘 이 포스팅에서는 서비스 활용 관점으로 Heatwave를 이야기해보도록 하겠습니다.</p>
+<h1 id="mysql-heatwave는">MySQL Heatwave는?</h1>
+<p>Oracle Cloud에서 제공하는 OLAP 분산 클러스터로, MySQL의 InnoDB데이터를 자동으로 Heatwave 클러스터로 동기화하여, 제공하는 스토리지 엔진 플러그인입니다.
+<img src="https://dev.mysql.com/doc/heatwave/en/images/hw-ml-genai-architecture.png" alt="Content is described in the surrounding text"></p>
+        <a href="//localhost:1313/2022/05/mysql-heatwave/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/cloud/">Cloud</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/columnar/">Columnar</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/heatwave/">HeatWave</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/innodb/">InnoDB</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2021/09/package-own-fluentd-agent/">
+        <h2 class="post-title">Fluentd? 나만의 에이전트 패키징!</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2021-09-07
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;10&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>세상에는 수많은 모니터링 도구들이 있습니다. 최근 많이 사용하고 있는 시계열 데이터베이스인 Prometheus와 수많은 exporter가 그중 하나입죠. 매트릭 수집에 최적화된 이런 구성은 시스템의 상태 값을 수집하기에는 더없이 좋은 시스템이기는 합니다만, 로그성 데이터 수집(에러로그 혹은 syslog)에는 아무래도 한계를 가집니다.</p>
+<p>이 경우, td-agent와 같은 범용적인 로그 수집 에이전트를 활용하게 되는데요. (혹은 자체적으로 구현을 하거나) 타팀과 혼재해서 사용하는 경우 문제 발생소지가 있긴합니다. 참고로, td-agent는 ruby 뿐만 아니라, 필요한 라이브러리들을 패키지 내부에 포함시켜서, OS 의존성을 최소화합니다.</p>
+        <a href="//localhost:1313/2021/09/package-own-fluentd-agent/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/fluentd/">fluentd</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/my-agent/">my-agent</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2021/07/mysql-document-store-test/">
+        <h2 class="post-title">MySQL document store 초간단 테스트</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2021-07-28
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>MySQL을 마치 NoSQL의 저장소처럼 써보겠다는 Document Store!! 만약 memcached plugin처럼 native한 프로토콜로 스토리지 엔진에서 직접적인 데이터 처리를 할 것 같은 꿈만 같은 저장소로 느껴졌습니만..</p>
+<p>결론적으로 이야기해보자면.. 단순히 json 타입의 컬럼에 데이터를 넣고 빼기위한 프로토콜일 뿐.. 모든 것이 쿼리로 변환이 되어서 데이터 처리가 이루어집니다.</p>
+<p>이에 대해 간단한 테스트 내용을 공유해봅니다.</p>
+<h1 id="installation">Installation</h1>
+<p>도큐먼스스토어를 활성화시키는 것은 간단합니다. 아래와 같이 mysqlx.so 플러그인만 설치를 하면 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">##</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">session</span><span class="o">@</span><span class="n">localhost</span><span class="w"> </span><span class="err">계정이</span><span class="w"> </span><span class="err">존재해야함</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="n">INSTALL</span><span class="w"> </span><span class="n">PLUGIN</span><span class="w"> </span><span class="n">mysqlx</span><span class="w"> </span><span class="n">SONAME</span><span class="w"> </span><span class="s1">&#39;mysqlx.so&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;%mysqlx_port%&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">--------------------------+-------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">Variable_name</span><span class="w">            </span><span class="o">|</span><span class="w"> </span><span class="n">Value</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">--------------------------+-------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">mysqlx_port</span><span class="w">              </span><span class="o">|</span><span class="w"> </span><span class="mi">33060</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="n">mysqlx_port_open_timeout</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mi">0</span><span class="w">     </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">--------------------------+-------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">2</span><span class="w"> </span><span class="k">rows</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="err">\</span><span class="o">!</span><span class="w"> </span><span class="n">netstat</span><span class="w"> </span><span class="o">-</span><span class="n">an</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="mi">33060</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">tcp46</span><span class="w">      </span><span class="mi">0</span><span class="w">      </span><span class="mi">0</span><span class="w">  </span><span class="o">*</span><span class="p">.</span><span class="mi">33060</span><span class="w">                </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w">                    </span><span class="k">LISTEN</span><span class="w">
+</span></span></span></code></pre></div><p>참고로, mysql.session 계정이 있어야, 정상적으로 동작합니다. (Docker로 테스트하시는 분들은. ^^ 이부분 유념해주세요.) 이제 테스트를 하기위한 테이블과 데이터를 만들어봅니다.</p>
+        <a href="//localhost:1313/2021/07/mysql-document-store-test/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/document-store/">document store</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysqlx/">mysqlx</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2021/07/make-own-query-exporter-with-go/">
+        <h2 class="post-title">Go언어로 나만의 Query Exporter 만들어보기!</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2021-07-13
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;12&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>안녕하세요. 무더운 7월 잘 지내고 계시죠.?</p>
+<p>오늘은 조금 특이한 주제를 가지고 이야기를 해보고자 합니다. 바로 <strong>go로 나만의 Exporter를 만들어보는 것</strong>입니다. 특정 쿼리를 등록을 해놓으면, 이 쿼리 결과를 Exporter 결과로 보여주는 간단한 프로그램입니다. 아직 Expoter가 무엇인지 생소하신 분들이 있을 수 있겠는데요. 오늘 차근차근 설명을 하면서, 머릿속에 살짝 인스톨해드리도록 하겠습니다. 🙂</p>
+<h1 id="exporter">Exporter?</h1>
+<p>Exporter란, Prometheus같은 시계열 데이터베이스에서 데이터를 끌어가기 위한 하나의 <strong>HTTP 서버</strong>라고 생각하면 되겠습니다. Prometheus에서는 정해진 주기에 따라 exporter의 특정 URL을 호출하고, 그 결과값을 시계열로 데이터를 저장합니다.
+<img src="/img/2021/07/prometheus-exporter.png" alt="prometheus &amp; exporter"></p>
+        <a href="//localhost:1313/2021/07/make-own-query-exporter-with-go/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/exporter/">exporter</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/go/">go</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/prometheus/">prometheus</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2021/06/resetable-sequence-for-mysql/">
+        <h2 class="post-title">MySQL에서 리셋되는 시퀀스 만들어보기</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2021-06-21
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;6&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>서비스를 준비하다보면, 시퀀스에 대한 요구사항은 언제나 생기기 마련입니다. 물론, MySQL에는 기본적으로 테이블 단위로 auto_increment가 있기는 합니다만, 일반적인 시퀀스가 요구되는 환경을 흡족하게 맞추기는 어려운 실정입니다.<br>
+보통은 Peter Zaitsev가 하단에 게시한 블로그 내용처럼, Function 기반으로 채번 함수를 만들고는 하지요. (물론 InnoDB로 지정하는 것이, 복제 상황에서는 아주 안정성을 확보하기는 합니다.)<br>
+<a href="https://www.percona.com/blog/2008/04/02/stored-function-to-generate-sequences/">https://www.percona.com/blog/2008/04/02/stored-function-to-generate-sequences/</a></p>
+<p>이 내용을 기반으로, “재미난 시퀀스를 만들어볼 수 없을까?” 라는 퀘스천에 따라, 이번 블로깅에서는 특정 시점에 리셋이 되는 시퀀스를 한번 만들어보고자 합니다.</p>
+<h1 id="schema">Schema</h1>
+<p>첫번째로는 현재 시퀀스를 담을 테이블 그릇(?)을 아래와 같이 생성을 해보도록 하겠습니다.</p>
+        <a href="//localhost:1313/2021/06/resetable-sequence-for-mysql/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/sequence/">sequence</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2020/08/mysql-binlog-memcached-plugin-collaboration/">
+        <h2 class="post-title">MySQL binlog파서와  memcached plugin의 콜라보레이션!</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2020-08-31
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>6개월도 훌쩍 넘은 시간에. 간만에 포스팅합니다. 그동안 OGG javaue든, MySQL Binlog파서든.. <strong>흐르는 데이터를 핸들링하는 고민</strong>으로 하루하루를 지내왔던 것 같아요. 그러던 중 이전 포스팅에서 주제로 삼았던, <strong>InnoDB memcached plugin을 Binlog parsing을 통해 데이터를 맞추면 좋을 것 같다</strong>는 생각이 들었습니다.<br>
+오늘 이 자리에서는 이런 답답함을 극복하고자, Binlog 이벤트를 활용하여, 최신 데이터를 유지시키는 방안에 대해서 이야기를 해보도록 하겠습니다.</p>
+<h1 id="mysql-binary-log">MySQL Binary log?</h1>
+<p>MySQL에서 데이터복제를 위해서는 Binnary Log(binlog)를 쓰게 되는데, 이중 ROW 포멧으로 만들어지는 이벤트를 활용하여 다양한 데이터 핸들링이 가능합니다.<br>
+<img src="/2020/08/image-1598580840319.png" alt=""></p>
+        <a href="//localhost:1313/2020/08/mysql-binlog-memcached-plugin-collaboration/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/binlog-parser/">binlog parser</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/memcached/">memcached</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2019/09/mysql-innodb-as-cache-server-monitoring/">
+        <h2 class="post-title">MySQL InnoDB의 메모리 캐시 서버로 변신! – 모니터링편 –</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2019-09-19
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>MySQL memcached plugin 2탄! 모니터링편입니다.<br>
+어떤 초호화 솔루션일지라도, 시스템의 정확한 상태를 파악할 수 없다면, 사용하기에는 참으로 꺼려집니다. 그래서 어떤 방법이든, <strong>가장 효율적인 모니터링 방안</strong>을 찾아봐야 하겠는데요. 저는 개인적으로는 <strong>prometheus를 활용한 metric수집을 선호</strong>합니다.<br>
+오늘 이 자리에서는 Prometheus에서 MySQL InnoDB memcached plugin을 모니터링 하는 방법에 대해서 이야기를 해보도록 하겠습니다. 🙂</p>
+<h1 id="why-prometheus">Why prometheus?</h1>
+<p>이유는 단순합니다. <strong>이미 만들어져 있는 exporter가 굉장히 많다</strong>는 것, 만약 원하는 것들이 있다면 <strong>나의 구미에 맞게 기능을 추가해서 쉽게 접근할 수 있다</strong>는 것! 즉, <strong>오픈소스</strong>라는 것!! 무엇보다 Time-series 기반의 데이터 저장소인 Prometheus로 정말로 효율적으로 모니터링 매트릭 정보를 수집할 수 있다는 것! Prometheus는 <strong>로그 수집에 최적화</strong> 되어 있다고 과언이 아닙니다.</p>
+        <a href="//localhost:1313/2019/09/mysql-innodb-as-cache-server-monitoring/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/exporter/">exporter</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/memcached/">memcached</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/prometheus/">prometheus</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2019/09/mysql-innodb-as-cache-server-config/">
+        <h2 class="post-title">MySQL InnoDB의 메모리 캐시 서버로 변신! – 설정편 –</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2019-09-15
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>꽤나 오래전의 일이었습니다. MariaDB에서 Handler Socket이 들어간 이후 얼마 후인 것으로 기억합니다. <strong>MySQL lab버전에 memcached plugin 기능이 추가</strong>되었고, <strong>memcache protocal로 InnoDB 데이터에 직접 접근</strong>할 수 있는 길이 열린 것이었죠. (아마도 거의 8년 정도 전의 일이었던 것같은..) 아무튼 당시, 이것에 대해 간단하게 테스트만 해보고, MySQL을 캐시형태로 잘 활용할 수 있겠다라는 희망만 품고 지나버렸다는 기억이 나네요.</p>
+<p>이제 Disk는 과거의 통돌이 디스크가 아니죠. 기계 장치를 탈피하여, 이제는 모터없는 전자기기.. <strong>SSD의 시대가 도래</strong>하였습니다. 통돌이 대비, 어마어마한 수치의 Random I/O를 제공해주는만큼, 이제 DB 데이터에 새로운 패러다임(?)으로 접근할 수 있겠다는 시점이 온 것 같아요.</p>
+        <a href="//localhost:1313/2019/09/mysql-innodb-as-cache-server-config/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/memcached/">memcached</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/plugin/">plugin</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2019/09/ifkakao-kakaobank-uldraman/">
+        <h2 class="post-title">오픈소스 데이터베이스, 흐르는 은행 데이터에 빨대를 꽂아보다.</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2019-09-11
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <p>ifkakao 발표 세션 동영상이 떴습니다. 두둥!</p>
+<h2 id="오픈소스-데이터베이스-흐르는-은행-데이터에-빨대를-꽂아보다">오픈소스 데이터베이스, 흐르는 은행 데이터에 빨대를 꽂아보다</h2>
+<p><a href="https://mk.kakaocdn.net/dn/if-kakao/conf2019/conf_video_2019/1_102_01_m1.mp4"><img src="/img/2019/09/ifkakao-chan.png" alt="Video Label"></a></p>
+<p>발표 자료는 아래에 있어용! (근데 왜 embed가 안되지.. -_-;)<br>
+자료: <a href="https://mk.kakaocdn.net/dn/if-kakao/conf2019/%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C_2019/T03-S01.pdf">오픈소스 데이터베이스 은행데이터에 빨대를 꼽아보다.v.1.1</a></p>
+
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/ifkakao/">ifkakao</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/kakaobank/">kakaobank</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/uldraman/">uldraman</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2019/08/mysql-poor-performance-with-super-many-partitions/">
+        <h2 class="post-title">MySQL 파티셔닝 테이블 SELECT가 느려요.</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2019-08-29
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>네이티브 파티셔닝 적용 이전의 MySQL은, 파티셔닝 파일들은 각각이 테이블로써 관리되었죠. 그래서, table cache 로 인한 메모리 부족 현상은 인지하고 있었습니다만.. 이것 외에는 특별히 성능 저하 요소는 없다고 생각해왔어요. (<a href="http://small-dbtalk.blogspot.com/2013/09/mysql-table-cache.html">http://small-dbtalk.blogspot.com/2013/09/mysql-table-cache.html</a>)</p>
+<p>그런데, 얼마전 서버당 4개의 데이터베이스를 만들고, 각각 데이터베이스 안에 26개월로 분할된 파티셔닝된 테이블을 넣고, 간단한 Range scan 성능 테스트를 하였는데.. 말도안되는 수치를 보였습니다. 이 관련하여 간단하게 이에 대해 알아보도록 할께요. 🙂</p>
+<h1 id="problem">Problem</h1>
+<p>하단과 같은 테이블 구조에서, 단순히 최근 10건의 데이터만 끌어오는 형식의 SQL을 다수 실행시켜 간단한 트래픽을 주었을 때.. 성능적으로 별다른 문제는 없을 것이라고 생각을 했습니다. 우리의 메모리는 기대치보다 훨씬 웃돌았기 때문에.. ㅎㅎ (참고로, InnoDB 버퍼풀 사이즈 대비 데이터 사이즈는 약 10배 이상이지만, 최근 파티셔닝 사이즈를 따지면, 버퍼풀 안에 충분히 들어올만한 상황이었습니다.)</p>
+        <a href="//localhost:1313/2019/08/mysql-poor-performance-with-super-many-partitions/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/partition/">partition</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+        </div>
+        
+          <ul class="pager main-pager">
+            
+            
+              <li class="next">
+                <a href="//localhost:1313/tags/mysql/page/2/">Older Posts &rarr;</a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          <li>
+            <a href="/tags/mysql/index.xml" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2011 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

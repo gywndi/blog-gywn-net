@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SQLite on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/sqlite/</link>
+    <description>Recent content in SQLite on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Sun, 08 Sep 2013 12:51:33 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/sqlite/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SQLite 3탄 – 미리알고, 풀스캔을 방지하자.(1)</title>
+      <link>//localhost:1313/2013/09/let-me-know-data-searching-in-sqlite/</link>
+      <pubDate>Sun, 08 Sep 2013 12:51:33 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2013/09/let-me-know-data-searching-in-sqlite/</guid>
+      <description>&lt;p&gt;처가 과수원 사과 수확을 하고 왔습니다. 매주 빡빡한 스케줄.. 연예인 못지않군요.^^ 그렇지만, 오늘도 역시.. SQLite 시리즈를 이어보겠습니다. ^0^ (힘들어서 2회에 걸쳐서 진행하겠습니다. ^^)&lt;/p&gt;&#xA;&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;어떤 DBMS를 막론하고, Searching은 가장 중요한 요소입니다. 특히 데이터 건 수가 많을수록, 원하는 데이터를 찾아내기 위해 처음부터 끝까지 모두 파일을 뒤지게 된다면.. 쿼리 시간을 떠나 사용하는 전력 또한 상당할 것입니다. 특히 SQLite가 모바일 환경에서 대부분 활용된다는 상황에서, CPU 자원을 최소화한다는 것은 결과적으로 배터리 소모를 최소한으로 이룰 수 있음을 의미하죠. ^^&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SQLite 2탄 – 데이터와 인덱스 구조!!</title>
+      <link>//localhost:1313/2013/09/let-me-know-data-index-of-sqlite/</link>
+      <pubDate>Sun, 01 Sep 2013 13:29:33 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2013/09/let-me-know-data-index-of-sqlite/</guid>
+      <description>&lt;p&gt;여름은 거의 막바지로 치닫은 지금, 벌초 시즌이 찾아왔네요. 시원할줄만 알았던 산속 아침이 왜이렇게 따갑고, 오늘따라 산은 왜이렇게 가파르게 느껴지던지.. 집에 돌아오자마자, 쓰러졌습니다. ^^;&lt;/p&gt;&#xA;&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;지난 1탄에 이어 SQLite에 대해 간단하게 포스팅하려 합니다. 어떤 솔루션을 사용하든, DB를 사용함에 있어서, 논리적인 데이터 모델을 정확하게 알고 있는 것이 중요하다고 생각합니다.&lt;/p&gt;&#xA;&lt;p&gt;SQLite 역시 Database이고, 데이터 또한 나름의 구조를 가지고 있고, 재미있는 특성이 있죠. ^^&lt;/p&gt;&#xA;&lt;h1 id=&#34;data-구조&#34;&gt;Data 구조&lt;/h1&gt;&#xA;&lt;p&gt;먼저 Data의 생김새를 먼저 살펴보도록 하겠습니다. SQLite의 &lt;strong&gt;각각의 Row는 고유의 8Byte 정수 타입의 RowID&lt;/strong&gt;를 가집니다.  그리고 RowID 순서로 데이터는 저장됩니다. RowID가 생소한 분이 계실 수도 있겠네요. ^^ 특히 MySQL을 거의 사용하셨던 분에게는 낯선 용어가 될 수도 있겠죠.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SQLite 1탄, 이것만은 알고 넘어가자!</title>
+      <link>//localhost:1313/2013/08/let-me-intorduce-sqlite/</link>
+      <pubDate>Sun, 25 Aug 2013 13:21:24 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2013/08/let-me-intorduce-sqlite/</guid>
+      <description>&lt;p&gt;안녕하세요. 오랜만에 포스팅을 합니다. 그동안 너무 소홀하게 블로그 관리를 한 듯..ㅜㅜ 뜬금없기는 하지만, 당분간 제가 공유할 주제는 바로 SQLite입니다. ^^;&lt;/p&gt;&#xA;&lt;h1 id=&#34;sqlite&#34;&gt;SQLite?&lt;/h1&gt;&#xA;&lt;p&gt;SQLite는 간단하게 말하면, 트랜잭션을 제공해주는 파일 기반의 DBMS입니다. 모바일 서비스가 대세가 된 요새, SQLite 역시 가장 많이 사용되는 DB로 떠오르고 있습니다. 대충만 적어도 쟁쟁한 회사들이 애용을 하고 있는 상황이죠. ^^&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;//localhost:1313/img/2013/08/SQLite-well-known-users-1024x592.png&#34; alt=&#34;SQLite well-known users&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;일반적인 타 DBMS 처럼 데몬처럼 동작하는 방식이 아닌, 마치 라이브러리와 같이 프로그램에 직접 Embed하여 사용하죠. 그리고 간과하지 말아야하는 것은 SQLite는 기존 서버에서 구동하는 대형 DBMS를 대체하자는 개념으로 탄생한 DB가 아닙니다. 그것보다는 프로그램 내부에서 잦은 파일 접근(fopen)을 최대한으로 적게하자는 취지로 만들어진 DB이죠. 그렇지만 강력합니다. ㅎㅎ&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

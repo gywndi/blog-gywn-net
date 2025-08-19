@@ -1,0 +1,556 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>MySQL Replication 이해(1) – 개념 - </title>
+
+  <meta name="description" content="Overview
+오늘은 조금더 제너럴한 주제를 가지고 정리를 할까합니다.
+바로 MySQL Replication 입니다. MySQL Community에서 유일하게 HA 또는 분산 구성을 할 수 있는 유일한 기능입니다. 물론 “MySQL&#43;DRBD 구성”와 같이 HA를 구성하는 방법도 있습니다만, MySQL 제품이 아니므로 스킵~!
+먼저 Replication에 대해 간략하게 말씀 드리겠습니다.
+MySQL Replication이란?
+MySQL Replication이란 말 그대로 복제입니다. 영어 사전에 나온 듯한 DNA는 아니지만 데이터를 “물리적으로 다른 서버의 저장 공간” 안에 동일한 데이터를 복사하는 기술이죠.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/post\/2011\/12\/2011-12-28-mysql-replication-1\/",
+          "name": "My SQL replication 이해(1) – 개념"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "MySQL Replication 이해(1) – 개념",
+  "description" : "Overview 오늘은 조금더 제너럴한 주제를 가지고 정리를 할까합니다.\n바로 MySQL Replication 입니다. MySQL Community에서 유일하게 HA 또는 분산 구성을 할 수 있는 유일한 기능입니다. 물론 “MySQL\u002bDRBD 구성”와 같이 HA를 구성하는 방법도 있습니다만, MySQL 제품이 아니므로 스킵~!\n먼저 Replication에 대해 간략하게 말씀 드리겠습니다.\nMySQL Replication이란? MySQL Replication이란 말 그대로 복제입니다. 영어 사전에 나온 듯한 DNA는 아니지만 데이터를 “물리적으로 다른 서버의 저장 공간” 안에 동일한 데이터를 복사하는 기술이죠.\n",
+  "inLanguage" : "en",
+  "wordCount":  401 ,
+  "datePublished" : "2011-12-28T05:14:02\u002b00:00",
+  "dateModified" : "2011-12-28T05:14:02\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "DB, InnoDB, MySQL, RDBMS, Replication, 리플리케이션" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/post\/2011\/12\/2011-12-28-mysql-replication-1\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="MySQL Replication 이해(1) – 개념" />
+<meta property="og:description" content="Overview
+오늘은 조금더 제너럴한 주제를 가지고 정리를 할까합니다.
+바로 MySQL Replication 입니다. MySQL Community에서 유일하게 HA 또는 분산 구성을 할 수 있는 유일한 기능입니다. 물론 “MySQL&#43;DRBD 구성”와 같이 HA를 구성하는 방법도 있습니다만, MySQL 제품이 아니므로 스킵~!
+먼저 Replication에 대해 간략하게 말씀 드리겠습니다.
+MySQL Replication이란?
+MySQL Replication이란 말 그대로 복제입니다. 영어 사전에 나온 듯한 DNA는 아니지만 데이터를 “물리적으로 다른 서버의 저장 공간” 안에 동일한 데이터를 복사하는 기술이죠.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/post/2011/12/2011-12-28-mysql-replication-1/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="MySQL Replication 이해(1) – 개념" />
+  <meta name="twitter:description" content="Overview
+오늘은 조금더 제너럴한 주제를 가지고 정리를 할까합니다.
+바로 MySQL Replication 입니다. MySQL Community에서 유일하게 HA 또는 분산 구성을 할 수 있는 유일한 기능입니다. 물론 “MySQL&#43;DRBD 구성”와 같이 HA를 구성하는 방법도 있습니다만, MySQL 제품이 아니므로 스킵~!
+먼저 Replication에  …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>MySQL Replication 이해(1) – 개념</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2011-12-28
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>오늘은 조금더 제너럴한 주제를 가지고 정리를 할까합니다.<br>
+바로 MySQL Replication 입니다. MySQL Community에서 유일하게 HA 또는 분산 구성을 할 수 있는 유일한 기능입니다. 물론 <!-- raw HTML omitted -->“MySQL+DRBD 구성”<!-- raw HTML omitted -->와 같이 HA를 구성하는 방법도 있습니다만, MySQL 제품이 아니므로 스킵~!</p>
+<p>먼저 Replication에 대해 간략하게 말씀 드리겠습니다.</p>
+<h1 id="mysql-replication이란">MySQL Replication이란?</h1>
+<p>MySQL Replication이란 말 그대로 복제입니다. 영어 사전에 나온 듯한 DNA는 아니지만 데이터를 “물리적으로 다른 서버의 저장 공간” 안에 동일한 데이터를 복사하는 기술이죠.</p>
+<p>다음 그림은 MySQL Replication을 가장 간단하게 나타낸 그림입니다.  데이터 변경을 마스터 장비에서만 수행하기 때문에 마스터 장애 시에는 전체 노드에 데이터 쓰기 작업이 불가능한 한계가 있습니다.</p>
+<!-- raw HTML omitted -->
+<p>아래 그림은 MySQL Replication과 Oracle RAC스토리지 구조를 가장 간단하게 묘사한 그림입니다.</p>
+<!-- raw HTML omitted -->
+<p>MySQL복제라는 말과 같이, 디스크를 독립적으로 분리하여 데이터를 유지합니다.</p>
+<p>이에 반해 오라클은 RAC 구성 시에는 공유 스토리지(SAN,iSCSI) 장비를 중간에 두고 DB를 이중화 합니다. 엄격하게 다시 말하자면, “**MySQL Replication은 데이터를 이중화”**하는 것이고, **“Oracle RAC는 DB를 이중화하는 개념”**입니다.</p>
+<p>MySQL은 오직 단일 마스터에서만 데이터 변경 작업을 수행할 수 있고, Oracle은 하나의 스토리지를 중간에 두고 여러 노드에서 데이터 변경 작업이 일어날 수 있습니다.  그렇기 때문에 MySQL에서는 쓰기 부하 분산은 불가능하지만, 읽기 부하 분산은 가능합니다. 그리고 특정 노드 디스크 장애가 전체 데이터 유실로 이어지지 않습니다. 데이터는 **“복제”**되니까요. Oracle은 어느정도의 읽기/쓰기 부하 분산은 가능하지만 공유 스토리지를 쓰는 만큼 스토리지 장애에는 상당히 취약합니다. 어디까지나, 일반 구성 시 비교를 한 것임을 알아주세요^^</p>
+<h1 id="마스터-슬레이브-간-data-복제-방법">마스터, 슬레이브 간 Data 복제 방법</h1>
+<p>MySQL Replication은 로그 기반으로 비동기적으로 데이터를 복제합니다. 마스터에서는 데이터 변경 작업이 수행되면 Binary Log라는 곳에 이력을 기록을 하는데, Statement, Row 그리고 Mixed 등 세 가지 방식이 있습니다.</p>
+<blockquote>
+<p><strong>Statement-based Type</strong><br>
+MySQL 3.23 이후로 도입된 방식<br>
+실행된 SQL을 그대로 Binary Log에 기록<br>
+Binary Log 사이즈는 작으나, SQL 에 따라 결과가 달라질 수 있음<br>
+(Time Function, UUID, User Defined Function)<br>
+<strong>Row-based Type</strong><br>
+MySQL 5.1부터 도입된 방식<br>
+변경된 행을 BASE64로 Encoding하여 Binary Log에 기록<br>
+특정 SQL이 변경하는 행 수가 많은 경우 Binary Log 사이즈가 비약적으로 커질 수 있음<br>
+<strong>Mixed Type (Statement + Row)</strong><br>
+기본적으로 Statement-Based Type으로 기록되나, 경우에 따라 Row-base Type으로 Binary Log에 기록</p></blockquote>
+<p>그렇다면 복제는 어떤 방식으로 이뤄질까요? 아래 그림으로 설명 드리겠습니다.</p>
+<!-- raw HTML omitted -->
+<ol>
+<li><!-- raw HTML omitted -->Master에서 데이터 변경이 일어나면 자신의 데이터베이스에 반영합니다.<!-- raw HTML omitted --></li>
+</ol>
+<!-- raw HTML omitted -->
+<p>기억해야할 사항은 마스터에서는 여러 세션에서 데이터 변경 처리가 가능하지만, <!-- raw HTML omitted --><!-- raw HTML omitted -->슬레이브에서는 오직 하나 SQL Thread에서만 데이터 변경 처리가 가능<!-- raw HTML omitted --><!-- raw HTML omitted -->한 점입니다. 그렇기 때문에 마스터에 데이터 변경 트래픽이 과도하게 몰리게 되면 마스터/슬레이브 간 데이터 동기화 시간이 크게 벌어질 수도 있습니다.</p>
+<h1 id="마치며">마치며..</h1>
+<p>리플리케이션을 잘 활용하면, 부하분산 뿐만 아니라 고가용성 그리고 버전 테스트 등 여러 분야에 멋지게 사용할 수 있습니다. 차근차근 이러한 내용을 정리해서 포스팅하도록 하겠습니다.<br>
+일단, 다음 번에는 실제 리플리케이션 구성 방법에 대해서 먼저 진행할께요^^<br>
+좋은 하루 되세요~!</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/db/">DB</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/innodb/">InnoDB</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/rdbms/">RDBMS</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/replication/">Replication</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/%EB%A6%AC%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/">리플리케이션</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2fpost%2f2011%2f12%2f2011-12-28-mysql-replication-1%2f&amp;text=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%281%29%20%e2%80%93%20%ea%b0%9c%eb%85%90&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2fpost%2f2011%2f12%2f2011-12-28-mysql-replication-1%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2011%2f12%2f2011-12-28-mysql-replication-1%2f&amp;title=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%281%29%20%e2%80%93%20%ea%b0%9c%eb%85%90" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2fpost%2f2011%2f12%2f2011-12-28-mysql-replication-1%2f&amp;title=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%281%29%20%e2%80%93%20%ea%b0%9c%eb%85%90" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2011%2f12%2f2011-12-28-mysql-replication-1%2f&amp;title=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%281%29%20%e2%80%93%20%ea%b0%9c%eb%85%90" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2fpost%2f2011%2f12%2f2011-12-28-mysql-replication-1%2f&amp;description=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%281%29%20%e2%80%93%20%ea%b0%9c%eb%85%90" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/post/2022/05/2022-05-23-mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/post/2021/09/2021-09-07-package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-28-mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-13-make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/post/2021/06/2021-06-21-resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/post/2011/12/2011-12-20-mysql-installation-on-linux/" data-toggle="tooltip" data-placement="top" title="리눅스에 MySQL 설치하기(CentOS 5.6)">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/post/2012/01/2012-01-02-mysql-tuning-strategy-bagic/" data-toggle="tooltip" data-placement="top" title="[H3 2011] 대형사이트 구축을 위한 MySQL 튜닝전략">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://tech.gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

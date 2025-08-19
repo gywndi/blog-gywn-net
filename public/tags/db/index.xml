@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DB on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/db/</link>
+    <description>Recent content in DB on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Wed, 28 Dec 2011 05:14:02 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/db/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL Replication 이해(1) – 개념</title>
+      <link>//localhost:1313/2011/12/mysql-replication-1/</link>
+      <pubDate>Wed, 28 Dec 2011 05:14:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2011/12/mysql-replication-1/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;오늘은 조금더 제너럴한 주제를 가지고 정리를 할까합니다.&lt;br&gt;&#xA;바로 MySQL Replication 입니다. MySQL Community에서 유일하게 HA 또는 분산 구성을 할 수 있는 유일한 기능입니다. 물론 &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.5/en/ha-drbd.html&#34;&gt;MySQL+DRBD 구성&lt;/a&gt;와 같이 HA를 구성하는 방법도 있습니다만, MySQL 제품이 아니므로 스킵~!&lt;/p&gt;&#xA;&lt;p&gt;먼저 Replication에 대해 간략하게 말씀 드리겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;mysql-replication이란&#34;&gt;MySQL Replication이란?&lt;/h1&gt;&#xA;&lt;p&gt;MySQL Replication이란 말 그대로 복제입니다. 영어 사전에 나온 듯한 DNA는 아니지만 데이터를 “물리적으로 다른 서버의 저장 공간” 안에 동일한 데이터를 복사하는 기술이죠.&lt;/p&gt;&#xA;&lt;p&gt;다음 그림은 MySQL Replication을 가장 간단하게 나타낸 그림입니다.  데이터 변경을 마스터 장비에서만 수행하기 때문에 마스터 장애 시에는 전체 노드에 데이터 쓰기 작업이 불가능한 한계가 있습니다.&#xA;&lt;img src=&#34;//localhost:1313/img/2011/12/MySQL-Replicaton-Master-Slave.png&#34; alt=&#34;MySQL Replicaton Master Slave&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>리눅스에 MySQL 설치하기(CentOS 5.6)</title>
+      <link>//localhost:1313/2011/12/mysql-installation-on-linux/</link>
+      <pubDate>Tue, 20 Dec 2011 09:26:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2011/12/mysql-installation-on-linux/</guid>
+      <description>&lt;p&gt;MySQL DBMS 를 설치할 때 제가 적용하는 내용을 공유합니다. root 계정으로 설치 준비를 하고, mysql 계정으로 DB를 구동합니다.&lt;/p&gt;&#xA;&lt;p&gt;일단 하단 내용들은 root계정으로 수행을 합니다.&lt;/p&gt;&#xA;&lt;h3 id=&#34;os-계정-추가&#34;&gt;OS 계정 추가&lt;/h3&gt;&#xA;&lt;p&gt;다음과 같이 dba 그룹을 추가하고 그 밑에 mysql 계정을 추가합니다.&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;groupadd -g &lt;span class=&#34;m&#34;&gt;600&lt;/span&gt; dba&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;useradd -g &lt;span class=&#34;m&#34;&gt;600&lt;/span&gt; -u &lt;span class=&#34;m&#34;&gt;605&lt;/span&gt; mysql&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;passwd mysql&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;linux-설정-변경&#34;&gt;Linux 설정 변경&lt;/h3&gt;&#xA;&lt;p&gt;세션 Limit 를 설정합니다.&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vi /etc/security/limits.conf&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;##하단 내용 추가&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mysql            soft    nproc  &lt;span class=&#34;m&#34;&gt;8192&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mysql            hard    nproc  &lt;span class=&#34;m&#34;&gt;16384&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mysql            soft    nofile &lt;span class=&#34;m&#34;&gt;8192&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mysql            hard    nofile &lt;span class=&#34;m&#34;&gt;65536&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;OS에서 limits.conf 파일을 읽어들이도록 설정합니다. 없으면 생성합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>반드시 알아야할 MySQL 특징 세 가지</title>
+      <link>//localhost:1313/2011/12/mysql-three-features/</link>
+      <pubDate>Mon, 05 Dec 2011 06:20:17 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2011/12/mysql-three-features/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL 요구가 전보다 급증하고 있습니다. 이제 친숙해서 사용하는 간단한 소용량 DBMS 이 아닌, 많은 대형 업체에서도 사용되고 있기 때문에 많은 이슈가 되고 있습니다. 트위터, 페이스북, 구글, 야후 뿐만 아니라 최근들어 SNS 열풍으로 국내에도 MySQL 관련하여 엄청난 붐이 시작되려는 찰나인 듯 하네요.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;//localhost:1313/img/2011/12/BIG_ISP.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;KTH에 입사를 한 당시에 주력 DB는 Oracle이었습니다. 그러나라이선스 비용 문제로 주력 DB 선정을 위한 저울질이 시작되었고, 그중 일반 개발자에게도 친숙한 MySQL을 선택했습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;mysql-세가지-특성&#34;&gt;MySQL 세가지 특성?&lt;/h1&gt;&#xA;&lt;p&gt;MySQL 3.X 버전으로 광고 시스템을 만든 적이 있습니다. 꽤나 오래된 얘기..&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

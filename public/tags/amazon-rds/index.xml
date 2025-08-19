@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Amazon RDS on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/amazon-rds/</link>
+    <description>Recent content in Amazon RDS on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Fri, 10 Aug 2012 05:26:37 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/amazon-rds/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>아마존의 가상 RDBMS인 Amazon RDS의 특성 몇 가지</title>
+      <link>//localhost:1313/2012/08/amazon-rds-feature/</link>
+      <pubDate>Fri, 10 Aug 2012 05:26:37 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/08/amazon-rds-feature/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;지난 해 말 글로벌 서비스를 겨냥하여 Amazon 가상 플랫폼 상에 인증 서비스를 오픈하였고, 올해 초에는 푸딩.투 서비스 또한 런칭하여 서비스 중에 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;글로벌 서비스를 위한 저장소로는 아마존에서 제공하는 가상 관계형 DBMS인 Amazon RDS를 사용 중입니다.&lt;/p&gt;&#xA;&lt;p&gt;이번 포스팅에서는 Amazon RDS에 대한 특성 몇 가지를 설명 드리겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;virtual-database-instance&#34;&gt;Virtual Database Instance&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Amazon RDS는 Virtual Database Instance입니다.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;DBMS는 데이터를 처리하는 미들웨어이고, 미들웨어는 OS 기반 위에서 동작합니다. 일반적인 상황이라면 OS에 접근하여 그에 맞게 DBMS를 설치하고, 관련 파라메터도 정의를 해야만 하지만, 모든 것이 &amp;ldquo;웹 콘솔&amp;rdquo; 상에서 간단하게 처리합니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

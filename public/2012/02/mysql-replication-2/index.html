@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>MySQL Replication 이해(2) – 구성 - </title>
+
+  <meta name="description" content="Overview
+MySQL Replication 개념에 이어, 이번에는 실 구성에 관한 내용입니다.
+각 서버 구성 방법은 리눅스에 MySQL 설치하기 편을 참고하시기 바랍니다.
+시작에 앞서서 Server_id는 다른 숫자로 설정하세요^^.
+Replication 구성은 다음 세 단계를 거쳐서 수행됩니다.
+
+DB 유저 생성
+DB 데이터 동기화(셋 중 택 1)
+
+DB Data File Copy
+MySQL Dump (All Lock)
+Export/Import (Single Transaction)
+
+
+리플리케이션 시작
+
+1. DB 유저 생성
+복제 데이터 전송을 위한 리플리케이션 권한의 DB 유저를 마스터에 생성합니다. 각 슬레이브 IO 쓰레드들은 추가된 DB 유저를 통해 데이터를 받습니다.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/2012\/02\/mysql-replication-2\/",
+          "name": "My SQL replication 이해(2) – 구성"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "MySQL Replication 이해(2) – 구성",
+  "description" : "Overview MySQL Replication 개념에 이어, 이번에는 실 구성에 관한 내용입니다.\n각 서버 구성 방법은 리눅스에 MySQL 설치하기 편을 참고하시기 바랍니다.\n시작에 앞서서 Server_id는 다른 숫자로 설정하세요^^.\nReplication 구성은 다음 세 단계를 거쳐서 수행됩니다.\nDB 유저 생성 DB 데이터 동기화(셋 중 택 1) DB Data File Copy MySQL Dump (All Lock) Export\/Import (Single Transaction) 리플리케이션 시작 1. DB 유저 생성 복제 데이터 전송을 위한 리플리케이션 권한의 DB 유저를 마스터에 생성합니다. 각 슬레이브 IO 쓰레드들은 추가된 DB 유저를 통해 데이터를 받습니다.\n",
+  "inLanguage" : "en",
+  "wordCount":  595 ,
+  "datePublished" : "2012-02-10T06:16:35\u002b00:00",
+  "dateModified" : "2012-02-10T06:16:35\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "MySQL, Replication, 복제, 이중화" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/2012\/02\/mysql-replication-2\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="MySQL Replication 이해(2) – 구성" />
+<meta property="og:description" content="Overview
+MySQL Replication 개념에 이어, 이번에는 실 구성에 관한 내용입니다.
+각 서버 구성 방법은 리눅스에 MySQL 설치하기 편을 참고하시기 바랍니다.
+시작에 앞서서 Server_id는 다른 숫자로 설정하세요^^.
+Replication 구성은 다음 세 단계를 거쳐서 수행됩니다.
+
+DB 유저 생성
+DB 데이터 동기화(셋 중 택 1)
+
+DB Data File Copy
+MySQL Dump (All Lock)
+Export/Import (Single Transaction)
+
+
+리플리케이션 시작
+
+1. DB 유저 생성
+복제 데이터 전송을 위한 리플리케이션 권한의 DB 유저를 마스터에 생성합니다. 각 슬레이브 IO 쓰레드들은 추가된 DB 유저를 통해 데이터를 받습니다.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/2012/02/mysql-replication-2/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="MySQL Replication 이해(2) – 구성" />
+  <meta name="twitter:description" content="Overview
+MySQL Replication 개념에 이어, 이번에는 실 구성에 관한 내용입니다.
+각 서버 구성 방법은 리눅스에 MySQL 설치하기 편을 참고하시기 바랍니다.
+시작에 앞서서 Server_id는 다른 숫자로 설정하세요^^.
+Replication 구성은 다음 세 단계를 거쳐서 수행됩니다.
+
+DB 유저 생성
+DB 데이터 동기화(셋 중 택 1) …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>MySQL Replication 이해(2) – 구성</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2012-02-10
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>MySQL Replication 개념에 이어, 이번에는 실 구성에 관한 내용입니다.<br>
+각 서버 구성 방법은 <a href="/2011/12/mysql-installation-on-linux/">리눅스에 MySQL 설치하기</a> 편을 참고하시기 바랍니다.</p>
+<p><strong>시작에 앞서서 Server_id는 다른 숫자로 설정하세요^^.</strong></p>
+<p>Replication 구성은 다음 세 단계를 거쳐서 수행됩니다.</p>
+<ol>
+<li><strong>DB 유저 생성</strong></li>
+<li><strong>DB 데이터 동기화(셋 중 택 1)</strong>
+<ul>
+<li>DB Data File Copy</li>
+<li>MySQL Dump (All Lock)</li>
+<li>Export/Import (Single Transaction)</li>
+</ul>
+</li>
+<li><strong>리플리케이션 시작</strong></li>
+</ol>
+<h1 id="1-db-유저-생성">1. DB 유저 생성</h1>
+<p>복제 데이터 전송을 위한 리플리케이션 권한의 DB 유저를 마스터에 생성합니다. 각 슬레이브 IO 쓰레드들은 추가된 DB 유저를 통해 데이터를 받습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>mysql@master<span class="o">]</span> $ mysql -uroot -p비밀번호
+</span></span><span class="line"><span class="cl"> mysql&gt; GRANT REPLICATION SLAVE ON *.*
+</span></span><span class="line"><span class="cl">     -&gt; TO repl IDENTIFIED BY <span class="s1">&#39;repl&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><h1 id="2-db-데이터-동기화">2. DB 데이터 동기화</h1>
+<ul>
+<li>**DB Data File Copy<br>
+DB 서버 데몬을 내린 상태에서 데이터 파일 자체를 복사하는 방식입니다. 데이터 파일 복사 과정만 수행하면 되기 때문에 대용량 서버에서 슬레이브 추가 시 유용한 방식입니다.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## MySQL 데몬 중지</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@master<span class="o">]</span> $ /etc/init.d/mysqld stop
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@slave<span class="o">]</span> $ /etc/init.d/mysqld stop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 슬레이브에 데이터 복사</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@slave<span class="o">]</span> $ scp -r mysql@master:/data/mysql/mysql-data/data/mysql
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 마스터 바이너리 로그 파일 확인</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@&lt;strong&gt;master**&lt;/strong&gt;<span class="o">]</span>$ <span class="nb">cd</span> /data/mysql/mysql-binlog
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@&lt;strong&gt;master**&lt;/strong&gt;<span class="o">]</span>$ ls -alh
+</span></span><span class="line"><span class="cl">합계 21M
+</span></span><span class="line"><span class="cl">drwxr-xr-x. <span class="m">2</span> mysql DBA 4.0K 13:34 .
+</span></span><span class="line"><span class="cl">drwxrwx---. <span class="m">7</span> mysql DBA 4.0K 16:34 ..
+</span></span><span class="line"><span class="cl">-rw-rw----. <span class="m">1</span> mysql DBA 21M  13:34 mysql-bin.000006
+</span></span><span class="line"><span class="cl">-rw-rw----. <span class="m">1</span> mysql DBA <span class="m">126</span> 13:34 mysql-bin.000007**
+</span></span><span class="line"><span class="cl">-rw-rw----. <span class="m">1</span> mysql DBA <span class="m">126</span>  13:34 mysql-bin.index
+</span></span></code></pre></div><p>DB가 재시작되면 기본적으로 새로운 바이너리 로그를 생성됩니다.</p>
+<ul>
+<li>로그 파일명 : mysql-bin.000007, 로그 포지션: 106</li>
+<li><strong>MySQL Dump (All Lock)</strong>
+<ul>
+<li>**DB 전체에 READ LOCK을 걸고 데이터를 Export하는 방식입니다.**트랜잭션이 지원 안되는 스토리지 엔진이 섞여 있고, 데이터량이 작은 경우 사용하면 되겠습니다. <a href="/2012/01/mysql-table-lock/">MySQL Table Lock에 관한 이해</a>와 같이 뜻하지 않은 Dead Lock이 발생할 수 있습니다.</li>
+<li><strong>Lock을 걸고 데이터를 Export 후 슬레이브 장비에서 다시 Import하는 방식입니다.</strong> 백업하는 도중에는 데이터 변경 작업은 수행 불가하며, MyISAM의 경우 백업 수행 시간 동안 Dead Lock이 발생할 수 있습니다.</li>
+<li>데이터량과 트랜잭션이 작은 경우 사용할 수 있는 방식입니다.
+<img src="/img/2012/02/mysql_full_backup.png" alt="MySQL Full Backup"></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">##################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 마스터 세션1&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## READ LOCK을 걸어서 데이터 변경을 방지합니다.</span>
+</span></span><span class="line"><span class="cl">mysql&gt; FLUSH TABLES WITH READ LOCK<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Query OK, <span class="m">0</span> rows affected <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql&gt; show master status<span class="se">\G</span>
+</span></span><span class="line"><span class="cl">***** 1. row *****
+</span></span><span class="line"><span class="cl">File: mysql-bin.000008
+</span></span><span class="line"><span class="cl">Position: <span class="m">456730</span>
+</span></span><span class="line"><span class="cl"><span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 마스터 세션2&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 다른 세션에서 전체 데이터를 백업합니다.</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@master<span class="o">]</span>$ <span class="nb">export</span> -uroot -p비밀번호 --all-databases &gt; /data/mysql/mysql-dump/dump.sql
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 마스터 세션1&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 원래 세션에서 READ LOCK을 해제합니다.</span>
+</span></span><span class="line"><span class="cl">mysql&gt; UNLOCK TABLES<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Query OK, <span class="m">0</span> rows affected <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 슬레이브에 데이터 이관</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@slave<span class="o">]</span> $ scp -r mysql@master:/data/mysql/mysql-dump/dump.sql /data/mysql/mysql-dump
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@slave<span class="o">]</span> $ mysql -uroot -p비밀번호 --force &gt; /data/mysql/mysql-dump/dump.sql
+</span></span></code></pre></div><ul>
+<li><strong>MySQL Dump (Single Transaction)</strong>
+서비스 중지가 불가하고, 테이블이 트랜잭션을 지원하는 경우에만 사용할 수 있는 방법으로,트랜잭션 고립 (Isolation)을 특성을 활용하는 방식입니다. 즉, Database 가 InnoDB로만 이루어진 경우 많이 쓰입니다.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## 시점 데이터 생성</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@&lt;strong&gt;master ~&lt;/strong&gt;<span class="o">]</span>$ <span class="nb">export</span> -uroot -p비밀번호 --single-transaction --master-data<span class="o">=</span><span class="m">2</span> --all-databases &gt; /data/mysql/mysql-dump/dump.sql
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 슬레이브에 데이터 이관</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@slave<span class="o">]</span> $ scp -r mysql@master:/data/mysql/mysql-dump/dump.sql /data/mysql/mysql-dump
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@slave<span class="o">]</span> $ head -n <span class="m">22</span> full_backup.sql <span class="p">|</span> tail -n <span class="m">1</span>
+</span></span><span class="line"><span class="cl">-- CHANGE MASTER TO <span class="nv">MASTER_LOG_FILE</span><span class="o">=</span><span class="s1">&#39;mysql_bin.000008&#39;</span>, <span class="nv">MASTER_LOG_POS</span><span class="o">=</span>456730<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mysql@slave<span class="o">]</span> $ mysql -uroot -p비밀번호 --force &gt; /data/mysql/mysql-dump/dump.sql
+</span></span></code></pre></div><h1 id="3-리플리케이션-시작">3. 리플리케이션 시작</h1>
+<p>데이터 통신 용도로는 별도 네트워크에 구성해야 NIC 간섭을 최소화할 수 있습니다. 그리고 앞서서 기록을 해놓은 마스터 Binlog 파일과 포지션을 세팅 후 슬레이브 서버를 구동하면 되겠습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## 슬레이브에서 실행</span>
+</span></span><span class="line"><span class="cl">mysql&gt; CHANGE MASTER TO
+</span></span><span class="line"><span class="cl">    -&gt; <span class="nv">MASTER_HOST</span><span class="o">=</span><span class="s1">&#39;master-pri&#39;</span>,
+</span></span><span class="line"><span class="cl">    -&gt; <span class="nv">MASTER_USER</span><span class="o">=</span><span class="s1">&#39;repl&#39;</span>,
+</span></span><span class="line"><span class="cl">    -&gt; <span class="nv">MASTER_PASSWORD</span><span class="o">=</span><span class="s1">&#39;repl&#39;</span>,
+</span></span><span class="line"><span class="cl">    -&gt; <span class="nv">MASTER_PORT</span><span class="o">=</span>3306,
+</span></span><span class="line"><span class="cl">    -&gt; <span class="nv">MASTER_LOG_FILE</span><span class="o">=</span><span class="s1">&#39;mysql-bin.000008&#39;</span>,
+</span></span><span class="line"><span class="cl">    -&gt; <span class="nv">MASTER_LOG_POS</span><span class="o">=</span>456730,
+</span></span><span class="line"><span class="cl">    -&gt; <span class="nv">MASTER_CONNECT_RETRY</span><span class="o">=</span>5<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 슬레이브 시작</span>
+</span></span><span class="line"><span class="cl">mysql&gt; START SLAVE<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Slave_IO_Running, Slave_SQL_Running 상태 확인</span>
+</span></span><span class="line"><span class="cl">mysql&gt; show slave status<span class="se">\G</span>
+</span></span><span class="line"><span class="cl">***** 1. row *****
+</span></span><span class="line"><span class="cl">               Slave_IO_State: Waiting <span class="k">for</span> master to..
+</span></span><span class="line"><span class="cl">                  Master_Host: gisselldb01-pri
+</span></span><span class="line"><span class="cl">                  Master_User: repl
+</span></span><span class="line"><span class="cl">                  Master_Port: <span class="m">3306</span>
+</span></span><span class="line"><span class="cl">                Connect_Retry: <span class="m">5</span>
+</span></span><span class="line"><span class="cl">              Master_Log_File: mysql-bin.000008
+</span></span><span class="line"><span class="cl">          Read_Master_Log_Pos: <span class="m">456730</span>
+</span></span><span class="line"><span class="cl">               Relay_Log_File: mysql-relay.000001
+</span></span><span class="line"><span class="cl">                Relay_Log_Pos: <span class="m">251</span>
+</span></span><span class="line"><span class="cl">        Relay_Master_Log_File: mysql-bin.000008
+</span></span><span class="line"><span class="cl">             Slave_IO_Running: Yes
+</span></span><span class="line"><span class="cl">            Slave_SQL_Running: Yes
+</span></span><span class="line"><span class="cl">            ..중략..
+</span></span><span class="line"><span class="cl">                 Skip_Counter: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">          Exec_Master_Log_Pos: <span class="m">456730</span>
+</span></span><span class="line"><span class="cl">              Relay_Log_Space: <span class="m">547</span>
+</span></span><span class="line"><span class="cl">              Until_Condition: None
+</span></span><span class="line"><span class="cl">            ..중략..
+</span></span><span class="line"><span class="cl">        Seconds_Behind_Master: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Master_SSL_Verify_Server_Cert: No
+</span></span><span class="line"><span class="cl">                Last_IO_Errno: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">                Last_IO_Error:
+</span></span><span class="line"><span class="cl">               Last_SQL_Errno: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">               Last_SQL_Error:
+</span></span><span class="line"><span class="cl"><span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span></span></code></pre></div><p>다음 편에는 실제 활용할 수 있는 분야에 관해서 정리하도록 하겠습니다.<br>
+긴 글 읽으시느라 수고하셨어요^^</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/replication/">Replication</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/%EB%B3%B5%EC%A0%9C/">복제</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/%EC%9D%B4%EC%A4%91%ED%99%94/">이중화</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2f2012%2f02%2fmysql-replication-2%2f&amp;text=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%282%29%20%e2%80%93%20%ea%b5%ac%ec%84%b1&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2f2012%2f02%2fmysql-replication-2%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f02%2fmysql-replication-2%2f&amp;title=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%282%29%20%e2%80%93%20%ea%b5%ac%ec%84%b1" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2f2012%2f02%2fmysql-replication-2%2f&amp;title=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%282%29%20%e2%80%93%20%ea%b5%ac%ec%84%b1" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f02%2fmysql-replication-2%2f&amp;title=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%282%29%20%e2%80%93%20%ea%b5%ac%ec%84%b1" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2f2012%2f02%2fmysql-replication-2%2f&amp;description=MySQL%20Replication%20%ec%9d%b4%ed%95%b4%282%29%20%e2%80%93%20%ea%b5%ac%ec%84%b1" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/2022/05/mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/2021/09/package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/2021/07/mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/2021/07/make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/2021/06/resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/2012/01/mysql-table-lock/" data-toggle="tooltip" data-placement="top" title="MySQL Table Lock에 관한 이해">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/2012/03/new-tweet-store/" data-toggle="tooltip" data-placement="top" title="하루 2.5억 트윗을 저장하는 트위터의 새로운 저장 스토어">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2011 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

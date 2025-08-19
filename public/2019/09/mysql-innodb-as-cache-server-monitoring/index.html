@@ -1,0 +1,624 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>MySQL InnoDB의 메모리 캐시 서버로 변신! – 모니터링편 – - </title>
+
+  <meta name="description" content="Overview
+MySQL memcached plugin 2탄! 모니터링편입니다.
+어떤 초호화 솔루션일지라도, 시스템의 정확한 상태를 파악할 수 없다면, 사용하기에는 참으로 꺼려집니다. 그래서 어떤 방법이든, 가장 효율적인 모니터링 방안을 찾아봐야 하겠는데요. 저는 개인적으로는 prometheus를 활용한 metric수집을 선호합니다.
+오늘 이 자리에서는 Prometheus에서 MySQL InnoDB memcached plugin을 모니터링 하는 방법에 대해서 이야기를 해보도록 하겠습니다. 🙂
+Why prometheus?
+이유는 단순합니다. 이미 만들어져 있는 exporter가 굉장히 많다는 것, 만약 원하는 것들이 있다면 나의 구미에 맞게 기능을 추가해서 쉽게 접근할 수 있다는 것! 즉, 오픈소스라는 것!! 무엇보다 Time-series 기반의 데이터 저장소인 Prometheus로 정말로 효율적으로 모니터링 매트릭 정보를 수집할 수 있다는 것! Prometheus는 로그 수집에 최적화 되어 있다고 과언이 아닙니다.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/2019\/09\/mysql-innodb-as-cache-server-monitoring\/",
+          "name": "My SQL inno db의 메모리 캐시 서버로 변신! – 모니터링편 –"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "MySQL InnoDB의 메모리 캐시 서버로 변신! – 모니터링편 –",
+  "description" : "Overview MySQL memcached plugin 2탄! 모니터링편입니다.\n어떤 초호화 솔루션일지라도, 시스템의 정확한 상태를 파악할 수 없다면, 사용하기에는 참으로 꺼려집니다. 그래서 어떤 방법이든, 가장 효율적인 모니터링 방안을 찾아봐야 하겠는데요. 저는 개인적으로는 prometheus를 활용한 metric수집을 선호합니다.\n오늘 이 자리에서는 Prometheus에서 MySQL InnoDB memcached plugin을 모니터링 하는 방법에 대해서 이야기를 해보도록 하겠습니다. 🙂\nWhy prometheus? 이유는 단순합니다. 이미 만들어져 있는 exporter가 굉장히 많다는 것, 만약 원하는 것들이 있다면 나의 구미에 맞게 기능을 추가해서 쉽게 접근할 수 있다는 것! 즉, 오픈소스라는 것!! 무엇보다 Time-series 기반의 데이터 저장소인 Prometheus로 정말로 효율적으로 모니터링 매트릭 정보를 수집할 수 있다는 것! Prometheus는 로그 수집에 최적화 되어 있다고 과언이 아닙니다.\n",
+  "inLanguage" : "en",
+  "wordCount":  809 ,
+  "datePublished" : "2019-09-19T14:28:50\u002b00:00",
+  "dateModified" : "2019-09-19T14:28:50\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "exporter, memcached, MySQL, prometheus" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/2019\/09\/mysql-innodb-as-cache-server-monitoring\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="MySQL InnoDB의 메모리 캐시 서버로 변신! – 모니터링편 –" />
+<meta property="og:description" content="Overview
+MySQL memcached plugin 2탄! 모니터링편입니다.
+어떤 초호화 솔루션일지라도, 시스템의 정확한 상태를 파악할 수 없다면, 사용하기에는 참으로 꺼려집니다. 그래서 어떤 방법이든, 가장 효율적인 모니터링 방안을 찾아봐야 하겠는데요. 저는 개인적으로는 prometheus를 활용한 metric수집을 선호합니다.
+오늘 이 자리에서는 Prometheus에서 MySQL InnoDB memcached plugin을 모니터링 하는 방법에 대해서 이야기를 해보도록 하겠습니다. 🙂
+Why prometheus?
+이유는 단순합니다. 이미 만들어져 있는 exporter가 굉장히 많다는 것, 만약 원하는 것들이 있다면 나의 구미에 맞게 기능을 추가해서 쉽게 접근할 수 있다는 것! 즉, 오픈소스라는 것!! 무엇보다 Time-series 기반의 데이터 저장소인 Prometheus로 정말로 효율적으로 모니터링 매트릭 정보를 수집할 수 있다는 것! Prometheus는 로그 수집에 최적화 되어 있다고 과언이 아닙니다.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/2019/09/mysql-innodb-as-cache-server-monitoring/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="MySQL InnoDB의 메모리 캐시 서버로 변신! – 모니터링편 –" />
+  <meta name="twitter:description" content="Overview
+MySQL memcached plugin 2탄! 모니터링편입니다.
+어떤 초호화 솔루션일지라도, 시스템의 정확한 상태를 파악할 수 없다면, 사용하기에는 참으로 꺼려집니다. 그래서 어떤 방법이든, 가장 효율적인 모니터링 방안을 찾아봐야 하겠는데요. 저는 개인적으로는 prometheus를 활용한 metric수집을 선호합니다. …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>MySQL InnoDB의 메모리 캐시 서버로 변신! – 모니터링편 –</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2019-09-19
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>MySQL memcached plugin 2탄! 모니터링편입니다.<br>
+어떤 초호화 솔루션일지라도, 시스템의 정확한 상태를 파악할 수 없다면, 사용하기에는 참으로 꺼려집니다. 그래서 어떤 방법이든, <strong>가장 효율적인 모니터링 방안</strong>을 찾아봐야 하겠는데요. 저는 개인적으로는 <strong>prometheus를 활용한 metric수집을 선호</strong>합니다.<br>
+오늘 이 자리에서는 Prometheus에서 MySQL InnoDB memcached plugin을 모니터링 하는 방법에 대해서 이야기를 해보도록 하겠습니다. 🙂</p>
+<h1 id="why-prometheus">Why prometheus?</h1>
+<p>이유는 단순합니다. <strong>이미 만들어져 있는 exporter가 굉장히 많다</strong>는 것, 만약 원하는 것들이 있다면 <strong>나의 구미에 맞게 기능을 추가해서 쉽게 접근할 수 있다</strong>는 것! 즉, <strong>오픈소스</strong>라는 것!! 무엇보다 Time-series 기반의 데이터 저장소인 Prometheus로 정말로 효율적으로 모니터링 매트릭 정보를 수집할 수 있다는 것! Prometheus는 <strong>로그 수집에 최적화</strong> 되어 있다고 과언이 아닙니다.</p>
+<p><img src="/img/2019/09/image-1568898356695.png" alt="prometheus"></p>
+<p>이미 MySQL관련하여 Prometheus 기반으로 대규모 모니터링을 하고 있고.. alerting을 위해 자체적으로 구성한 &ldquo;[pmm-ruled][1]&ldquo;로 다수의 시스템을 무리없이 이슈 감지하고 있으니, 이것을 시도 안할 이유가 전혀 없습니다. (트래픽은 쥐꼬리만한, 글 몇개 없는 영문 블로그 투척..ㅋㅋ)</p>
+<p>참고로 prometheus으로 공식적으로 모니터링을 할 수 있는 exporter들이 이렇게나 많답니다. 써본것은 별로 없지만, 이런 시스템을 새롭게 시작할지라도.. 모니터링에서는 한시름 놓을 수 있겠다는.. -_-;;<br>
+<a href="https://prometheus.io/docs/instrumenting/exporters/">https://prometheus.io/docs/instrumenting/exporters/</a></p>
+<h1 id="start-memcached-exporter">Start! memcached exporter</h1>
+<p>Prometheus에서는 공식적으로 하단 exporter로 memcached를 모니터링합니다.<br>
+<a href="https://github.com/prometheus/memcached_exporter">https://github.com/prometheus/memcached_exporter</a></p>
+<p>이렇게 받아서 컴파일을 하면 되고..</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ go get github.com/prometheus/memcached_exporter
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> <span class="nv">$GOPATH</span>/src/github.com/prometheus/memcached_exporter/
+</span></span><span class="line"><span class="cl">$ make
+</span></span><span class="line"><span class="cl">$ ls -al memcached_exporter
+</span></span><span class="line"><span class="cl">-rwxr-xr-x  <span class="m">1</span> gywndi  staff  <span class="m">12507644</span>  <span class="m">9</span> <span class="m">19</span> 21:11 memcached_exporter
+</span></span></code></pre></div><p>바로 이전에 구성을 했던 MySQL InnoDB memcached plugin이 있는 곳을 향하여 exporter를 올려봅니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ./memcached_exporter --memcached.address<span class="o">=</span>10.5.5.12:11211
+</span></span><span class="line"><span class="cl">INFO<span class="o">[</span>0000<span class="o">]</span> Starting memcached_exporter <span class="o">(</span><span class="nv">version</span><span class="o">=</span>, <span class="nv">branch</span><span class="o">=</span>, <span class="nv">revision</span><span class="o">=)</span>  <span class="nv">source</span><span class="o">=</span><span class="s2">&#34;main.go:795&#34;</span>
+</span></span><span class="line"><span class="cl">INFO<span class="o">[</span>0000<span class="o">]</span> Build context <span class="o">(</span><span class="nv">go</span><span class="o">=</span>go1.11.5, <span class="nv">user</span><span class="o">=</span>, <span class="nv">date</span><span class="o">=)</span>     <span class="nv">source</span><span class="o">=</span><span class="s2">&#34;main.go:796&#34;</span>
+</span></span><span class="line"><span class="cl">INFO<span class="o">[</span>0000<span class="o">]</span> Starting HTTP server on :9150                 <span class="nv">source</span><span class="o">=</span><span class="s2">&#34;main.go:827&#34;</span>
+</span></span></code></pre></div><h1 id="problem">Problem</h1>
+<p>그런데 문제가 생겼네요.<br>
+<code>http://10.5.5.101:9150/metrics</code>에 접근해서, memcached exporter가 수집해서 뿌려주는 metric 정보를 확인해보았는데.. exporter에서 아래와 같은 이상한 에러를 뱉어낸 것이죠. (참고로, exporter를 올린 곳의 아이피는 10.5.5.101입니다.)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ERRO[0024] Could not query stats settings: memcache: unexpected stats line format &#34;STAT logger standard error\r\n&#34;  source=&#34;main.go:522&#34;
+</span></span></code></pre></div><p>심지어 exporter에서는 아래와 같이 <code>memcached_up</code> 이 &ldquo;0&quot;인 상태.. 즉, memcached가 죽어있다는 형태로 데이터를 뿌려줍니다. 모니터링을 위해 붙인 exporter가 memcached 데몬이 늘 죽어있다고 이야기를 하면 큰일날 이야기겠죠. ㅠㅠ</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># HELP memcached_up Could the memcached server be reached.
+</span></span><span class="line"><span class="cl"># TYPE memcached_up gauge
+</span></span><span class="line"><span class="cl">memcached_up 0
+</span></span></code></pre></div><p>MySQL memcached plugin에서 <code>stats settings</code> 결과는 아래와 같습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ telnet 127.0.0.1 <span class="m">11211</span>
+</span></span><span class="line"><span class="cl">Trying 10.5.5.12...
+</span></span><span class="line"><span class="cl">Connected to 10.5.5.12.
+</span></span><span class="line"><span class="cl">Escape character is <span class="s1">&#39;^]&#39;</span>.
+</span></span><span class="line"><span class="cl">stats settings
+</span></span><span class="line"><span class="cl">STAT maxbytes <span class="m">67108864</span>
+</span></span><span class="line"><span class="cl">STAT maxconns <span class="m">1000</span>
+</span></span><span class="line"><span class="cl">..skip ..
+</span></span><span class="line"><span class="cl">STAT item_size_max <span class="m">1048576</span>
+</span></span><span class="line"><span class="cl">STAT topkeys <span class="m">0</span>
+</span></span><span class="line"><span class="cl">STAT logger standard erro   <span class="p">&amp;</span>lt<span class="p">;</span>-- 이녀석!!
+</span></span><span class="line"><span class="cl">END
+</span></span></code></pre></div><p>문제는 저 윗부분에서 4개의 단어로 이루어진 저 부분에서 발생한 문제이지요. memcached exporter에서 <code>stats settings</code>을 처리하는 <code>statusSettingsFromAddr</code> 함수에서, 결과가 3개의 단어로만 이루어진 것을 정상 패턴으로 인지하고, 그 외에는 무조건 에러로 리턴하는 부분에서 발생한 것인데요.</p>
+<p><code>[memcache.go][2]</code> 파일의 가장 하단에 위치한 <code>statusSettingsFromAddr</code> 함수 내부의 이 부분이 원인입니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="nl">stats</span> <span class="p">:</span><span class="o">=</span> <span class="n">map</span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="n">string</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">err</span> <span class="o">==</span> <span class="n">nil</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">bytes</span><span class="p">.</span><span class="n">Equal</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">resultEnd</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">s</span> <span class="p">:</span><span class="o">=</span> <span class="n">bytes</span><span class="p">.</span><span class="n">Split</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="p">[]</span><span class="n">byte</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span> <span class="o">||</span> <span class="o">!</span><span class="n">bytes</span><span class="p">.</span><span class="n">HasPrefix</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">resultStatPrefix</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">fmt</span><span class="p">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">&#34;memcache: unexpected stats line format %q&#34;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stats</span><span class="p">[</span><span class="n">string</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="n">string</span><span class="p">(</span><span class="n">bytes</span><span class="p">.</span><span class="n">TrimSpace</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">line</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">rw</span><span class="p">.</span><span class="n">ReadSlice</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="modify-code">Modify code</h1>
+<p>그래서 이것을 아래와 같이 4글자까지 정상 패턴으로 인지하도록 변경을 했습니다. 물론, 정상 패턴을 3단어로만 했던 원작자의 정확한 의도는 모르지만요.. ㅠㅠ</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="nl">stats</span> <span class="p">:</span><span class="o">=</span> <span class="n">map</span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="n">string</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">err</span> <span class="o">==</span> <span class="n">nil</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">bytes</span><span class="p">.</span><span class="n">Equal</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">resultEnd</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">s</span> <span class="p">:</span><span class="o">=</span> <span class="n">bytes</span><span class="p">.</span><span class="n">Split</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="p">[]</span><span class="n">byte</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stats</span><span class="p">[</span><span class="n">string</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="n">string</span><span class="p">(</span><span class="n">bytes</span><span class="p">.</span><span class="n">TrimSpace</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stats</span><span class="p">[</span><span class="n">string</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="n">string</span><span class="p">(</span><span class="n">bytes</span><span class="p">.</span><span class="n">TrimSpace</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="o">+</span> <span class="s">&#34;-&#34;</span> <span class="o">+</span> <span class="n">string</span><span class="p">(</span><span class="n">bytes</span><span class="p">.</span><span class="n">TrimSpace</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">fmt</span><span class="p">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">&#34;memcache: unexpected stats line format %q&#34;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">line</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">rw</span><span class="p">.</span><span class="n">ReadSlice</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>이제 컴파일하고, 다시 memcached exporter를 구동해볼까요?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ <span class="nb">cd</span> <span class="nv">$GOPATH</span>/src/github.com/prometheus/memcached_exporter
+</span></span><span class="line"><span class="cl">$ go build .
+</span></span><span class="line"><span class="cl">$ ./memcached_exporter --memcached.address<span class="o">=</span>10.5.5.12:11211
+</span></span><span class="line"><span class="cl">INFO<span class="o">[</span>0000<span class="o">]</span> Starting memcached_exporter <span class="o">(</span><span class="nv">version</span><span class="o">=</span>, <span class="nv">branch</span><span class="o">=</span>, <span class="nv">revision</span><span class="o">=)</span>  <span class="nv">source</span><span class="o">=</span><span class="s2">&#34;main.go:795&#34;</span>
+</span></span><span class="line"><span class="cl">INFO<span class="o">[</span>0000<span class="o">]</span> Build context <span class="o">(</span><span class="nv">go</span><span class="o">=</span>go1.11.5, <span class="nv">user</span><span class="o">=</span>, <span class="nv">date</span><span class="o">=)</span>     <span class="nv">source</span><span class="o">=</span><span class="s2">&#34;main.go:796&#34;</span>
+</span></span><span class="line"><span class="cl">INFO<span class="o">[</span>0000<span class="o">]</span> Starting HTTP server on :9150                 <span class="nv">source</span><span class="o">=</span><span class="s2">&#34;main.go:827&#34;</span>
+</span></span></code></pre></div><p>문제없이 잘 올라왔고, <code>http://10.5.5.101:9150/metrics</code>에 접근해도 정상적으로 memcached 구동 상태를 명확하게 보여주고 있군요.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># HELP memcached_up Could the memcached server be reached.
+</span></span><span class="line"><span class="cl"># TYPE memcached_up gauge
+</span></span><span class="line"><span class="cl">memcached_up 1   &lt;-- 요기요기요기
+</span></span></code></pre></div><h1 id="external-metric-with-pmm-admin">External metric with pmm-admin</h1>
+<p>PMM을 구성하는 것에 대해서는 이 자리에서 설명하지 않겠습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pmm-admin add external:metrics memcached 10.5.5.101:9150<span class="o">=</span>memcached01 --interval<span class="o">=</span>10s
+</span></span></code></pre></div><p>그러면 이런 모양으로 MySQL InnoDB memcached로부터 상태 매트릭 정보를 수집하게 됩니다.<br>
+<img src="/img/2019/09/image-1568901663693.png" alt="external metric"></p>
+<p>만약, 추가로 memcached라는 job 이름으로 하나를 더 추가하고 싶다면?? 이렇게 하면 됩니다요.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pmm-admin add external:metrics memcached <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>   10.5.5.101:9150<span class="o">=</span>memcached01 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>   10.5.5.102:9150<span class="o">=</span>memcached02 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>   --interval<span class="o">=</span>10s
+</span></span></code></pre></div><p>이제부터는 <strong>매 10초마다 memcached 에 접근해서 상태 정보를 수집해서 prometheus에 넣습니다.</strong> 이로써, MySQL memcached plugin을 모니터링하기 위한 데이터 수집단계가 모두 마무리 되었습니다. ㅎㅎ<br>
+prometheus에서 <code>{ job=&quot;memcached&quot; }</code> 쿼리 결과 매트릭을 활용해서, 초당 get 트래픽 뿐만 아니라, get miss 카운트도 충분히 확인 가능합니다. 이런 것들을 잘 활용한다면.. memcached 데몬의 실시간 모니터링 뿐만 아니라 트래픽 트랜드도 쉽게 확인할 수 있겠네요.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Grafana로 필요한 그래프를 만들어야하는 단계가 남았지만.. 여기서는 선호도에 따른 내용이라.(사실 저도.. get 오퍼레이션 유입 카운트와.. 히트율 정보.. 단 하나의 모니터링만 해놓은지라;; ㅋㅋㅋ 쓸 얘기가 없네요.)</p>
+<ul>
+<li>memcached plugin으로 모니터링</li>
+<li>MySQL memcached plugin에 맞게 소스 일부 수정</li>
+<li>pmm-admin을 활용하여, 동적으로 exporter 등록 및 데이터 수집</li>
+</ul>
+<p>세상에는 널린 지식이 많고.. 쉽게 가져다 쓸 수 있지만. 잘 쓰려면.. 발생하는 문제에도 열린(?) 마음으로 당황하지 말고 접근을 하면.. 진짜 <strong>손 안대고 코를 시원하게 풀 수</strong> 있는 다양한 길이 여기저기 많이 열려 있는 듯 합니다.</p>
+<p>참고로 위 이슈는 하단 두 개의 깃헙에서 쪼르고 있습니다. (해줄지는 모르겠지만..ㅠㅠ)</p>
+<ul>
+<li><a href="https://github.com/prometheus/memcached_exporter/pull/71">https://github.com/prometheus/memcached_exporter/pull/71</a></li>
+<li><a href="https://github.com/grobie/gomemcache/pull/1">https://github.com/grobie/gomemcache/pull/1</a></li>
+</ul>
+<p>좋은 하루 되세용.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/exporter/">exporter</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/memcached/">memcached</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/prometheus/">prometheus</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2f2019%2f09%2fmysql-innodb-as-cache-server-monitoring%2f&amp;text=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%eb%aa%a8%eb%8b%88%ed%84%b0%eb%a7%81%ed%8e%b8%20%e2%80%93&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2f2019%2f09%2fmysql-innodb-as-cache-server-monitoring%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2f2019%2f09%2fmysql-innodb-as-cache-server-monitoring%2f&amp;title=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%eb%aa%a8%eb%8b%88%ed%84%b0%eb%a7%81%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2f2019%2f09%2fmysql-innodb-as-cache-server-monitoring%2f&amp;title=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%eb%aa%a8%eb%8b%88%ed%84%b0%eb%a7%81%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2f2019%2f09%2fmysql-innodb-as-cache-server-monitoring%2f&amp;title=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%eb%aa%a8%eb%8b%88%ed%84%b0%eb%a7%81%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2f2019%2f09%2fmysql-innodb-as-cache-server-monitoring%2f&amp;description=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%eb%aa%a8%eb%8b%88%ed%84%b0%eb%a7%81%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/2022/05/mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/2021/09/package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/2021/07/mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/2021/07/make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/2021/06/resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/2019/09/mysql-innodb-as-cache-server-config/" data-toggle="tooltip" data-placement="top" title="MySQL InnoDB의 메모리 캐시 서버로 변신! – 설정편 –">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/2020/01/mysql-innodb-as-cache-server-monitoring-advanced/" data-toggle="tooltip" data-placement="top" title="MySQL InnoDB의 메모리 캐시 서버로 변신! – 활용편 –">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2011 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

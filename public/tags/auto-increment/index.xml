@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Auto Increment on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/auto-increment/</link>
+    <description>Recent content in Auto Increment on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Sun, 17 Feb 2013 15:01:55 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/auto-increment/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>InnoDB에서 Auto_Increment를 맹신하지 말자.</title>
+      <link>//localhost:1313/2013/02/mysql-innodb-auto-increment/</link>
+      <pubDate>Sun, 17 Feb 2013 15:01:55 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2013/02/mysql-innodb-auto-increment/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL에서는 시퀀스 개념이 없지만, 테이블 단위로 움직이는 Auto_Increment라는 강력한 기능이 있습니다. Auto_Increment 속성은 숫자 형 Primary Key를 생성하는 데 많이 사용됩니다.&lt;/p&gt;&#xA;&lt;p&gt;특히나 InnoDB 경우에는 Primary Key 사이즈가 전체 인덱스 사이즈에 직접적인 영향을 미치기 때문에, 저도 테이블 설계에 많이 권고하는 사항이기도 합니다.&lt;/p&gt;&#xA;&lt;p&gt;그러나 InnoDB에서 Auto_Increment가 동작하는 방식을 정확하게 알지 못하고 사용하면, 대형 장애 상황으로도 치닫을 수 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;오늘은 간단한 사례를 바탕으로 관련 내용을 공유할까 합니다. ^^&lt;/p&gt;&#xA;&lt;h1 id=&#34;auto_increment-in-innodb&#34;&gt;Auto_Increment In InnoDB&lt;/h1&gt;&#xA;&lt;p&gt;Auto_Increment는 스토리지 엔진 별로 다르게 동작합니다. 파일 기반의 스토리지 엔진인 MyISAM 경우에는 현재 Auto_Increment값이 파일에 일일이 기록되는 방식으로 관리됩니다. 그러나 메모리 기반의 스토리지 엔진인 InnoDB에서는 조금 다른 방식으로 관리됩니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

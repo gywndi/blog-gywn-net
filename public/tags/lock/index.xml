@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lock on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/lock/</link>
+    <description>Recent content in Lock on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Mon, 02 Dec 2013 02:13:40 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/lock/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL의 User Level Lock를 활용한다면?</title>
+      <link>//localhost:1313/2013/12/mysql-user-level-lock/</link>
+      <pubDate>Mon, 02 Dec 2013 02:13:40 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2013/12/mysql-user-level-lock/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;DB에는 크게는 두 가지 타입의 Lock이 있습니다. Table Level Lock, Row Level Lock.. 두 가지 타입의 Lock은 RDBMS에서 대표적인 Lock이라고 지칭할 수 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;Table Level Lock은 데이터 변경 시 테이블 자체를 Lock을 걸어 안전하게 데이터를 변경하는 방식이고, Row Level Lock은 변경되는 칼럼의 Row에만 Lock을 걸어서 데이터를 조작하는 방식입니다. 일반적인 상황에서는 두 가지의 Lock만으로도 충분히 다양한 사용자의 요구사항을 충족할 수가 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;그러나, 테이블 파티셔닝을 하는 경우나, 혹은 다양한 서버에 데이터가 분산 저장되는 경우 DB 내적인 제약사항 혹은 데이터 공간 자체의 한계로 인해 상황에 따라 더욱 확장된 Lock이 필요한 경우가 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>대용량 테이블에서 카운트 정보를 효과적으로 관리하자.</title>
+      <link>//localhost:1313/2012/10/how-to-prevent-massive-row-lock/</link>
+      <pubDate>Sun, 28 Oct 2012 15:40:46 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/10/how-to-prevent-massive-row-lock/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;대부분 서비스에서는 데이터 카운트를 합니다. 커뮤니티에서는 사용자 아티클 수를, 결제 서비스에서는 남은 물폼 수를 관리하기 위해서 사용하죠. 그리고 트랜잭션이 중요한 서비스라면, 데이터 일관성 유지를 위해 카운트 시 매번 데이터를 다시 읽어옵니다.&lt;/p&gt;&#xA;&lt;p&gt;데이터가 적으면 큰 문제가 되지 않겠지만, 데이터 지속적으로 누적됨에 따라 성능 또한 기하급수적으로 저하됩니다.&lt;/p&gt;&#xA;&lt;p&gt;그렇다면 이러한 환경에서 어떻게 카운트 퍼포먼스를 향상할 수 있을까요? 오늘 포스팅할 내용은 MySQL뿐만 아니라 행 단위 잠금을 지원하는 환경도 포함합니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;통계-테이블-사용&#34;&gt;통계 테이블 사용&lt;/h1&gt;&#xA;&lt;p&gt;빠른 데이터 건 수를 가져오는 방법으로는 별도의 통계 테이블을 관리하는 것입니다. 다음과 같이 통계 테이블을 별도로 구성하여 카운트 정보를 관리합니다.&#xA;이렇게 되면, 굳이 덩치가 큰 테이블에서 일일이 카운트를 하지 않고, 통계 테이블에서 &lt;strong&gt;한 건의 데이터&lt;/strong&gt;만 읽어오므로, 카운트 성능을 크게 향상할 수 있죠.&#xA;&lt;img src=&#34;//localhost:1313/img/2012/10/Count-Stat-Table.png&#34; alt=&#34;Count Stat Table&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL Table Lock에 관한 이해</title>
+      <link>//localhost:1313/2012/01/mysql-table-lock/</link>
+      <pubDate>Mon, 30 Jan 2012 06:01:51 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/01/mysql-table-lock/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;Table Lock 스토리지 엔진 사용 시 반드시 알아야할 사항을 정리 드리겠습니다.&lt;/p&gt;&#xA;&lt;p&gt;근래에는 물론 InnoDB가 아~주 많이 사용되고 있겠지만, 여전히 서비스에서는 MyISAM이 쓰이고 있습니다. MyISAM은 MySQL의 대표적인 스토리지 엔진이면서 내부적으로는 Table Lock으로 동작합니다.&lt;/p&gt;&#xA;&lt;p&gt;관련 스토리지 엔진에 관한 설명은 MySQL특성을 정리한 &lt;a href=&#34;https://gywn.net/2011/12/mysql-three-features/&#34;&gt;반드시 알아야할 MySQL 특징 세 가지&lt;/a&gt; 포스팅을  참고하시면, 간단한 비교를 하실 수 있습니다. 자 그럼 Table Lock 스토리지 엔진 사용 시 반드시 알아야할 사항을 정리 드리겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;table-lock-이해&#34;&gt;Table Lock 이해&lt;/h1&gt;&#xA;&lt;p&gt;MySQL에서 Table Lock은 다음 기준에 의해서 부여됩니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

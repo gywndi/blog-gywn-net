@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Slow Query on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/slow-query/</link>
+    <description>Recent content in Slow Query on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Mon, 14 Aug 2017 23:13:09 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/slow-query/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>데이터쟁이 입장으로 “슬로우 쿼리”를 다시 고민해보았습니다.</title>
+      <link>//localhost:1313/2017/08/mysql-slow-log-gather/</link>
+      <pubDate>Mon, 14 Aug 2017 23:13:09 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2017/08/mysql-slow-log-gather/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;서비스를 하면 당연히 실행이 오래 걸리는 쿼리, 슬로우 쿼리는 발생합니다. 원인은 정말 비효율적인 쿼리인 것도 있겠지만,  때로는 Lock, Disk fault 등등 원인은 다양합니다. DB 내/외부 요소에 의해서, 슬로우 쿼리가 발생하게 되는데.. 이것을 늘 모니터링하고 적시에 바로 최적화 적용을 하는 것이야말로, 안정적인 서비스 최상 품질 보장의 첫 걸음이라고 생각합니다.&lt;/p&gt;&#xA;&lt;p&gt;물론, 이 관련해서는 여러가지 방법론이 있겠지만, (예를들면 fluentd를 활용한 수집 방안) 슬로우 쿼리를 데이터로써 제가 생각하는 원칙으로 접근해보았습니다.&lt;/p&gt;&#xA;&lt;p&gt;스크립트는 하단 github를 참고하시지요. 아마도 잘 될꺼예요. (50% 상상코딩이라..흐흐)&lt;br&gt;&#xA;&lt;a href=&#34;https://github.com/gywndi/kkb/tree/master/mysql_slow_log_gather&#34;&gt;https://github.com/gywndi/kkb/tree/master/mysql_slow_log_gather&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

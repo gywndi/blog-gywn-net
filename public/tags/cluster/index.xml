@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cluster on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/cluster/</link>
+    <description>Recent content in Cluster on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Wed, 12 Sep 2012 06:38:23 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/cluster/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MariaDB/Galera Cluster 기술 노트!!</title>
+      <link>//localhost:1313/2012/09/mariadb-galera-cluster/</link>
+      <pubDate>Wed, 12 Sep 2012 06:38:23 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/09/mariadb-galera-cluster/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MariaDB에서 MariaDB/Galera Cluster 제품군을 새롭게 출시하였습니다.MariaDB/Galera는 MariaDB의 &lt;strong&gt;Synchronous 방식으로 동작하는 다중 마스터 클러스터&lt;/strong&gt;입니다.&lt;/p&gt;&#xA;&lt;p&gt;MariaDB/Galera Cluster은 Galera 라이브러리를 사용하여 노드 간 데이터 복제를 수행합니다. 물론 아직은 Alpha 버전으로 발표되기는 했지만, 조만간 안정적인 버전이 릴리즈 되면 상당한 물건이 될만한 놈입니다.&lt;/p&gt;&#xA;&lt;p&gt;오늘은 이에 관해 간단하게 리뷰를 하겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;feature--benefits&#34;&gt;Feature &amp;amp; Benefits&lt;/h1&gt;&#xA;&lt;p&gt;먼저 MariaDB/Galera Cluster의 특징은 다음과 같이 몇 가지로 나눠볼 수 있습니다.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Synchronous 방식으로 노드 간 데이터 복제&lt;/li&gt;&#xA;&lt;li&gt;Active-Active 방식의 다중 마스터 구성 모든 노드에서 읽기/쓰기가 가능&lt;/li&gt;&#xA;&lt;li&gt;클러스터 내 노드 자동 컨트롤 특정 노드 장애 시 자동으로 해당 노드 제거&lt;/li&gt;&#xA;&lt;li&gt;자동으로 신규 노드 추가&lt;/li&gt;&#xA;&lt;li&gt;완벽한 병렬적으로 데이터를 행단위로 복제&lt;/li&gt;&#xA;&lt;li&gt;기존의 MySQL 클라이언트 방식으로 동작&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;img src=&#34;//localhost:1313/img/2012/09/cluster-diagram1.png&#34; alt=&#34;cluster-diagram1&#34;&gt;&#xA;출처 : &lt;a href=&#34;http://www.percona.com/doc/percona-xtradb-cluster/_images/cluster-diagram1.png&#34;&gt;http://www.percona.com/doc/percona-xtradb-cluster/_images/cluster-diagram1.png&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

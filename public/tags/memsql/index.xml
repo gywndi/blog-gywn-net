@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MemSQL on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/memsql/</link>
+    <description>Recent content in MemSQL on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Wed, 27 Jun 2012 10:18:56 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/memsql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>메모리 기반 RDBMS, MemSQL을 알아봅시다</title>
+      <link>//localhost:1313/2012/06/memory-based-rdbms-memsql/</link>
+      <pubDate>Wed, 27 Jun 2012 10:18:56 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/06/memory-based-rdbms-memsql/</guid>
+      <description>&lt;h1 id=&#34;memsql이란&#34;&gt;MemSQL이란?&lt;/h1&gt;&#xA;&lt;p&gt;MemSQL은 디스크 병목을 최소화하기 위해 만들어진 &lt;strong&gt;메모리 기반의 관계형 DBMS&lt;/strong&gt;입니다. 메모리 기반으로 데이터 처리가 이루어지기 때문에, 엄청난 속도로 Read/Write이 가능하며, 기존의 NoSQL 또는 캐시로만 가능했던 퍼포먼스 향상이 있습니다. 실제로 디스크 기반 DBMS 대비 약 30배 이상의 성능 향상이 있다고 하니, 놀라울 따름입니다.&lt;br&gt;&#xA;&lt;img src=&#34;//localhost:1313/img/2012/06/memsql-logo.png&#34; alt=&#34;memsql logo&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;최근 들어 메모리 가격이 하루가 다르게 저렴해지고 있기 때문에 메모리 사이즈를 최대한 늘려서 가격 대비 성능 비를 최대로 이끌어 내는 DB입니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;memsql-특징&#34;&gt;MemSQL 특징&lt;/h1&gt;&#xA;&lt;h3 id=&#34;1-강력한-sql기반의-통신&#34;&gt;1) 강력한 SQL기반의 통신&lt;/h3&gt;&#xA;&lt;p&gt;SQL 기반으로 통신하며, MySQL API를 따릅니다. 그렇기 때문에 기존 MySQL을 사용하는 서비스 경우 로직 변경이 불필요하다고 합니다. 하다못해 라이브러리 또한 기존 MySQL에서 사용하던 그대로 재사용해도 상관 없습니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

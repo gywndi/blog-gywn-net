@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>InnoDB Hash Index on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/innodb-hash-index/</link>
+    <description>Recent content in InnoDB Hash Index on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Thu, 08 Jan 2015 13:28:02 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/innodb-hash-index/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>InnoDB의 Adaptive Hash Index로 쿼리 성능에 날개를 달아보자!!</title>
+      <link>//localhost:1313/2015/01/innodb-adaptive-hash-index/</link>
+      <pubDate>Thu, 08 Jan 2015 13:28:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2015/01/innodb-adaptive-hash-index/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL과 같은 RDBMS에서 대표적으로 가장 많이 사용되는 자료 구조는 B-Tree입니다. 데이터 사이즈가 아무리 커져도 특정 데이터 접근에 소요되는 비용이 크게 증가되지 않기 때문에 어느정도 예상할 수 있는 퍼포먼스를 제공할 수 있기 때문이죠. 그치만 상황에 따라서, B-Tree 사용에 따른 잠금 현상으로 최대의 퍼포먼스를 발휘하지 못하는 경우도 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;이에 대한 해결책으로 InnoDB에는 Adaptive Hash Index 기능이 있는데, 어떤 상황에서 효과가 있고 사용 시 반드시 주의를 해야할 부분에 대해서 정리해보겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;innodb-b-tree-index&#34;&gt;InnoDB B-Tree Index?&lt;/h1&gt;&#xA;&lt;p&gt;소개하기에 앞서서 먼저 InnoDB에서 B-Tree가 어떠한 방식으로 활용되는 지 알아볼까요?&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

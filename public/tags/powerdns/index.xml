@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Powerdns on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/powerdns/</link>
+    <description>Recent content in Powerdns on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Tue, 17 Jan 2017 13:54:29 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/powerdns/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PowerDNS와 MySQL로 DNS를 해보고 싶어요~</title>
+      <link>//localhost:1313/2017/01/install_powerdns_with_mysql_backend/</link>
+      <pubDate>Tue, 17 Jan 2017 13:54:29 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2017/01/install_powerdns_with_mysql_backend/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;PowerDNS란 범용적(?)으로 사용되는 오픈소스 기반의 DNS서버이고, 다양한 백엔드를 지원하는 멋진(?) DNS 이기도 합니다. 얼마전, 이 관련되어 간단한 사례에 대해 세미나를 진행을 하였고, 이 구성에 대한 설명이 미흡하여 간단하게 정리해봅니다. ^^&lt;/p&gt;&#xA;&lt;h1 id=&#34;install-powerdns&#34;&gt;Install PowerDNS&lt;/h1&gt;&#xA;&lt;p&gt;CentOS 6.7 버전에서 구성을 하였고, 실제 설치 작업에는 아래와 같이 같단합니다.&lt;br&gt;&#xA;(참고 : &lt;a href=&#34;https://doc.powerdns.com/md/authoritative/installation/#binary-packages&#34;&gt;https://doc.powerdns.com/md/authoritative/installation/#binary-packages&lt;/a&gt;)&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ yum install pdns&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ yum install pdns-backend-mysql&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;(단, 여기서 MySQL 은 이미 구성되어 있다는 가정하에 진행합니다.)&lt;/p&gt;&#xA;&lt;h1 id=&#34;configuration&#34;&gt;Configuration&lt;/h1&gt;&#xA;&lt;p&gt;자~ 이제 DNS 데몬을 설치하였으니..(두줄에.. 끝? -_-;; 헐~)&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

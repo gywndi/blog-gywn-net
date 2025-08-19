@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>InnoDB on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/innodb/</link>
+    <description>Recent content in InnoDB on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Mon, 23 May 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/innodb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL Heatwave를 살펴보았습니다</title>
+      <link>//localhost:1313/2022/05/mysql-heatwave/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2022/05/mysql-heatwave/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;안녕하세요. 너무 오랜만에 글을 올려봅니다. 올해도 벌써 반이 훌쩍지나버렸네요.&lt;/p&gt;&#xA;&lt;p&gt;MySQL을 쓰시는 분들, 아니 &lt;strong&gt;RDBMS를 써오시던 분들의 가장 가려운 부분은 개인적으로 통계 쿼리 수행 속도&lt;/strong&gt;라고 봅니다. 특히나 데이터 사이즈가 하루가 다르게 폭발적으로 증가해가는 상황에서 너무나도 반가운 소식이라고 봅니다. HTAP(Hybrid transactional/analytical processing) 구현이라 하는데..&lt;/p&gt;&#xA;&lt;p&gt;오늘 이 포스팅에서는 서비스 활용 관점으로 Heatwave를 이야기해보도록 하겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;mysql-heatwave는&#34;&gt;MySQL Heatwave는?&lt;/h1&gt;&#xA;&lt;p&gt;Oracle Cloud에서 제공하는 OLAP 분산 클러스터로, MySQL의 InnoDB데이터를 자동으로 Heatwave 클러스터로 동기화하여, 제공하는 스토리지 엔진 플러그인입니다.&#xA;&lt;img src=&#34;https://dev.mysql.com/doc/heatwave/en/images/hw-ml-genai-architecture.png&#34; alt=&#34;Content is described in the surrounding text&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>InnoDB의 Adaptive Hash Index로 쿼리 성능에 날개를 달아보자!!</title>
+      <link>//localhost:1313/2015/01/innodb-adaptive-hash-index/</link>
+      <pubDate>Thu, 08 Jan 2015 13:28:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2015/01/innodb-adaptive-hash-index/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL과 같은 RDBMS에서 대표적으로 가장 많이 사용되는 자료 구조는 B-Tree입니다. 데이터 사이즈가 아무리 커져도 특정 데이터 접근에 소요되는 비용이 크게 증가되지 않기 때문에 어느정도 예상할 수 있는 퍼포먼스를 제공할 수 있기 때문이죠. 그치만 상황에 따라서, B-Tree 사용에 따른 잠금 현상으로 최대의 퍼포먼스를 발휘하지 못하는 경우도 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;이에 대한 해결책으로 InnoDB에는 Adaptive Hash Index 기능이 있는데, 어떤 상황에서 효과가 있고 사용 시 반드시 주의를 해야할 부분에 대해서 정리해보겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;innodb-b-tree-index&#34;&gt;InnoDB B-Tree Index?&lt;/h1&gt;&#xA;&lt;p&gt;소개하기에 앞서서 먼저 InnoDB에서 B-Tree가 어떠한 방식으로 활용되는 지 알아볼까요?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[H3 2011] 대형사이트 구축을 위한 MySQL 튜닝전략</title>
+      <link>//localhost:1313/2012/01/mysql-tuning-strategy-bagic/</link>
+      <pubDate>Mon, 02 Jan 2012 03:22:07 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/01/mysql-tuning-strategy-bagic/</guid>
+      <description>&lt;p&gt;작년 11월 30일 KTH에서 주최한 H3 컨퍼런스에서 DB 관련 발표 동영상입니다.&lt;br&gt;&#xA;&lt;a href=&#34;https://youtu.be/aVP0QOWEaFk?t=0s&#34;&gt;&lt;img src=&#34;http://img.youtube.com/vi/aVP0QOWEaFk/0.jpg&#34; alt=&#34;Video Label&#34;&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL Replication 이해(1) – 개념</title>
+      <link>//localhost:1313/2011/12/mysql-replication-1/</link>
+      <pubDate>Wed, 28 Dec 2011 05:14:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2011/12/mysql-replication-1/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;오늘은 조금더 제너럴한 주제를 가지고 정리를 할까합니다.&lt;br&gt;&#xA;바로 MySQL Replication 입니다. MySQL Community에서 유일하게 HA 또는 분산 구성을 할 수 있는 유일한 기능입니다. 물론 &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.5/en/ha-drbd.html&#34;&gt;MySQL+DRBD 구성&lt;/a&gt;와 같이 HA를 구성하는 방법도 있습니다만, MySQL 제품이 아니므로 스킵~!&lt;/p&gt;&#xA;&lt;p&gt;먼저 Replication에 대해 간략하게 말씀 드리겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;mysql-replication이란&#34;&gt;MySQL Replication이란?&lt;/h1&gt;&#xA;&lt;p&gt;MySQL Replication이란 말 그대로 복제입니다. 영어 사전에 나온 듯한 DNA는 아니지만 데이터를 “물리적으로 다른 서버의 저장 공간” 안에 동일한 데이터를 복사하는 기술이죠.&lt;/p&gt;&#xA;&lt;p&gt;다음 그림은 MySQL Replication을 가장 간단하게 나타낸 그림입니다.  데이터 변경을 마스터 장비에서만 수행하기 때문에 마스터 장애 시에는 전체 노드에 데이터 쓰기 작업이 불가능한 한계가 있습니다.&#xA;&lt;img src=&#34;//localhost:1313/img/2011/12/MySQL-Replicaton-Master-Slave.png&#34; alt=&#34;MySQL Replicaton Master Slave&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ngram on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/ngram/</link>
+    <description>Recent content in Ngram on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Tue, 18 Apr 2017 23:47:31 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/ngram/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL_5.7의 n-gram 전문 검색을 이상하지 않게 써보아요.</title>
+      <link>//localhost:1313/2017/04/mysql_57-ngram-ft-se/</link>
+      <pubDate>Tue, 18 Apr 2017 23:47:31 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2017/04/mysql_57-ngram-ft-se/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL5.6부터는 InnoDB에서도 전문검색이 가능하기는 하였습니다만.. 아쉽게도 여전히 공백 기준으로 단어들이 파싱이 되는 &lt;code&gt;MeCab Full-Text Parser Plugin&lt;/code&gt; 방식으로 동작합니다. 즉, 한국말처럼 공백만으로 단어를 파싱할 수 없는 언어의 경우에는 크게 매력적이지는 않습니다. &lt;strong&gt;InnoDB에서 전문검색 인덱싱이 가능하다는 것은 Transaction이 전제로 이루어지는 것이라고 볼 수 있기에.. 리플리케이션 및 시점 백업/복구 측면에서는 혁신&lt;/strong&gt;으로 볼 수 있습니다.&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;반드시 Limit로 끊어서 가져오고자 한다면, &amp;lsquo;Order By&amp;rsquo;로 정렬을 하세요~ 이 관련해 버그가 있고 조만간 픽스될 예정이기는 합니다. (n-gram 처리 시 스토리지 엔진에서 limit이 영향을 미쳐 제대로된 결과 도출 혹은 최악의 경우 크래시까지 발생할 수 있어요.)&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

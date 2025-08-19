@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Semi-Sync Replication on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/semi-sync-replication/</link>
+    <description>Recent content in Semi-Sync Replication on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Mon, 12 Jun 2017 21:08:18 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/semi-sync-replication/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[MySQL] 슬레이브 하나 더 추가했을 뿐인데.. :-)</title>
+      <link>//localhost:1313/2017/06/mysql-slave-addition-effect/</link>
+      <pubDate>Mon, 12 Jun 2017 21:08:18 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2017/06/mysql-slave-addition-effect/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL의 꽃중의 꽃은 역시 비동기 방식의 데이터 복제라고 볼 수 있는데요. 지극히 개인적인 생각이기는 하지만, 슬레이브 노드를 &lt;strong&gt;데이터 일관성이 반드시 필요한 상황에서의 READ 스케일아웃을 제외&lt;/strong&gt;하고는, 지금의 MySQL을 있게한 결정적인 한방이라고 봅니다. 물론 소셜 서비스에 따른 기존 스케일업으로는 도저히 감당할 수 없는 데이터 사이즈와 비용 요소도 직접적인 영향을 주었겠지만요.&lt;/p&gt;&#xA;&lt;p&gt;뜬구름잡는 얘기는 여기까지로 마무리하고.. 슬레이브 노드를 READ 분산 혹은 배치 서버 용도를 제외하고는 스탠바이 용도로 한대를 더 추가하는 경우는 극히 드뭅니다. 뭐, 나랏님이 시키는대로.. &lt;strong&gt;반드시 수십 km 떨어진 IDC에 DR 서버를 구축해야한다는 법적인 제약인 경우를 제외&lt;/strong&gt;하고는요.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

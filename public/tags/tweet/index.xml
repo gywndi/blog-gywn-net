@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tweet on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/tweet/</link>
+    <description>Recent content in Tweet on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Thu, 08 Mar 2012 01:46:30 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/tweet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>하루 2.5억 트윗을 저장하는 트위터의 새로운 저장 스토어</title>
+      <link>//localhost:1313/2012/03/new-tweet-store/</link>
+      <pubDate>Thu, 08 Mar 2012 01:46:30 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/03/new-tweet-store/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;트위터는 하루 평균 2.5억 건의 트윗을 저장한다고 합니다. 과거 트위터는 날짜 기준으로 데이터를 분할 관리하여 저장을 하였고, 대략 3주에 한번씩 서버를 추가하여 Scale-out 하였습니다.&lt;/p&gt;&#xA;&lt;p&gt;하지만 이 방식에는 다음과 같은 문제가 있었습니다.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;부하 분산&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;고비용&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;복잡한 프로세스&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;문제를 해결하기 위해서 트위터에서 New Tweet Store를 고안했다고 합니다.&lt;/p&gt;&#xA;&lt;p&gt;자, 그럼 기존 문제점부터 차근차근 알아보도록 합시다^^;&lt;/p&gt;&#xA;&lt;h1 id=&#34;problems&#34;&gt;Problems&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;부하 분산(Load Balancing)&lt;/strong&gt;&lt;br&gt;&#xA;날짜 기준으로 데이터를 나눠서 분산 저장 및 관리하기 때문에, 시간이 지날수록 과거 데이터 조회 건수는 비약적으로 낮아집니다. 특히 대부분의 데이터 조회 요청은 현재 시각 기준으로 들어오기 때문에, 데이터 읽기 HOTSPOT이 발생할 수 밖에 없습니다.&#xA;&lt;img src=&#34;//localhost:1313/img/2012/03/old_load_balancing.png&#34; alt=&#34;Load Balancing Problem&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

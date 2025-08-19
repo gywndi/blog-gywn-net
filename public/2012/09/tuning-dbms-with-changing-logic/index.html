@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>서비스 로직 흐름을 변경하여 DB 튜닝을 해보자! - </title>
+
+  <meta name="description" content="Overview
+오래전 메가존(현 혜택존) 서비스를 담당하던 시기, 포인트 관련된 부분에서 심각한 성능 저하 및 유효성 취약 문제가 발생하였습니다. 장비 고도화를 통해 관련 문제를 해결하기에 앞서, 서비스 로직 및 테이블 재구성을 통한 최적화 작업을 통해 문제를 해결하였습니다.
+이에 관해 간단하게 소개하도록 하겠습니다.
+Problems
+다음과 같이 크게 두 가지 문제가 있었습니다.
+
+성능 이슈
+
+로그 테이블은 거대한 한 개의 테이블로 구성
+데이터 누적에 따라 성능이 급격하게 저하
+
+
+유효성 이슈
+
+자바 어플리케이션에서만 유효성 체크, 비 정상적인 사용 존재
+포인트가 현금처럼 사용될 수 있으므로 반드시 필요함
+
+
+
+Solutions
+1) 파티셔닝을 통한 성능 최적화
+오라클 엔터프라이즈 버전에서는 테이블 파티셔닝을 제공하지만, 아쉽게도 오라클 스탠다드에서는 관련 기능이 없습니다. 즉, 어플리케이션 레벨에서 적당히 데이터 분산을 유도하는 방법 밖에는 없습니다. 데이터를 분산하는 방법으로는 여러가지가 존재하겠지만, 저는 월별로 테이블을 분산 저장하는 방식을 사용하였습니다.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/2012\/09\/tuning-dbms-with-changing-logic\/",
+          "name": "서비스 로직 흐름을 변경하여 db 튜닝을 해보자!"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "서비스 로직 흐름을 변경하여 DB 튜닝을 해보자!",
+  "description" : "Overview 오래전 메가존(현 혜택존) 서비스를 담당하던 시기, 포인트 관련된 부분에서 심각한 성능 저하 및 유효성 취약 문제가 발생하였습니다. 장비 고도화를 통해 관련 문제를 해결하기에 앞서, 서비스 로직 및 테이블 재구성을 통한 최적화 작업을 통해 문제를 해결하였습니다.\n이에 관해 간단하게 소개하도록 하겠습니다.\nProblems 다음과 같이 크게 두 가지 문제가 있었습니다.\n성능 이슈 로그 테이블은 거대한 한 개의 테이블로 구성 데이터 누적에 따라 성능이 급격하게 저하 유효성 이슈 자바 어플리케이션에서만 유효성 체크, 비 정상적인 사용 존재 포인트가 현금처럼 사용될 수 있으므로 반드시 필요함 Solutions 1) 파티셔닝을 통한 성능 최적화 오라클 엔터프라이즈 버전에서는 테이블 파티셔닝을 제공하지만, 아쉽게도 오라클 스탠다드에서는 관련 기능이 없습니다. 즉, 어플리케이션 레벨에서 적당히 데이터 분산을 유도하는 방법 밖에는 없습니다. 데이터를 분산하는 방법으로는 여러가지가 존재하겠지만, 저는 월별로 테이블을 분산 저장하는 방식을 사용하였습니다.\n",
+  "inLanguage" : "en",
+  "wordCount":  567 ,
+  "datePublished" : "2012-09-23T07:43:12\u002b00:00",
+  "dateModified" : "2012-09-23T07:43:12\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "Oracle, Performance" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/2012\/09\/tuning-dbms-with-changing-logic\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="서비스 로직 흐름을 변경하여 DB 튜닝을 해보자!" />
+<meta property="og:description" content="Overview
+오래전 메가존(현 혜택존) 서비스를 담당하던 시기, 포인트 관련된 부분에서 심각한 성능 저하 및 유효성 취약 문제가 발생하였습니다. 장비 고도화를 통해 관련 문제를 해결하기에 앞서, 서비스 로직 및 테이블 재구성을 통한 최적화 작업을 통해 문제를 해결하였습니다.
+이에 관해 간단하게 소개하도록 하겠습니다.
+Problems
+다음과 같이 크게 두 가지 문제가 있었습니다.
+
+성능 이슈
+
+로그 테이블은 거대한 한 개의 테이블로 구성
+데이터 누적에 따라 성능이 급격하게 저하
+
+
+유효성 이슈
+
+자바 어플리케이션에서만 유효성 체크, 비 정상적인 사용 존재
+포인트가 현금처럼 사용될 수 있으므로 반드시 필요함
+
+
+
+Solutions
+1) 파티셔닝을 통한 성능 최적화
+오라클 엔터프라이즈 버전에서는 테이블 파티셔닝을 제공하지만, 아쉽게도 오라클 스탠다드에서는 관련 기능이 없습니다. 즉, 어플리케이션 레벨에서 적당히 데이터 분산을 유도하는 방법 밖에는 없습니다. 데이터를 분산하는 방법으로는 여러가지가 존재하겠지만, 저는 월별로 테이블을 분산 저장하는 방식을 사용하였습니다.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/2012/09/tuning-dbms-with-changing-logic/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="서비스 로직 흐름을 변경하여 DB 튜닝을 해보자!" />
+  <meta name="twitter:description" content="Overview
+오래전 메가존(현 혜택존) 서비스를 담당하던 시기, 포인트 관련된 부분에서 심각한 성능 저하 및 유효성 취약 문제가 발생하였습니다. 장비 고도화를 통해 관련 문제를 해결하기에 앞서, 서비스 로직 및 테이블 재구성을 통한 최적화 작업을 통해 문제를 해결하였습니다.
+이에 관해 간단하게 소개하도록 하겠습니다.
+Problems …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>서비스 로직 흐름을 변경하여 DB 튜닝을 해보자!</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2012-09-23
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>오래전 메가존(현 혜택존) 서비스를 담당하던 시기, 포인트 관련된 부분에서 심각한 성능 저하 및 유효성 취약 문제가 발생하였습니다. 장비 고도화를 통해 관련 문제를 해결하기에 앞서, 서비스 로직 및 테이블 재구성을 통한 최적화 작업을 통해 문제를 해결하였습니다.</p>
+<p>이에 관해 간단하게 소개하도록 하겠습니다.</p>
+<h1 id="problems">Problems</h1>
+<p>다음과 같이 크게 두 가지 문제가 있었습니다.</p>
+<ol>
+<li><strong>성능 이슈</strong>
+<ul>
+<li>로그 테이블은 거대한 한 개의 테이블로 구성</li>
+<li>데이터 누적에 따라 성능이 급격하게 저하</li>
+</ul>
+</li>
+<li><strong>유효성 이슈</strong>
+<ul>
+<li>자바 어플리케이션에서만 유효성 체크, 비 정상적인 사용 존재</li>
+<li>포인트가 현금처럼 사용될 수 있으므로 반드시 필요함</li>
+</ul>
+</li>
+</ol>
+<h1 id="solutions">Solutions</h1>
+<h3 id="1-파티셔닝을-통한-성능-최적화">1) 파티셔닝을 통한 성능 최적화</h3>
+<p>오라클 엔터프라이즈 버전에서는 테이블 파티셔닝을 제공하지만, 아쉽게도 오라클 스탠다드에서는 관련 기능이 없습니다. 즉, 어플리케이션 레벨에서 적당히 데이터 분산을 유도하는 방법 밖에는 없습니다. 데이터를 분산하는 방법으로는 여러가지가 존재하겠지만, 저는 월별로 테이블을 분산 저장하는 방식을 사용하였습니다.</p>
+<p>매월 하단과 같은 스키마의 테이블을 MCHIP<code>YYYYMM</code> 형식으로 생성을 합니다.</p>
+<p>물론 해당 월 다음 달로 생성을 해야겠죠?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Name            Type
+</span></span><span class="line"><span class="cl"> --------------- ------------
+</span></span><span class="line"><span class="cl"> SEQ             NUMBER
+</span></span><span class="line"><span class="cl"> USER_NO         VARCHAR2(12)
+</span></span><span class="line"><span class="cl"> POINT           NUMBER
+</span></span><span class="line"><span class="cl"> ISSUE_DATE      DATE
+</span></span></code></pre></div><p>그리고 인덱스 필요 시 데이터 테이블스페이스와는 &ldquo;물리적으로 분리&quot;된 전용의 테이블스페이스에 생성하여 DISK I/O 비효율도 최소화 유도하였습니다.</p>
+<p>데이터 조회는 기본적으로 월별로만 가능하며, 최근 3개월 동안만 조회할 수 있도록 하였고, 필요 시 과거 테이블을 DROP하는 방식으로 변경하였습니다. 만약 최근 3개월 데이터가 필요할 시에는 <code>UNION ALL</code> 구문으로 데이터를 가져왔습니다.</p>
+<p>다음은 쿼리를 월별로 생성하여 데이터를 저장하는 간단한 자바 프로그램입니다. 저는 SpringFramework 환경에서 구현했었는데, 그것보다는 알아보기 쉬운 단순 자바 프로그램으로 보여드리는 것이 좋을 것 같습니다. (설마 아래 있는 것을 그대로 쓰시는 것은 아니겠죠? ㅎㅎ)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import java.text.DateFormat;
+</span></span><span class="line"><span class="cl">import java.text.SimpleDateFormat;
+</span></span><span class="line"><span class="cl">import java.util.Date;
+</span></span><span class="line"><span class="cl">public class Test {
+</span></span><span class="line"><span class="cl">    public static void main(String[] args) {
+</span></span><span class="line"><span class="cl">        DateFormat df = new SimpleDateFormat(&#34;yyyyMM&#34;);
+</span></span><span class="line"><span class="cl">        Date date = new Date();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 현재 기준 년월
+</span></span><span class="line"><span class="cl">        String yyyymm = df.format(date).toString();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        // 쿼리 생성
+</span></span><span class="line"><span class="cl">        String sql = &#34;INSERT INTO MCHIP&#34;+yyyymm+&#34; \n&#34; +
+</span></span><span class="line"><span class="cl">                &#34;(SEQ, USER_NO, POINT, ISSUE_DATE) \n&#34; +
+</span></span><span class="line"><span class="cl">                &#34;VALUES \n&#34; +
+</span></span><span class="line"><span class="cl">                &#34;(SEQ_MCHIP.NEXTVAL, ?, ?, SYSDATE)&#34;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        System.out.println(sql);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><p>위와 같이 쿼리를 생성하고, 원하는 테이블에 선별적으로 데이터를 넣습니다. 조회 시에도 위와 같은 방식으로 쿼리를 생성합니다. 만약 한달 이상의 데이터가 필요하다면 UNION ALL로 쿼리를 붙여서 데이터를 조회하면 되겠죠. ^^</p>
+<h3 id="2-트리거를-사용한-유효성-체크">2) 트리거를 사용한 유효성 체크</h3>
+<p>포인트 내역을 저장하는 테이블이 있었다면, 포인트 현황을 조회하기 위한 전용 테이블 또한 존재했습니다. 포인트 현황에 저장된 점수가 사용자가 현재 소지하고 있는 포인트이며, 이를 차감하여 서비스에서 사용하는 방식으로 사용하고 있었습니다.</p>
+<p>개인 당 한 건의 데이터만 있기 때문에, 사용자 데이터를 조회하는 것에는 큰 무리가 없었지만, 유효성을 자바 어플리케이션에서만 체크했었기 때문에 여기저기 헛점이 많은 상태였습니다. 물론 내구성이 뛰어나게 개발되었다면 큰 문제는 없었겠지만, 협력사가 시간에 쫓겨서 급하게 개발한 산출물인지라.. 아무래도.. ^^;;</p>
+<p>자바 소스 전체를 뒤져서 모든 유효성을 체크하는 것은 거의 무리에 가까웠고, 그래서 제가 채택한 방식은 트리거였습니다. 트리거를 사용하여 사용자 포인트 유효성 여부를 DB레벨에서 체크해서 어플리케이션과 분리하자는 의도였죠.</p>
+<p>MCHIP201209 테이블에 포인트가 내역이 들어가는 동시에 유효성 체크 후 정상적이면 포인트 현황 테이블에 반영하는 트리거입니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TRIGGER</span><span class="w"> </span><span class="n">TRG01_MCHIP201209</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEFORE</span><span class="w"> </span><span class="k">INSERT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="n">MCHIP201209</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">REFERENCING</span><span class="w"> </span><span class="k">NEW</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">NEW</span><span class="w"> </span><span class="k">OLD</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">OLD</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FOR</span><span class="w"> </span><span class="k">EACH</span><span class="w"> </span><span class="k">ROW</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">DECLARE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">POINT</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="cm">/*** 현재 사용자 포인트 조회 ***/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">POINT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">POINT</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">MCHIP_INFO</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">USER_NO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="k">NEW</span><span class="p">.</span><span class="n">USER_NO</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="err">…</span><span class="w"> </span><span class="err">중략…</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="cm">/*** 포인트 유효성 체크  ***/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="n">POINT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">:</span><span class="k">NEW</span><span class="p">.</span><span class="n">POINT</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">RAISE_APPLICATION_ERROR</span><span class="p">(</span><span class="o">-</span><span class="mi">20001</span><span class="p">,</span><span class="s1">&#39;Not enough point!!&#39;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="cm">/*** 포인트 현황 업데이트 ***/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">UPDATE</span><span class="w"> </span><span class="n">MCHIP_INFO</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">POINT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">POINT</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">POINT_NEW</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">USER_NO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="k">NEW</span><span class="p">.</span><span class="n">USER_NO</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="w">
+</span></span></span></code></pre></div><h1 id="conclusion">Conclusion</h1>
+<p>오래전에 성능을 최적화한 내용을 정리하였습니다.</p>
+<p>당시 서버에 과부하로 인하여 서버 고도화 및 장비 도입을 위한 투자를 검토 중이었으나, 서비스 로직 재구성 이후 서버가 안정적이었기 때문에 기존 장비로 서비스를 진행하였습니다. 게다가 현재 기존 장비 사용률이 CPU 기준 80~90%였던 상황이 10~20%로 유지되는 쾌거를 거두었죠.</p>
+<p>데이터 처리량을 최소로 유도하는 것이 성능 최적화의 첫걸음이라는 것을 느낀 경험이었습니다.</p>
+<p>좋은 포스팅으로 다시 찾아뵐께요^^;</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/oracle/">Oracle</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2f2012%2f09%2ftuning-dbms-with-changing-logic%2f&amp;text=%ec%84%9c%eb%b9%84%ec%8a%a4%20%eb%a1%9c%ec%a7%81%20%ed%9d%90%eb%a6%84%ec%9d%84%20%eb%b3%80%ea%b2%bd%ed%95%98%ec%97%ac%20DB%20%ed%8a%9c%eb%8b%9d%ec%9d%84%20%ed%95%b4%eb%b3%b4%ec%9e%90%21&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2f2012%2f09%2ftuning-dbms-with-changing-logic%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f09%2ftuning-dbms-with-changing-logic%2f&amp;title=%ec%84%9c%eb%b9%84%ec%8a%a4%20%eb%a1%9c%ec%a7%81%20%ed%9d%90%eb%a6%84%ec%9d%84%20%eb%b3%80%ea%b2%bd%ed%95%98%ec%97%ac%20DB%20%ed%8a%9c%eb%8b%9d%ec%9d%84%20%ed%95%b4%eb%b3%b4%ec%9e%90%21" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2f2012%2f09%2ftuning-dbms-with-changing-logic%2f&amp;title=%ec%84%9c%eb%b9%84%ec%8a%a4%20%eb%a1%9c%ec%a7%81%20%ed%9d%90%eb%a6%84%ec%9d%84%20%eb%b3%80%ea%b2%bd%ed%95%98%ec%97%ac%20DB%20%ed%8a%9c%eb%8b%9d%ec%9d%84%20%ed%95%b4%eb%b3%b4%ec%9e%90%21" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f09%2ftuning-dbms-with-changing-logic%2f&amp;title=%ec%84%9c%eb%b9%84%ec%8a%a4%20%eb%a1%9c%ec%a7%81%20%ed%9d%90%eb%a6%84%ec%9d%84%20%eb%b3%80%ea%b2%bd%ed%95%98%ec%97%ac%20DB%20%ed%8a%9c%eb%8b%9d%ec%9d%84%20%ed%95%b4%eb%b3%b4%ec%9e%90%21" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2f2012%2f09%2ftuning-dbms-with-changing-logic%2f&amp;description=%ec%84%9c%eb%b9%84%ec%8a%a4%20%eb%a1%9c%ec%a7%81%20%ed%9d%90%eb%a6%84%ec%9d%84%20%eb%b3%80%ea%b2%bd%ed%95%98%ec%97%ac%20DB%20%ed%8a%9c%eb%8b%9d%ec%9d%84%20%ed%95%b4%eb%b3%b4%ec%9e%90%21" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/2019/08/mysql-poor-performance-with-super-many-partitions/">MySQL 파티셔닝 테이블 SELECT가 느려요.</a></li>
+                
+                    <li><a href="/2012/10/mysql-transaction-isolation-level2/">MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!!</a></li>
+                
+                    <li><a href="/2012/09/mysql-tuning/">MySQL 성능 최적화를 위한 몇 가지 팁!!</a></li>
+                
+                    <li><a href="/2012/09/dbms-implicit-type-conversion/">SQL 작성 시 묵시적 형 변환 함정에 빠지지 말자!!</a></li>
+                
+                    <li><a href="/2012/07/improve-mariadb-mysql/">Maria 2탄 – 진화하는 Maria, 함께하는 MySQL!!</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/2012/09/good-bye-my-kth/" data-toggle="tooltip" data-placement="top" title="KTH에서 5년간의 생활을 마무리하며..">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/2012/10/mysql-transaction-isolation-level2/" data-toggle="tooltip" data-placement="top" title="MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!!">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2011 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

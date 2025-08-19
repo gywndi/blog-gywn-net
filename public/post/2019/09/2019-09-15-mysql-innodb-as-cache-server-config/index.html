@@ -1,0 +1,546 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>MySQL InnoDB의 메모리 캐시 서버로 변신! – 설정편 – - </title>
+
+  <meta name="description" content="Overview
+꽤나 오래전의 일이었습니다. MariaDB에서 Handler Socket이 들어간 이후 얼마 후인 것으로 기억합니다. MySQL lab버전에 memcached plugin 기능이 추가되었고, memcache protocal로 InnoDB 데이터에 직접 접근할 수 있는 길이 열린 것이었죠. (아마도 거의 8년 정도 전의 일이었던 것같은..) 아무튼 당시, 이것에 대해 간단하게 테스트만 해보고, MySQL을 캐시형태로 잘 활용할 수 있겠다라는 희망만 품고 지나버렸다는 기억이 나네요.
+이제 Disk는 과거의 통돌이 디스크가 아니죠. 기계 장치를 탈피하여, 이제는 모터없는 전자기기.. SSD의 시대가 도래하였습니다. 통돌이 대비, 어마어마한 수치의 Random I/O를 제공해주는만큼, 이제 DB 데이터에 새로운 패러다임(?)으로 접근할 수 있겠다는 시점이 온 것 같아요.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/post\/2019\/09\/2019-09-15-mysql-innodb-as-cache-server-config\/",
+          "name": "My SQL inno db의 메모리 캐시 서버로 변신! – 설정편 –"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "MySQL InnoDB의 메모리 캐시 서버로 변신! – 설정편 –",
+  "description" : "Overview 꽤나 오래전의 일이었습니다. MariaDB에서 Handler Socket이 들어간 이후 얼마 후인 것으로 기억합니다. MySQL lab버전에 memcached plugin 기능이 추가되었고, memcache protocal로 InnoDB 데이터에 직접 접근할 수 있는 길이 열린 것이었죠. (아마도 거의 8년 정도 전의 일이었던 것같은..) 아무튼 당시, 이것에 대해 간단하게 테스트만 해보고, MySQL을 캐시형태로 잘 활용할 수 있겠다라는 희망만 품고 지나버렸다는 기억이 나네요.\n이제 Disk는 과거의 통돌이 디스크가 아니죠. 기계 장치를 탈피하여, 이제는 모터없는 전자기기.. SSD의 시대가 도래하였습니다. 통돌이 대비, 어마어마한 수치의 Random I\/O를 제공해주는만큼, 이제 DB 데이터에 새로운 패러다임(?)으로 접근할 수 있겠다는 시점이 온 것 같아요.\n",
+  "inLanguage" : "en",
+  "wordCount":  663 ,
+  "datePublished" : "2019-09-15T11:50:15\u002b00:00",
+  "dateModified" : "2019-09-15T11:50:15\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "memcached, MySQL, plugin" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/post\/2019\/09\/2019-09-15-mysql-innodb-as-cache-server-config\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="MySQL InnoDB의 메모리 캐시 서버로 변신! – 설정편 –" />
+<meta property="og:description" content="Overview
+꽤나 오래전의 일이었습니다. MariaDB에서 Handler Socket이 들어간 이후 얼마 후인 것으로 기억합니다. MySQL lab버전에 memcached plugin 기능이 추가되었고, memcache protocal로 InnoDB 데이터에 직접 접근할 수 있는 길이 열린 것이었죠. (아마도 거의 8년 정도 전의 일이었던 것같은..) 아무튼 당시, 이것에 대해 간단하게 테스트만 해보고, MySQL을 캐시형태로 잘 활용할 수 있겠다라는 희망만 품고 지나버렸다는 기억이 나네요.
+이제 Disk는 과거의 통돌이 디스크가 아니죠. 기계 장치를 탈피하여, 이제는 모터없는 전자기기.. SSD의 시대가 도래하였습니다. 통돌이 대비, 어마어마한 수치의 Random I/O를 제공해주는만큼, 이제 DB 데이터에 새로운 패러다임(?)으로 접근할 수 있겠다는 시점이 온 것 같아요.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/post/2019/09/2019-09-15-mysql-innodb-as-cache-server-config/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="MySQL InnoDB의 메모리 캐시 서버로 변신! – 설정편 –" />
+  <meta name="twitter:description" content="Overview
+꽤나 오래전의 일이었습니다. MariaDB에서 Handler Socket이 들어간 이후 얼마 후인 것으로 기억합니다. MySQL lab버전에 memcached plugin 기능이 추가되었고, memcache protocal로 InnoDB 데이터에 직접 접근할 수 있는 길이 열린 것이었죠. (아마도 거의 8년 정도 전의 일이었던 것같은..)  …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>MySQL InnoDB의 메모리 캐시 서버로 변신! – 설정편 –</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2019-09-15
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>꽤나 오래전의 일이었습니다. MariaDB에서 Handler Socket이 들어간 이후 얼마 후인 것으로 기억합니다. <strong>MySQL lab버전에 memcached plugin 기능이 추가</strong>되었고, <strong>memcache protocal로 InnoDB 데이터에 직접 접근</strong>할 수 있는 길이 열린 것이었죠. (아마도 거의 8년 정도 전의 일이었던 것같은..) 아무튼 당시, 이것에 대해 간단하게 테스트만 해보고, MySQL을 캐시형태로 잘 활용할 수 있겠다라는 희망만 품고 지나버렸다는 기억이 나네요.</p>
+<p>이제 Disk는 과거의 통돌이 디스크가 아니죠. 기계 장치를 탈피하여, 이제는 모터없는 전자기기.. <strong>SSD의 시대가 도래</strong>하였습니다. 통돌이 대비, 어마어마한 수치의 Random I/O를 제공해주는만큼, 이제 DB 데이터에 새로운 패러다임(?)으로 접근할 수 있겠다는 시점이 온 것 같아요.</p>
+<p>말이 거창했습니다. 8년이 훌쩍 지난 지금 <strong>MySQL 5.7에서 InnoDB memcached plugin 활용성 테스트</strong>를 해보았어요.</p>
+<h1 id="mysql-memcached-plugin">MySQL memcached plugin?</h1>
+<p>MySQL 5.6부터 들어왔던 것 같은데.. <strong>InnoDB의 데이터를 memcached 프로토콜을 통해서 접근할 수 있다는 것</strong>을 의미합니다. 플러그인을 통하여 구동되기 때문에.. 캐시와 디비의 몸통은 하나이며, InnoDB 데이터에 직접 접근할 수 있기도 하지만, 캐시 공간을 별도로 두어.. 캐시처럼 사용할 수도 있어요. (옵션을 주면, set 오퍼레이션이 binlog에 남는다고 하던데.. 해보지는 않음 ㅋㅋ)</p>
+<!-- raw HTML omitted -->
+<p>그런데, 만약.. 데이터베이스의 테이블 데이터를.. memcached 프로토콜로 직접적으로 access할 수 있다면 어떨까요? 메모리 위주로 데이터 처리가 이루어질 때.. 가장 많은 리소스를 차지하는 부분은 바로 <strong>쿼리 파싱과 옵티마이징 단계</strong>입니다. 만약 <strong>PK 조회 위주의 서비스이며.. 이것들이 자주 변하지 않는 데이터</strong>.. 이를테면 “서비스토큰”이라든지, “사용자정보” 같은 타입이라면..?</p>
+<ul>
+<li>PK 조회 위주의 서비스</li>
+<li>변경 빈도가 굉장히 낮음</li>
+</ul>
+<p>심지어 이 데이터는 이미 InnoDB 라는 안정적인 데이터베이스 파일로 존재하기 때문에.. 예기치 않은 정전이 발생했을지라도, 사라지지 않습니다. 물론, 파일의 데이터를 메모리로 올리는 웜업 시간이 어느정도 소요될테지만.. 최근의 DB의 스토리지들이 SSD 기반으로 많이들 구성되어가는 추세에서, 웜업 시간이 큰 문제는 될 것 같지는 않네요.</p>
+<p>MySQL InnoDB memcached plugin을 여러 방식으로 설정하여 사용할 수 있겠지만, 오늘 이야기할 내용은, memcache 프로토콜만 사용할 뿐, 실제 액세스하는 영역은 DB 데이터 그 자체임을 우선 밝히고 다음으로 넘어가도록 하겠습니다.</p>
+<h1 id="configuration">Configuration</h1>
+<p>오라클 문서(<a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-memcached-setup.html">innodb-memcached-setup</a>)를 참고할 수도 있겠습니다만, 오늘 이 자리에서는 memcached 플러그인을 단순히 memcache 프로토콜을 쓰기 위한 용도 기준으로만 구성해보도록 하겠습니다.</p>
+<p>우선, InnoDB 플러그인 구성을 위해 아래와 같이 memcached 관련된 스키마를 구성합니다. 🙂 여기서 $MYSQL_HOME는 MySQL이 설치된 홈디렉토리를 의미하며, 각자 시스템 구성 환경에 따라 다르겠죠.</p>
+<!-- raw HTML omitted -->
+<p>자, 이제 간단한 성능 테스트를 위한 환경을 구성해볼까요? 먼저 아래와 같이 테스트 테이블 하나를 생성하고, 성능 테스트를 위한 약 100만 건의 데이터를 생성해봅니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>이제, 위에서 생성한 테이블을 memcached plugin이 보도록 설정 정보를 수정을 하고, 최종적으로 플러그인을 올려줍니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>이 과정을 거치면, 디비 데이터를 memcached protocol로 직접 접근할 수 있는 환경이 만들어집니다. 기본 포트로 11211 포트가 개방되며, 이 포트를 통해 memcache protocal 로 get 오퍼레이션을 수행하면 InnoDB 데이터 영역으로부터 직접 데이터를 가져올 수 있습니다. (물론, 다수의 칼럼이 있는 경우)</p>
+<p>즉, SQL 변경한 데이터를 직접 읽을 수 있다는 것이죠. (테이블 칼럼을 구분자로 맵핑하여 memcache의 VALUE를 만들 수 있으나, 여기서는 스킵합니다.)</p>
+<h1 id="performance">Performance</h1>
+<p>간단한 테스트를 해보았습니다. <strong>SQL vs memcached!!</strong> 생성한 데이터 전체 ID값 기준으로 랜덤한 아래 패턴의 쿼리를 각각 초당 약 7만 건의 쿼리를 수행하여 시스템 리소스를 측정하였습니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>SQL과 memcache 모두 7만 쿼리 처리는 큰 무리없이 처리 하지만, 시스템 리소스 측면에서는 큰 차이를 보였습니다. <strong>SQL인 경우 30~40% 리소스를 사용</strong>하는 반면에, <strong>memcache에서는 대략 5% 내외의 리소스를 사용</strong>할 뿐 아주 여유있는 시스템 상황을 보입니다. SQL 파싱와 옵티마이징 단계를 스킵한, 단순 데이터 GET 처리 효과이겠죠.</p>
+<!-- raw HTML omitted -->
+<p>이왕 할 테스트, 장기적으로 약 10일간 초당 약 6<del>7만 건 쿼리를 지속적으로 주면서 안정성 테스트를 해보았습니다.<br>
+일단, 이 기간동안 <strong>memcache GET 오퍼레이션 에러 카운트는 0건</strong>입니다. 초단위 평균 응답속도 결과는 **초당 평균 0.3ms</del>0.5ms 사이로 좋은 응답 속도**를 보였습니다. 무엇보다, <strong>제일 느렸던 것은 대략 1.5ms 정도</strong>로.. DB datafile의 B-Tree로 직접 데이터를 읽을지라도, 캐시로써 전혀 손색없는 속도를 보였습니다. 🙂</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h1 id="conclusion">Conclusion</h1>
+<p>MySQL InnoDB에 데이터가 변경이 되면, 이를 memcached protocol로 접근할 수 있기 때문에.. 이것을 잘 활용하면 복잡한 캐시 관리 없이 쉽게 캐시 레이어 구성이 가능해보입니다.</p>
+<ul>
+<li>세션 혹은 토큰 데이터(사용자 데이터)를 <strong>MySQL복제 구성</strong>하고, 이것으로 실시간 서비스를 한다면?</li>
+<li>Binlog를 통한 리플리케이터를 하나 작성해서, 원하는 형태로 **데이터를 조작(ex, json)**한 이후, 이것을 memcache protocal로 데이터를 접근한다면?</li>
+<li>코드 혹은 공통 정보에 대한 데이터(거의 안변하는 데이터)를 <strong>캐시 구성 없이 GET 오퍼레이션으로 바로 서비스에 사용</strong>한다면??</li>
+</ul>
+<p>서비스의 요구 사항에 맞게, 데이터를 원하는 모습으로, 적재적소에 MySQL InnoDB memcached plugin을 잘 활용할 수 있다면, 휘발성에서 오는 한계점, 동기화 이슈 등등 많은 부분을 정말 단순한 구조로 해결할 수 있을 것으로 기대됩니다.</p>
+<p>다음 편은, 이렇게 구성한 memcached plugin을 어떻게 PMM(prometheus &amp; grafana) 구조로 쉽게 모니터링을 할 수 있을지에 대해 이야기를 해보도록 할께요.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/memcached/">memcached</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/plugin/">plugin</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2fpost%2f2019%2f09%2f2019-09-15-mysql-innodb-as-cache-server-config%2f&amp;text=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%ec%84%a4%ec%a0%95%ed%8e%b8%20%e2%80%93&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2fpost%2f2019%2f09%2f2019-09-15-mysql-innodb-as-cache-server-config%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2019%2f09%2f2019-09-15-mysql-innodb-as-cache-server-config%2f&amp;title=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%ec%84%a4%ec%a0%95%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2fpost%2f2019%2f09%2f2019-09-15-mysql-innodb-as-cache-server-config%2f&amp;title=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%ec%84%a4%ec%a0%95%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2019%2f09%2f2019-09-15-mysql-innodb-as-cache-server-config%2f&amp;title=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%ec%84%a4%ec%a0%95%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2fpost%2f2019%2f09%2f2019-09-15-mysql-innodb-as-cache-server-config%2f&amp;description=MySQL%20InnoDB%ec%9d%98%20%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ec%ba%90%ec%8b%9c%20%ec%84%9c%eb%b2%84%eb%a1%9c%20%eb%b3%80%ec%8b%a0%21%20%e2%80%93%20%ec%84%a4%ec%a0%95%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/post/2022/05/2022-05-23-mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/post/2021/09/2021-09-07-package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-28-mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-13-make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/post/2021/06/2021-06-21-resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/post/2019/09/2019-09-11-ifkakao-kakaobank-uldraman/" data-toggle="tooltip" data-placement="top" title="오픈소스 데이터베이스, 흐르는 은행 데이터에 빨대를 꽂아보다.">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/post/2019/09/2019-09-19-mysql-innodb-as-cache-server-monitoring/" data-toggle="tooltip" data-placement="top" title="MySQL InnoDB의 메모리 캐시 서버로 변신! – 모니터링편 –">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://tech.gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

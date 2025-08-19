@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>MySQL에서 Affected Rows를 병맛나게 활용해보자. - </title>
+
+  <meta name="description" content="Overview
+이제 슬슬 날이 풀려가고 있습니다. 얼어붙은 땅이 녹듯이, 오랜시간 얼어있던 블로그 공간도 잠시마나 녹여볼까 합니다. 사실 지난  “PMM 이야기 1편” 이후 2편, 3편 쭉 써야하지만.. 이노무 귀차니즘과 여기저기 산재한 낙서들을 아직 정리하지 못한 탓에.. 쿨럭..
+사실 오늘 얘기할 내용은 3년도 훨씬 전 내용으로, 블로그로 이미 정리했다고 지금까지 착각을 했던 이야기입니다. 바로 “Affected Rows” 값을 활용해서, 다양한 요구 사항을 조금 더 재미있게 풀어보자는 내용이죠.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/post\/2018\/03\/2018-03-27-mad-usage-with-mysql-affected-rows\/",
+          "name": "My sql에서 affected rows를 병맛나게 활용해보자."
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "MySQL에서 Affected Rows를 병맛나게 활용해보자.",
+  "description" : "Overview 이제 슬슬 날이 풀려가고 있습니다. 얼어붙은 땅이 녹듯이, 오랜시간 얼어있던 블로그 공간도 잠시마나 녹여볼까 합니다. 사실 지난 “PMM 이야기 1편” 이후 2편, 3편 쭉 써야하지만.. 이노무 귀차니즘과 여기저기 산재한 낙서들을 아직 정리하지 못한 탓에.. 쿨럭..\n사실 오늘 얘기할 내용은 3년도 훨씬 전 내용으로, 블로그로 이미 정리했다고 지금까지 착각을 했던 이야기입니다. 바로 “Affected Rows” 값을 활용해서, 다양한 요구 사항을 조금 더 재미있게 풀어보자는 내용이죠.\n",
+  "inLanguage" : "en",
+  "wordCount":  613 ,
+  "datePublished" : "2018-03-26T23:45:20\u002b00:00",
+  "dateModified" : "2018-03-26T23:45:20\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "affected rows, MySQL" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/post\/2018\/03\/2018-03-27-mad-usage-with-mysql-affected-rows\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="MySQL에서 Affected Rows를 병맛나게 활용해보자." />
+<meta property="og:description" content="Overview
+이제 슬슬 날이 풀려가고 있습니다. 얼어붙은 땅이 녹듯이, 오랜시간 얼어있던 블로그 공간도 잠시마나 녹여볼까 합니다. 사실 지난  “PMM 이야기 1편” 이후 2편, 3편 쭉 써야하지만.. 이노무 귀차니즘과 여기저기 산재한 낙서들을 아직 정리하지 못한 탓에.. 쿨럭..
+사실 오늘 얘기할 내용은 3년도 훨씬 전 내용으로, 블로그로 이미 정리했다고 지금까지 착각을 했던 이야기입니다. 바로 “Affected Rows” 값을 활용해서, 다양한 요구 사항을 조금 더 재미있게 풀어보자는 내용이죠.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/post/2018/03/2018-03-27-mad-usage-with-mysql-affected-rows/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="MySQL에서 Affected Rows를 병맛나게 활용해보자." />
+  <meta name="twitter:description" content="Overview
+이제 슬슬 날이 풀려가고 있습니다. 얼어붙은 땅이 녹듯이, 오랜시간 얼어있던 블로그 공간도 잠시마나 녹여볼까 합니다. 사실 지난  “PMM 이야기 1편” 이후 2편, 3편 쭉 써야하지만.. 이노무 귀차니즘과 여기저기 산재한 낙서들을 아직 정리하지 못한 탓에.. 쿨럭..
+사실 오늘 얘기할 내용은 3년도 훨씬 전 내용으로, 블로그로 이미 정리했 …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>MySQL에서 Affected Rows를 병맛나게 활용해보자.</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2018-03-26
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>이제 슬슬 날이 풀려가고 있습니다. 얼어붙은 땅이 녹듯이, 오랜시간 얼어있던 블로그 공간도 잠시마나 녹여볼까 합니다. 사실 지난  <!-- raw HTML omitted -->“PMM 이야기 1편”<!-- raw HTML omitted --> 이후 2편, 3편 쭉 써야하지만.. 이노무 귀차니즘과 여기저기 산재한 낙서들을 아직 정리하지 못한 탓에.. 쿨럭..</p>
+<p>사실 오늘 얘기할 내용은 3년도 훨씬 전 내용으로, 블로그로 이미 정리했다고 지금까지 착각을 했던 이야기입니다. 바로 “Affected Rows” 값을 활용해서, 다양한 요구 사항을 조금 더 재미있게 풀어보자는 내용이죠.</p>
+<h1 id="affected-rows">Affected Rows?</h1>
+<p>다들 아시겠지만, Affected Rows는 DML시 실제로 영향을 미친 데이터 Row 수입니다. 보통 update/delete를 날린 후에 몇 건의 데이터가 변경이 되었는지를 CLI툴에서 확인하는 용도로만 “제 경우”에는 많이 사용하고는 했습니다.</p>
+<p>참고로 MySQL에서 Affected Rows는 <!-- raw HTML omitted --><!-- raw HTML omitted -->“정말로 데이터가 변경”<!-- raw HTML omitted --><!-- raw HTML omitted -->된 경우에만 반영되며, 하단과 같이 **<!-- raw HTML omitted -->기존 데이터에 변화가 없는 경우에는 Affected Rows는 0건<!-- raw HTML omitted -->**으로 보여집니다. (이 내용은 중요해요!)</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>MySQL만 제공하는 다음 두 개 쿼리는 조금 재미있게 동작합니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --><!-- raw HTML omitted -->REPLACE 구문<!-- raw HTML omitted --><!-- raw HTML omitted -->은 우선 넣고자 하는 데이터와 충돌이 되는 ROW는 DELETE 후 INSERT하는 특성을 가집니다. 트리거 기반의 온라인 스키마 변경 툴 중 대표적인 pt-online-schema-change의 INSERT/UPDATE 트리거 이벤트는 REPLACE로 되어 있죠. (방해꾼 PK/UK가 없으면, 그냥 계속 누적 INSERT됩니다.ㅋㅋ)</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted -->INSERT INTO ..  ON DUPLICATE UPDATE .. 는<!-- raw HTML omitted --><!-- raw HTML omitted --> PK 혹은 UK로 인한 중복된 값 에러 발생 시 이를 뒤에 명시한 값으로 데이터를 업데이트하라는 의미입니다. (다들 아실꺼예요.) 없으면 알아서 초기화하고, 있으면 업데이트하는 형식의 굳이 초기화할 필요없는 통계 테이블을 관리하는 용도로 사용한다고나할까.. -_-;</p>
+<p>오늘 재밌게 가지고 놀 녀석은 바로 두 번째 녀석 “INSERT INTO .. ON DUPLICATE UPDATE”입니다.</p>
+<h1 id="crazy-question">Crazy Question</h1>
+<p>벌써 3년도 더 된 이야기네요. 엯촋 개발자 분에게 아래와 같은 질문을 받습니다.</p>
+<blockquote>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted -->(1)일정 주기<!-- raw HTML omitted --><!-- raw HTML omitted -->에 따라 이벤트 참여 **<!-- raw HTML omitted -->(2)카운트를 제한<!-- raw HTML omitted -->**하고 싶어요~!</p></blockquote>
+<p>하루 혹은 일정 주기에 따라 이벤트 등록 횟수를 제한하고자 하는 요구사항입니다. 예를들어 한 시간 기준 이벤트을 생각해본다면, 매 0시마다 지금까지 이벤트 참여 카운트는 초기화하고, 다시 정해진 수만큼 응모를 하는 그런 형태의 요구사항이죠. 아.. 물론.. 어플리케이션 레벨에서 트랜잭션을 구성한다면, 아래와 같이 생각해볼 수 있을 것 같네요. (그냥 막 쓴 것 아시죠? ㅋㅋ)</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>뭐, 저렇게 하면 되니까.. 저렇게 풀어도 되겠지만.. 이런 처리를 조금 더 병맛나고 재미있게 풀어볼계요.</p>
+<h1 id="my-solution">My Solution</h1>
+<p>자, 우선.. 테스트 하기에 앞서 테이블을 하나 생성합니다. 구조가 참 간단하쥬?</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>그냥, 사용자 기준응모 카운트와 마지막 응모 시간(타임스탬프)을 가지는 지극히 간단한 테이블입니다. 이제, 요구 사항에 맞게 쿼리를 아래와 같이 만들어보겠습니다. 우선은 데이터가 없을 수 있으니, INSERT 합니다.</p>
+<!-- raw HTML omitted -->
+<p>문제는 그 다음에도 동일한 사용자에 대한 처리를 위해서 ON DUPLICATE KEY UPDATE로 apply_count를 업데이트 관리합니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>그런데 매일 0시마다 초기화를 해야 하겠죠? 마지막 응모 날짜와 오늘 날짜가 동일하면 응모 카운트를 증가합니다. <!-- raw HTML omitted --><!-- raw HTML omitted -->(1)일정 주기<!-- raw HTML omitted --><!-- raw HTML omitted -->를 만족하기 위해서, 아래와 같이 if로 분기 처리합니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>이제 마지막입니다. <!-- raw HTML omitted --><!-- raw HTML omitted -->(1)일정 주기 조건<!-- raw HTML omitted --><!-- raw HTML omitted -->은 앞에서 맞췄으니, 이번에는 <strong><!-- raw HTML omitted -->(2)카운트를 제한<!-- raw HTML omitted --></strong> 조건을 아래와 같이 맞춰봅시다. apply_count는 현재 값이 5보다 작을 때만 1 올리자는 얘기지요.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>이렇게 꼼수같은 꼼수같은 꼼수를 통해, 단 한줄의 쿼리로 원하는 요구사항을 충족시켜 보았습니다.</p>
+<ul>
+<li><strong>user_id(pk)를 포함한 데이터를 INSERT</strong></li>
+<li><strong>PK 중복 시, 정해진 기간 내에 존재한다면,</strong>
+<ol>
+<li>카운트가 유효하다면, 응모 카운트 1 증가</li>
+<li>정해진 카운트 도달 상태면 아무것도 안함</li>
+</ol>
+</li>
+<li><strong>PK 중복 시, 정해진 기간 밖에 있다면,</strong>
+<ol>
+<li>응모 건 수를 초기화</li>
+</ol>
+</li>
+</ul>
+<p>자.. 쿼리 요구사항은 맞췄으니, 이제 Affected Rows에 따라 처리 결과를 분기 처리해봐야겠죠? 테스트를 위해 위 쿼리처럼 하루를 기다릴 수 없으니, 시간을 초단위(10초)로 구성해서 반복 수행해봅니다. (아래 쿼리 예시)</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>그리고 아래와 같이 예쁜 결과를 얻어봅니다. 어플리케이션에서는 쿼리 결과로 전달받는 Affected Rows 값에 따라, 이 사람이 응모가 되었는지(1 이상), 제한된 상황인지(0)를 판단하면 되겠습니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>즉 정리를 해보면.. 아래와 같은 동작을 기대해볼 수 있겠습니다. ^^ 단, 자바에서는 이런 이쁜 결과를 받아보기 위해서는 useAffectedRows=true 파라메터를 줘야합니다. (관련: <!-- raw HTML omitted --><a href="https://bugs.mysql.com/bug.php?id=39352">https://bugs.mysql.com/bug.php?id=39352</a><!-- raw HTML omitted -->)</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h1 id="conclusion">Conclusion</h1>
+<p>데이터에 변경 사항이 없으면 Affected Rows 변화량 또한 없는 것은 MySQL의 고유 특성입니다. 이것은 DBMS에 따라 다르게 동작하기 때문에, MySQL에 (아마도) 의존적이죠.</p>
+<p>그러나 이런 동작을 이해하고 활용해본다면, 더욱 병맛나는 문제도 해결할 수 있습니다. 일정 기간 응모 횟수를 제한하는 것 뿐만 아니라, 일단위 혹은 월단위 통계 테이블을 유지하는 것이나.. 어플리케이션 레벨의 락 용도로 충분히 써볼만 합니다. 모든 것은 각자의 문제 상황에 맞춰서 재미나게 이야기를 풀어보면 될 것 같네요. ㅎㅎ</p>
+<p>“별 생각없이 넘어갈 수 있는 Affected Rows 도 병맛나게 활용해볼 수 있다”라는 이야기를 해보고 싶었어요.</p>
+<p>좋은 밤 되세요, ㅎㅎ</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/affected-rows/">affected rows</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2fpost%2f2018%2f03%2f2018-03-27-mad-usage-with-mysql-affected-rows%2f&amp;text=MySQL%ec%97%90%ec%84%9c%20Affected%20Rows%eb%a5%bc%20%eb%b3%91%eb%a7%9b%eb%82%98%ea%b2%8c%20%ed%99%9c%ec%9a%a9%ed%95%b4%eb%b3%b4%ec%9e%90.&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2fpost%2f2018%2f03%2f2018-03-27-mad-usage-with-mysql-affected-rows%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2018%2f03%2f2018-03-27-mad-usage-with-mysql-affected-rows%2f&amp;title=MySQL%ec%97%90%ec%84%9c%20Affected%20Rows%eb%a5%bc%20%eb%b3%91%eb%a7%9b%eb%82%98%ea%b2%8c%20%ed%99%9c%ec%9a%a9%ed%95%b4%eb%b3%b4%ec%9e%90." target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2fpost%2f2018%2f03%2f2018-03-27-mad-usage-with-mysql-affected-rows%2f&amp;title=MySQL%ec%97%90%ec%84%9c%20Affected%20Rows%eb%a5%bc%20%eb%b3%91%eb%a7%9b%eb%82%98%ea%b2%8c%20%ed%99%9c%ec%9a%a9%ed%95%b4%eb%b3%b4%ec%9e%90." target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2018%2f03%2f2018-03-27-mad-usage-with-mysql-affected-rows%2f&amp;title=MySQL%ec%97%90%ec%84%9c%20Affected%20Rows%eb%a5%bc%20%eb%b3%91%eb%a7%9b%eb%82%98%ea%b2%8c%20%ed%99%9c%ec%9a%a9%ed%95%b4%eb%b3%b4%ec%9e%90." target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2fpost%2f2018%2f03%2f2018-03-27-mad-usage-with-mysql-affected-rows%2f&amp;description=MySQL%ec%97%90%ec%84%9c%20Affected%20Rows%eb%a5%bc%20%eb%b3%91%eb%a7%9b%eb%82%98%ea%b2%8c%20%ed%99%9c%ec%9a%a9%ed%95%b4%eb%b3%b4%ec%9e%90." target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/post/2022/05/2022-05-23-mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/post/2021/09/2021-09-07-package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-28-mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-13-make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/post/2021/06/2021-06-21-resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/post/2018/03/2018-03-04-pmm-intro/" data-toggle="tooltip" data-placement="top" title="PMM 이야기 1편 – INTRO">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/post/2018/10/2018-10-12-online-alter-for-varchar/" data-toggle="tooltip" data-placement="top" title="[MySQL] Online Alter에도 헛점은 있더구나 – gdb, mysqld-debug 활용 사례">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://tech.gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

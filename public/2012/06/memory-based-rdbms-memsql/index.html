@@ -1,0 +1,648 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>메모리 기반 RDBMS, MemSQL을 알아봅시다 - </title>
+
+  <meta name="description" content="MemSQL이란?
+MemSQL은 디스크 병목을 최소화하기 위해 만들어진 메모리 기반의 관계형 DBMS입니다. 메모리 기반으로 데이터 처리가 이루어지기 때문에, 엄청난 속도로 Read/Write이 가능하며, 기존의 NoSQL 또는 캐시로만 가능했던 퍼포먼스 향상이 있습니다. 실제로 디스크 기반 DBMS 대비 약 30배 이상의 성능 향상이 있다고 하니, 놀라울 따름입니다.
+
+최근 들어 메모리 가격이 하루가 다르게 저렴해지고 있기 때문에 메모리 사이즈를 최대한 늘려서 가격 대비 성능 비를 최대로 이끌어 내는 DB입니다.
+MemSQL 특징
+1) 강력한 SQL기반의 통신
+SQL 기반으로 통신하며, MySQL API를 따릅니다. 그렇기 때문에 기존 MySQL을 사용하는 서비스 경우 로직 변경이 불필요하다고 합니다. 하다못해 라이브러리 또한 기존 MySQL에서 사용하던 그대로 재사용해도 상관 없습니다.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/2012\/06\/memory-based-rdbms-memsql\/",
+          "name": "메모리 기반 rdbms, mem sql을 알아봅시다"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "메모리 기반 RDBMS, MemSQL을 알아봅시다",
+  "description" : "MemSQL이란? MemSQL은 디스크 병목을 최소화하기 위해 만들어진 메모리 기반의 관계형 DBMS입니다. 메모리 기반으로 데이터 처리가 이루어지기 때문에, 엄청난 속도로 Read\/Write이 가능하며, 기존의 NoSQL 또는 캐시로만 가능했던 퍼포먼스 향상이 있습니다. 실제로 디스크 기반 DBMS 대비 약 30배 이상의 성능 향상이 있다고 하니, 놀라울 따름입니다.\n최근 들어 메모리 가격이 하루가 다르게 저렴해지고 있기 때문에 메모리 사이즈를 최대한 늘려서 가격 대비 성능 비를 최대로 이끌어 내는 DB입니다.\nMemSQL 특징 1) 강력한 SQL기반의 통신 SQL 기반으로 통신하며, MySQL API를 따릅니다. 그렇기 때문에 기존 MySQL을 사용하는 서비스 경우 로직 변경이 불필요하다고 합니다. 하다못해 라이브러리 또한 기존 MySQL에서 사용하던 그대로 재사용해도 상관 없습니다.\n",
+  "inLanguage" : "en",
+  "wordCount":  1450 ,
+  "datePublished" : "2012-06-27T10:18:56\u002b00:00",
+  "dateModified" : "2012-06-27T10:18:56\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "MemSQL, MySQL" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/2012\/06\/memory-based-rdbms-memsql\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="메모리 기반 RDBMS, MemSQL을 알아봅시다" />
+<meta property="og:description" content="MemSQL이란?
+MemSQL은 디스크 병목을 최소화하기 위해 만들어진 메모리 기반의 관계형 DBMS입니다. 메모리 기반으로 데이터 처리가 이루어지기 때문에, 엄청난 속도로 Read/Write이 가능하며, 기존의 NoSQL 또는 캐시로만 가능했던 퍼포먼스 향상이 있습니다. 실제로 디스크 기반 DBMS 대비 약 30배 이상의 성능 향상이 있다고 하니, 놀라울 따름입니다.
+
+최근 들어 메모리 가격이 하루가 다르게 저렴해지고 있기 때문에 메모리 사이즈를 최대한 늘려서 가격 대비 성능 비를 최대로 이끌어 내는 DB입니다.
+MemSQL 특징
+1) 강력한 SQL기반의 통신
+SQL 기반으로 통신하며, MySQL API를 따릅니다. 그렇기 때문에 기존 MySQL을 사용하는 서비스 경우 로직 변경이 불필요하다고 합니다. 하다못해 라이브러리 또한 기존 MySQL에서 사용하던 그대로 재사용해도 상관 없습니다.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/2012/06/memory-based-rdbms-memsql/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="메모리 기반 RDBMS, MemSQL을 알아봅시다" />
+  <meta name="twitter:description" content="MemSQL이란?
+MemSQL은 디스크 병목을 최소화하기 위해 만들어진 메모리 기반의 관계형 DBMS입니다. 메모리 기반으로 데이터 처리가 이루어지기 때문에, 엄청난 속도로 Read/Write이 가능하며, 기존의 NoSQL 또는 캐시로만 가능했던 퍼포먼스 향상이 있습니다. 실제로 디스크 기반 DBMS 대비 약 30배 이상의 성능 향상이 있다고 하니, …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>메모리 기반 RDBMS, MemSQL을 알아봅시다</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2012-06-27
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;7&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="memsql이란">MemSQL이란?</h1>
+<p>MemSQL은 디스크 병목을 최소화하기 위해 만들어진 <strong>메모리 기반의 관계형 DBMS</strong>입니다. 메모리 기반으로 데이터 처리가 이루어지기 때문에, 엄청난 속도로 Read/Write이 가능하며, 기존의 NoSQL 또는 캐시로만 가능했던 퍼포먼스 향상이 있습니다. 실제로 디스크 기반 DBMS 대비 약 30배 이상의 성능 향상이 있다고 하니, 놀라울 따름입니다.<br>
+<img src="/img/2012/06/memsql-logo.png" alt="memsql logo"></p>
+<p>최근 들어 메모리 가격이 하루가 다르게 저렴해지고 있기 때문에 메모리 사이즈를 최대한 늘려서 가격 대비 성능 비를 최대로 이끌어 내는 DB입니다.</p>
+<h1 id="memsql-특징">MemSQL 특징</h1>
+<h3 id="1-강력한-sql기반의-통신">1) 강력한 SQL기반의 통신</h3>
+<p>SQL 기반으로 통신하며, MySQL API를 따릅니다. 그렇기 때문에 기존 MySQL을 사용하는 서비스 경우 로직 변경이 불필요하다고 합니다. 하다못해 라이브러리 또한 기존 MySQL에서 사용하던 그대로 재사용해도 상관 없습니다.</p>
+<p><img src="/img/2012/06/memsql-protocal.png" alt="memsql protocol"></p>
+<p>SQL기반이기 때문에 복잡한 데이터 처리에 유연하며, DB 레이어가 구분되므로 어플리케이션에 영향을 의존적이지 않습니다.</p>
+<p>사실 NoSQL이 강력한 성능을 발휘하기는 하지만, DB Schema와 같은 기반 요소가 어플리케이션에 녹아있고 사용이 어렵습니다. 그리고 데이터 처리 시 개발자 개인 역량에 따라 전체적인 성능에 엄청난 영향을 주기도 하죠.</p>
+<h3 id="2-내구성이-좋은-구조">2) 내구성이 좋은 구조</h3>
+<p>MemSQL은 서버가 예기치 않게 종료가 된다고 하더라도 데이터 유실이 거의 없습니다. 서버 장애가 발생한다고 하더라도 Snapshot으로 특정 시점의 풀 백업 데이터와L(Write Ahead to Log)로 쌓인 데이터 변경 이력을 조합하여 “장애 시점 이전”으로 데이터 버전을 되돌릴 수 있습니다.</p>
+<p><img src="/img/2012/06/memsql-data-recovery1.png" alt="memsql data recovery"></p>
+<p>물론 데이터 영속성이 불필요한 프로세스 경우에는 “durability = off” 옵션으로 비활성할 수 있습니다. 하지만, 이 경우 서버 재시작 후 메모리에 있는 모든 데이터는 소멸되므로 사용 시 주의를 해야겠죠. ^^;;</p>
+<h3 id="3-쉬운-설치-및-사용">3) 쉬운 설치 및 사용</h3>
+<p>MemSQL은 설치가 정말로 쉬우며, 관련 Configure 파일도 단순합니다. 그리고 MySQL 진영에서 개발을 했었다면, 쿼리 사용에도 큰 무리가 없습니다.</p>
+<h3 id="4-transaction-기능">4) Transaction 기능</h3>
+<p>MemSQL은 트랜잭션을 단일 쿼리 레벨에서 <strong>Read Committed</strong> 레벨로 데이터를 처리합니다. 사용자 레벨로는 Transaction을 제공하지 않기 때문에 복잡한 Transaction이 요구되는 부분에서는 분명 한계가 있습니다.</p>
+<p>만약 being, commit, rollback과 같은 구문을 어플리케이션에서 사용한다고 하더라도, Warning 메세지와 함께 DB 내부에서 무시됩니다. 즉, 데이터 변경 질의가 완료되는 바로 그 순간 다른 세션에서도 변경된 데이터를 바로 읽을 수 있습니다.</p>
+<p>Repeatable Read(Snapshot Read) Isolation Level은 내부적으로 Database Snapshot을 생성하기 위해 사용되는데, snapshot-trigger-size 임계치에 도달하여 새로운 Snapshot을 생성할 때 사용합니다.</p>
+<h3 id="5-동시성과-퍼포먼스를-위한-인덱스-기능">5) 동시성과 퍼포먼스를 위한 인덱스 기능</h3>
+<h4 id="hash-index">Hash Index</h4>
+<p>Hash 인덱스는 1:1로 매칭되는 경우 최상의 성능을 발휘하며, Hash 인덱스를 사용하기 위해서는 인덱스 필드에 Unique 옵션이 있어야 가능합니다.고 Hash 인덱스 생성 시 BUCKET_COUNT 옵션을 별도로 줄 수 있고, 512에서 2^30까지 설정할 수 있는데, 데이터 사이즈에 따라 적절하게 파라메터 값을 지정해야 합니다.메터 값이 너무 작으면, Hash 효율이 크게 저하되고, 반대로 너무 크면 Hash Bucket을 위해 메모리가 불필요하게 많이 사용되기 때문이죠.</p>
+<p>예를 들어 파라메터 값이 너무 작으면 빨간 색 그림처럼 한 개의 Hash 타겟에 여러 개의 데이터가 포함되어 있으므로, 원하는 타겟 데이터를 선별하는 부분에서 로드가 발생합니다.다고 파라메터를 너무 크게 잡으면 파란 그림처럼 메모리 공간만 잡고 아무 것도 포인팅하고 있지 않는 결과가 발생하죠.</p>
+<p><img src="/img/2012/06/memsql-hash-index.png" alt="memsql hash index"></p>
+<p>MemSQL측에서는 누적될 수 있는 데이터 최대치 Row 수의 50%로 설정하는 것이 바람직하다고 합니다. 즉, 하나의 Hash키에서는 평균 2개까지 중복되는 것이 성능 및 공간 효율적으로 최적이라는 것을 의미하는 것이죠.</p>
+<h4 id="skip-list">Skip List</h4>
+<p>B-Tree는 일반적으로 RDBMS에서 제공하는 인덱스 구조이며, MySQL에서도 관련 기능을 제공합니다.</p>
+<p>둘의 차이점은 MySQL은 디스크 기반으로 B-Tree를 수행하나, MemSQL은 메모리 기반의 Skip List 구조로 데이터를 찾아냅니다. 데이터 접근 속도가 더욱 빠른 것이죠.</p>
+<p><img src="/img/2012/06/memsql-skip-list.png" alt="memsql skip list"></p>
+<p>하단과 같이 인덱스를 ASC 옵션으로 생성된 경우, “Order By r ASC”로 Skip List로 빠르게 데이터에 접근할 수 있습니다. 그러나 “Order By r DESC” 경우에는 Skip List를 사용하지 않기 때문에 상대적으로 속도가 느리다고는 합니다.</p>
+<p>물론 DESC 옵션으로 추가적인 인덱스를 생성하면 동일하게 Skip List의 강점을 이용할 수도 있겠지만, 인덱스 또한 공간을 잡아먹는 데이터이기 때문에 사용 상 주의가 필요합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">memsql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">tbl</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">-&gt;</span><span class="w">   </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">-&gt;</span><span class="w">   </span><span class="n">r</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">-&gt;</span><span class="w">   </span><span class="k">INDEX</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">BTREE</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="k">ASC</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">memsql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tbl</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">ASC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">-------------+------+------+-------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">select_type</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">key</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">Extra</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">-------------+------+------+-------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="k">SIMPLE</span><span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="k">ALL</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">i1</span><span class="w">   </span><span class="o">|</span><span class="w">       </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">-------------+------+------+-------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">memsql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tbl</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">-------------+------+------+-----------------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">select_type</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">key</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">Extra</span><span class="w">                 </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">-------------+------+------+-----------------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="k">SIMPLE</span><span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="k">ALL</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">i1</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">memsql</span><span class="p">:</span><span class="w"> </span><span class="n">requires</span><span class="w"> </span><span class="n">sort</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">-------------+------+------+-----------------------+
+</span></span></span></code></pre></div><h3 id="6-sql을-선행-컴파일하여-처리">6) SQL을 선행 컴파일하여 처리</h3>
+<p>SQL 실행 순서는 Oracle과 거의 흡사합니다.</p>
+<p><strong>Parse → Code Generate →an Cache →ecute</strong>를 거칩니다. Plan Cache에 적재된 SQL 실행 속도는 빠르지만, 처음 실행되는 SQL은 상당히 느립니다.</p>
+<p>처리 단계를 조목조목 설명하겠습니다.</p>
+<ol>
+<li><strong>Parse</strong><br>
+쿼리가 유입되면 SQL에 포함된 정수 혹은 문자열 파라메터를 특정 문자로 변환하는 과정입니다.<br>
+예를 들어 SELECT * FROM users WHERE id = ‘gywndi’;라는 쿼리는 SELECT * FROM users WHERE id = @; 와 같이 변환됩니다.<br>
+물론 이 SQL Parsing 단계는 DB에 오버헤드가 거의 없습니다.</li>
+<li><strong>Code Generate</strong><br>
+Parsing 단계에서 생성된 SQL을 DB가 쉽게 처리할 수 있는 C++ 기반으로 변환하는 단계입니다.<br>
+DB에서는 원본 SQL이 아닌 데이터를 조회하기에 최적화된 코드에 따라서 데이터를 질의합니다.<br>
+결과는 바로 다음 단계인 Plan Cache 영역에 저장됩니다.</li>
+<li><strong>Plan Cache</strong><br>
+전 단계에서 컴파일된 실행 계획을 Plan Cache 메모리 영역에 저장하며, 이후 동일한 타입의 SQL 유입 시 SQL 컴파일 단계 없이 Plan Cache에 있는 정보로 바로 처리합니다.</li>
+<li><strong>ecute</strong><br>
+데이터 추출은 오직 선행 컴파일된 Plan정보로만 수행됩니다.<br>
+이제 SQL을 더이상 순차적으로 읽으며 분석하지 않아도 되기 때문에 마치 NoSQL Solution처럼 혹은 그 이상의 속도를 낼 수 있는 것입니다.</li>
+</ol>
+<p><img src="/img/2012/06/memsql-query-execute.png" alt="memsql query execute"></p>
+<p><strong>처음 SQL 질의 요청이 들어오면</strong> Parse → Code Generate →an Cache →ecute 단계를 거쳐서 데이터를 뽑아냅니다.</p>
+<p>기존에 SQL을 실행하여 이미 <strong>Plan Cache에 관련 실행 계획이 저장된 경우</strong>에는rse → Plan Cache →ecute 단계로 수행을 합니다. 실행 계획 생성 없이 Plan Cache에 저장된 정보로 바로 데이터를 조회할 수 있습니다.</p>
+<h3 id="7-concepts">7) Concepts</h3>
+<p>메모리 기반의 RDBMS인 MemSQL은 두 가지 컨셉으로 만들어졌습니다. Lock이 없는 Hash인덱스와 Skip List를 활용한 B-Tree인덱스를 사용함으로써 일반 CPU에서도 강력한 데이터 처리가 가능합니다. 그리고 MVCC를 제공하기 때문에 엄청난 Writing이 발생함에도 절대 Reading 시 장애가 발생하지 않습니다.</p>
+<p>두 가지 특징에 초점을 맞추어 개발을 하였고, 기존 디스크 기반 데이터 처리 속도 대비 30배 이상 빠르다고 합니다.</p>
+<h1 id="memsql-테스트-후기">MemSQL 테스트 후기</h1>
+<p>Sysbench 툴을 사용하여 벤치마킹을 시도하려 하였으나, DB 특성이 다르다보니 테스트를 할 수 없었습니다. 대신 다른 몇 가지 부분만 짚어서 단일 쿼리 테스트로 진행을 하였고, 테스트 기간 동안 데이터 현황을 한번 살펴보았습니다.</p>
+<p>MemSQL Requirement가 일단은 CentOS 6.0 이상이었고, 해당 OS는 제 개인 블로그 서버에만 설치되어 있었기 때문에 어쩔 수 없이 저사양 PC에서 테스트하였습니다. ^^;;</p>
+<p><strong>테스트 환경</strong></p>
+<ul>
+<li>CPU :350 (1.6GHz)</li>
+<li>Memory : 8G</li>
+<li>Disk : 3.5′ SATAII 5400 rpm Single</li>
+<li>Data : 100만 건</li>
+</ul>
+<p>Sysbench 툴로 100만 건 데이터를 생성하고, 해당 데이터로 간단한 질의 몇개와 기본적인 차이점을 위주로 살펴보았습니다. MemSQL은 물론 메모리 안에 모두 데이터가 존재하며, MySQL 또한 데이터 사이즈가 크지 않기 때문에 메모리에 전체 데이터가 들어있다고 봐도 무관합니다.</p>
+<p><img src="/img/2012/06/memsql-performance-result.png" alt="memsql performance result"></p>
+<p>테스트 결과 100만 건 일괄 업데이트에서는 MySQL이 더 빠릅니다. InnoDB Buffer Pool도 결국에는 메모리에 존재하기 때문이 아닐까 합니다. 그리고 업데이트 도중 다른 세션에서는 현재 변경되고 있는 데이터 현황을 확인할 수 없는 것에서 쿼리 단위로 트랜잭션이 보장되는 것을 추측할 수 있었습니다.</p>
+<p>MemSQL에서 SQL이 처음 실행되는 순간, 즉 컴파일이 필요한 시점에는 상당히 느립니다. 그러나 동일 타입의 쿼리가 다시 호출되는 경우 MySQL대비 10배 이상 빠른 결과를 보였습니다.</p>
+<p>MemSQL에는 Plan Cache가 있는데 이것에 관한 현황은 다음과 같이 조회할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">memsql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="n">PLANCACHE</span><span class="err">\</span><span class="k">G</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">**************</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span><span class="w"> </span><span class="k">row</span><span class="w"> </span><span class="o">**************</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="k">Database</span><span class="p">:</span><span class="w"> </span><span class="n">sysbench</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">QueryText</span><span class="p">:</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">sbtest</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">@</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Commits</span><span class="p">:</span><span class="w"> </span><span class="mi">113</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">Rollbacks</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="n">RowCount</span><span class="p">:</span><span class="w"> </span><span class="mi">2606</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ExecutionTime</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">LogBufferTime</span><span class="p">:</span><span class="w"> </span><span class="k">NULL</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">LogFlushTime</span><span class="p">:</span><span class="w"> </span><span class="k">NULL</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">RowLockTime</span><span class="p">:</span><span class="w"> </span><span class="k">NULL</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">**************</span><span class="w"> </span><span class="mi">2</span><span class="p">.</span><span class="w"> </span><span class="k">row</span><span class="w"> </span><span class="o">**************</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="k">Database</span><span class="p">:</span><span class="w"> </span><span class="n">sysbench</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">QueryText</span><span class="p">:</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">sbtest</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">k</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Commits</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">Rollbacks</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="n">RowCount</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ExecutionTime</span><span class="p">:</span><span class="w"> </span><span class="mi">3611</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">LogBufferTime</span><span class="p">:</span><span class="w"> </span><span class="k">NULL</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">LogFlushTime</span><span class="p">:</span><span class="w"> </span><span class="k">NULL</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">RowLockTime</span><span class="p">:</span><span class="w"> </span><span class="k">NULL</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">**************</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span><span class="w"> </span><span class="k">row</span><span class="w"> </span><span class="o">**************</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="k">Database</span><span class="p">:</span><span class="w"> </span><span class="n">sysbench</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">QueryText</span><span class="p">:</span><span class="w"> </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">sbtest</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="k">c</span><span class="p">,</span><span class="w"> </span><span class="k">pad</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="o">?</span><span class="p">,</span><span class="o">?</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Commits</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">Rollbacks</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="n">RowCount</span><span class="p">:</span><span class="w"> </span><span class="mi">1000000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ExecutionTime</span><span class="p">:</span><span class="w"> </span><span class="mi">19503</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">LogBufferTime</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">LogFlushTime</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">RowLockTime</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span></span></span></code></pre></div><p>각 정보는 누적된 결과이며, Plan Cache에 들어있으면, 그 이후로는 SQL 실행 시간이 엄청하게 빨라집니다. (1번 쿼리는 평균 0.00005초 미만입니다.)</p>
+<p>그러나! 질의를 만드는 도중 몇 가지 제약 사항을 알게 되었는데.. 기존에서 큰 무리가 없던 쿼리 사용이 불가하다는 것입니다.</p>
+<p>간단하게 두 개 정도 쿼리 예를 들겠습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">memsql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">update</span><span class="w"> </span><span class="n">sbtest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">cast</span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="o">*</span><span class="mi">100000</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">unsigned</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1707</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">contains</span><span class="w"> </span><span class="n">constructs</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">currently</span><span class="w"> </span><span class="n">supported</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">MemSQL</span><span class="p">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">executed</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">memsql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">-&gt;</span><span class="w">     </span><span class="k">select</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">sbtest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">-&gt;</span><span class="w">     </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">between</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1707</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="k">contains</span><span class="w"> </span><span class="n">constructs</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">currently</span><span class="w"> </span><span class="n">supported</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">MemSQL</span><span class="p">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">executed</span><span class="p">.</span><span class="w">
+</span></span></span></code></pre></div><p>Update쿼리에는 함수가 아닌 상수 값이 지정되어야 하며, 위와 같은 타입의 서브쿼리는 지원하지 않습니다. 즉 MySQL에서 MemSQL로 데이터를 이관한다고 하더라도 상당 부분 SQL 변경을 해야할 것 같네요^^;;</p>
+<p>위 두 가지 외에도 더욱 많은 제약 사항들이 있을 것 같네요.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>트랜잭션을 지원하는 메모리 기반 DBMS이기 때문에 많은 기대를 하였으나, 서비스에 직접적인 투입을 하기에는 아직까지는 한계가 있어 보입니다.풍부한 기능을 가진 MySQL과 테스트에서는 기능적인 요소 뿐만 아니라 편의성 부분에서도 부족합니다.</p>
+<p>MySQL 프로토콜을 사용기 때문에 접근성은 타 NoSQL보다는 수훨하나, 기존 MySQL에서 데이터 이관 시 쿼리 또한 상당 부분 변경이 필요합니다.고 Replicaion 기능과 Sharding에 관한 내용을 MemSQL에서는 소개를 하였으나, 활용할 수 있는 메뉴얼을 현재까지 찾을 수 없었습니다. (현재 개발되고 있는 버전이 아닐까 생각이 드네요.)</p>
+<p><strong>하지만 메모리 기반이고, NoSQL보다는 접근성이 뛰어나며 단순 Select 테스트에서도 MySQL대비 10배 이상 빠른 성능을 보인 것</strong>으로 보아 지속적으로 눈여겨 볼 필요가 있는 제품일 것 같네요. ^^;**</p>
+<p>DB 목적을 정확하게 정의하고 데이터 그룹 메타 정보 보관 혹은 해시 성격의 데이터를 관리하는 시스템에서라면.. (SQL 종류가 다양하지 않은 단순 질의) 꽤나 좋은 성능을 보이지 않을까요?</p>
+<p>물론 서비스에 투입하기 이전에 DB 안정성 및 데이터 견고성에 관한 보장이 선행되어야겠죠.^^</p>
+<p>참고자료 : href=&ldquo;<a href="http://developers.memsql.com/%22">http://developers.memsql.com/&quot;</a> target=&quot;_blank&rdquo; rel=&ldquo;nofollow&rdquo;&gt;http://developers.memsql.com/<!-- raw HTML omitted --></p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/memsql/">MemSQL</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmemory-based-rdbms-memsql%2f&amp;text=%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ea%b8%b0%eb%b0%98%20RDBMS%2c%20MemSQL%ec%9d%84%20%ec%95%8c%ec%95%84%eb%b4%85%ec%8b%9c%eb%8b%a4&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2f2012%2f06%2fmemory-based-rdbms-memsql%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmemory-based-rdbms-memsql%2f&amp;title=%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ea%b8%b0%eb%b0%98%20RDBMS%2c%20MemSQL%ec%9d%84%20%ec%95%8c%ec%95%84%eb%b4%85%ec%8b%9c%eb%8b%a4" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmemory-based-rdbms-memsql%2f&amp;title=%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ea%b8%b0%eb%b0%98%20RDBMS%2c%20MemSQL%ec%9d%84%20%ec%95%8c%ec%95%84%eb%b4%85%ec%8b%9c%eb%8b%a4" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmemory-based-rdbms-memsql%2f&amp;title=%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ea%b8%b0%eb%b0%98%20RDBMS%2c%20MemSQL%ec%9d%84%20%ec%95%8c%ec%95%84%eb%b4%85%ec%8b%9c%eb%8b%a4" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmemory-based-rdbms-memsql%2f&amp;description=%eb%a9%94%eb%aa%a8%eb%a6%ac%20%ea%b8%b0%eb%b0%98%20RDBMS%2c%20MemSQL%ec%9d%84%20%ec%95%8c%ec%95%84%eb%b4%85%ec%8b%9c%eb%8b%a4" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/2022/05/mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/2021/09/package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/2021/07/mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/2021/07/make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/2021/06/resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/2012/06/let-me-introduce-mariadb/" data-toggle="tooltip" data-placement="top" title="Maria 1탄 – MySQL의 쌍둥이 형제 MariaDB를 소개합니다.">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/2012/07/mysql-replication-driver-error-report/" data-toggle="tooltip" data-placement="top" title="MySQL에서 Replication Driver 사용 시 장애 취약점 리포트">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2011 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

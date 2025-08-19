@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Unmap on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/unmap/</link>
+    <description>Recent content in Unmap on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Thu, 15 Jun 2017 21:39:12 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/unmap/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[MySQL] 바쁜 서비스 투입 전, 이런 캐시 전략 어때요?</title>
+      <link>//localhost:1313/2017/06/mysql-os-cache-management/</link>
+      <pubDate>Thu, 15 Jun 2017 21:39:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2017/06/mysql-os-cache-management/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;데이터베이스를 운영한다는 것은 최적의 상태로 리소스를 &lt;strong&gt;쥐어짜면서&lt;/strong&gt; 가장 효율적으로 데이터를 끄집어내야할텐데요. 지금은 SSD 디스크 도입으로 상당 부분 Disk I/O가 개선되었다지만, 여전히 메모리 효율은 굉장히 중요합니다. 특히나 &lt;strong&gt;Page Cache와 같은 항목이 과다하게 메모리를 점유하게 되면.. 다른 프로세스 효율에도 영향을 미칠 뿐만 아니라, 때로는 메모리 부족 현상으로 인하여 스왑 메모리에도 영향&lt;/strong&gt;을 줄 수 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;서론은 짧게.. 이번에 DBMS 구조를 그려가면서, 실제 리소스 사용에 걸림돌이 되는 몇몇 요소에 대한 우리의 사례를 얘기해보도록 하겠습니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

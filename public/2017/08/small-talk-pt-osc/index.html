@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>소소한 데이터 이야기 – pt-online-schema-change 편 – - </title>
+
+  <meta name="description" content="Overview
+MySQL 5.6부터는 Online ddl 기능을 제공하기 시작하였지만, 사실은 이전에도 트리거 기반의 online alter 유틸로 서비스 중단없이 테이블 스키마 변경을 수행했었습니다. 이중 percona에서 제공해주는 pt-online-schema-change가 많이들 활용되고 있는데요. 오늘은 돌다리도 망치로 때려가면서 안정성에 신중히 접근한 우리의 케이스에 대해서 데이터 기준으로 얘기를 해보고자 합니다.
+pt-online-schema-change?
+얘기하기에 앞서서, 이 툴에 대해서 다시한번 짚어보겠습니다. 대충 동작 순서는 아래와 같이..
+
+변경할 스키마 구조의 임시 테이블을 생성하고,
+insert/update/delete 트리거를 만들어서 최근 변경 데이터를 동기화하고,
+처음부터 끝까지 일정 청크 사이즈로 읽으면서 임시 테이블에 복사한 후,
+완료되면 RENAME TABLE하여 완료
+
+동작합니다.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/2017\/08\/small-talk-pt-osc\/",
+          "name": "소소한 데이터 이야기 – pt online schema change 편 –"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "소소한 데이터 이야기 – pt-online-schema-change 편 –",
+  "description" : "Overview MySQL 5.6부터는 Online ddl 기능을 제공하기 시작하였지만, 사실은 이전에도 트리거 기반의 online alter 유틸로 서비스 중단없이 테이블 스키마 변경을 수행했었습니다. 이중 percona에서 제공해주는 pt-online-schema-change가 많이들 활용되고 있는데요. 오늘은 돌다리도 망치로 때려가면서 안정성에 신중히 접근한 우리의 케이스에 대해서 데이터 기준으로 얘기를 해보고자 합니다.\npt-online-schema-change? 얘기하기에 앞서서, 이 툴에 대해서 다시한번 짚어보겠습니다. 대충 동작 순서는 아래와 같이..\n변경할 스키마 구조의 임시 테이블을 생성하고, insert\/update\/delete 트리거를 만들어서 최근 변경 데이터를 동기화하고, 처음부터 끝까지 일정 청크 사이즈로 읽으면서 임시 테이블에 복사한 후, 완료되면 RENAME TABLE하여 완료 동작합니다.\n",
+  "inLanguage" : "en",
+  "wordCount":  960 ,
+  "datePublished" : "2017-08-23T22:20:31\u002b00:00",
+  "dateModified" : "2017-08-23T22:20:31\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "MySQL, online alter, pt-online-schema-change" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/2017\/08\/small-talk-pt-osc\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="소소한 데이터 이야기 – pt-online-schema-change 편 –" />
+<meta property="og:description" content="Overview
+MySQL 5.6부터는 Online ddl 기능을 제공하기 시작하였지만, 사실은 이전에도 트리거 기반의 online alter 유틸로 서비스 중단없이 테이블 스키마 변경을 수행했었습니다. 이중 percona에서 제공해주는 pt-online-schema-change가 많이들 활용되고 있는데요. 오늘은 돌다리도 망치로 때려가면서 안정성에 신중히 접근한 우리의 케이스에 대해서 데이터 기준으로 얘기를 해보고자 합니다.
+pt-online-schema-change?
+얘기하기에 앞서서, 이 툴에 대해서 다시한번 짚어보겠습니다. 대충 동작 순서는 아래와 같이..
+
+변경할 스키마 구조의 임시 테이블을 생성하고,
+insert/update/delete 트리거를 만들어서 최근 변경 데이터를 동기화하고,
+처음부터 끝까지 일정 청크 사이즈로 읽으면서 임시 테이블에 복사한 후,
+완료되면 RENAME TABLE하여 완료
+
+동작합니다.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/2017/08/small-talk-pt-osc/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="소소한 데이터 이야기 – pt-online-schema-change 편 –" />
+  <meta name="twitter:description" content="Overview
+MySQL 5.6부터는 Online ddl 기능을 제공하기 시작하였지만, 사실은 이전에도 트리거 기반의 online alter 유틸로 서비스 중단없이 테이블 스키마 변경을 수행했었습니다. 이중 percona에서 제공해주는 pt-online-schema-change가 많이들 활용되고 있는데요. …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>소소한 데이터 이야기 – pt-online-schema-change 편 –</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2017-08-23
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>MySQL 5.6부터는 Online ddl 기능을 제공하기 시작하였지만, 사실은 이전에도 트리거 기반의 online alter 유틸로 서비스 중단없이 테이블 스키마 변경을 수행했었습니다. 이중 percona에서 제공해주는 pt-online-schema-change가 많이들 활용되고 있는데요. 오늘은 돌다리도 망치로 때려가면서 안정성에 신중히 접근한 우리의 케이스에 대해서 데이터 기준으로 얘기를 해보고자 합니다.</p>
+<h1 id="pt-online-schema-change">pt-online-schema-change?</h1>
+<p>얘기하기에 앞서서, 이 툴에 대해서 다시한번 짚어보겠습니다. 대충 동작 순서는 아래와 같이..</p>
+<ul>
+<li>변경할 스키마 구조의 <strong>임시 테이블을 생성</strong>하고,</li>
+<li>insert/update/delete <strong>트리거를 만들어서 최근 변경 데이터를 동기화</strong>하고,</li>
+<li>처음부터 끝까지 일정 청크 사이즈로 읽으면서 <strong>임시 테이블에 복사</strong>한 후,</li>
+<li>완료되면 <strong>RENAME TABLE</strong>하여 완료</li>
+</ul>
+<p>동작합니다.</p>
+<p><img src="/img/2016/09/image2013-3-25-14_42_26.png" alt="pt-online-schema-change"></p>
+<p>조금더 시각화된 설명을 원한다면. 하단 블로그를 참고하세요.</p>
+<blockquote>
+<blockquote>
+<p><a href="http://small-dbtalk.blogspot.kr/2014/02/mysql-table-schema.html">http://small-dbtalk.blogspot.kr/2014/02/mysql-table-schema.html</a></p></blockquote></blockquote>
+<h1 id="goals">Goals</h1>
+<p>24*365 서비스인만큼, 목표는 여전히 명쾌합니다. 심플하쥬?</p>
+<ol>
+<li><strong>무중단 스키마 변경</strong></li>
+<li><strong>서비스 영향도 제로</strong></li>
+</ol>
+<p>그런데, 구닥다리 MySQL 버전을 사용하지 않으면서, 왜 pt-online-schema-change와 같은 툴 얘기를 꺼내냐고요? 우선은 상황에 따라 가능하지 않기 때문입니다.</p>
+<blockquote>
+<blockquote>
+<p><a href="https://dev.mysql.com/doc/refman/5.6/en/innodb-create-index-overview.html">https://dev.mysql.com/doc/refman/5.6/en/innodb-create-index-overview.html</a></p></blockquote></blockquote>
+<p><strong>DML이 블록킹되는 케이스(Permits Concurrent DML이 NO인 경우)</strong> 에서는 절대적으로 온라인 서비스 적용이 불가합니다.</p>
+<p>혹은 아래와 같이 <strong>다수의 alter를 동시에 적용하고자 하는 케이스</strong>도 찾아볼 수 있고..</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">alter</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">tab</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">excol01</span><span class="w"> </span><span class="n">varhcar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">excol02</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="n">ix_col01</span><span class="p">(</span><span class="n">col01</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="n">ix_excol01</span><span class="p">(</span><span class="n">excol01</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>로그성 테이블이 일정 사이즈 이상된 시점에 <strong>파티셔닝 적용하는 케이스</strong>도 생각해볼 수 있겠네요.</p>
+<p>그렇기에, (개인적인 생각으로는) 아무리 online ddl 기능이 좋아질지라도, pt-online-schema-change와 같은 트리거 기반의 스키마 변경 유틸은 여전히 유효할 것으로 조심스레 예측해봅니다. 적용 여부 판단은 데이터쟁이의 판단 하에..ㅎㅎ</p>
+<h1 id="risk-point">Risk Point</h1>
+<p>아무튼 지금까지 우리의 상황을 정리해보고자 한다면..</p>
+<ul>
+<li><strong>MySQL의 online ddl 사용 불가</strong></li>
+<li><strong>서비스 영향도 없은 무중단 스키마 변경</strong></li>
+</ul>
+<p>두 가지 상황이고, 이 난관 극복을 위해서 트리거 기반의 유틸인 pt-online-schema-change를 활용하기로 하였습니다.</p>
+<p>우선 pt-online-schema-change 동작 로직 중, 트리거를 통한 트래픽 발생은 어느정도 예측할 수 있습니다. 타겟 테이블에 발생하는 트랜잭션 양만큼 딱 증가할 것이기에, 현재 데이터 변경량을 보면 어느정도 트랜잭션이 더 늘어날지는 어느정도 판단이 가능하죠.</p>
+<p>문제는 <strong>처음부터 끝까지 청크 사이즈로 읽어가면서 임시 테이블에 데이터를 복사하는 경우</strong>이 부분인데요. 데이터 복제를 위함이든, 데이터 복구를 위함이든, MySQL에는 바이너리 로그가 거의 필수입니다. 즉, 데이터 복사를 위한 처리 부분도 어떤 방식이든 <strong>바이너리 로그에 기록</strong>됩니다. 최근에는 바이너리 로그 포멧이 변경된 ROW 자체가 기록이 되는 ROW 포멧 방식으로 대부분 동작합니다. 게다가 만약 트랜잭션 ISOLATION LEVEL을 READ-COMMITTED 사용하고자 한다면, ROW FORMAT이 전제 조건입니다.</p>
+<p>여기서 우리의 상황에 세번째 항목을 붙여 아래와 같이 얘기해봅니다.</p>
+<ul>
+<li><strong>MySQL의 online ddl 사용 불가</strong></li>
+<li><strong>서비스 영향도 없은 무중단 스키마 변경</strong></li>
+<li><strong>바이너리 로그는 ROW 포멧으로 동작</strong></li>
+</ul>
+<p>처음부터 끝까지 데이터를 카피하는 상황에서, 바이너리 로그 사이즈가 기하급수적으로 늘어나는 것에 대한 영향도를 최소화해야 합니다. 대략 다음 두가지 정도?</p>
+<ol>
+<li><strong>네트워크 트래픽 과도로 인한 서비스 영향 발생 가능</strong></li>
+<li><strong>바이너리 로그 과다 적재로 인한 디스크 Full 발생 가능</strong></li>
+</ol>
+<p>서비스에 직접적인 영향을 미칠 뿐만 아니라, 잘못하면 서비스 불능 상태로까지 이어질 수 있습니다. (특히 2번 케이스는.. 서비스 멈춰요~ ㅜㅜ)</p>
+<h1 id="lets-solve">Let&rsquo;s solve</h1>
+<p>문제가 있으면 해결하면 되고, 해결할 수 없으면 대안을 마련하면 되고.. 아무튼.. 임팩 최소화 노력을 해보도록 하죠.</p>
+<h3 id="1-reduce-chunk-size">1. Reduce Chunk Size</h3>
+<p>Chunk 단위로 데이터를 카피하는 구조이기 때문에, <strong>다량의 로그가 슬레이브 서버로 스파이크 튀듯이 전송되는 상황</strong>은 막아야합니다. 순간순간 바이너리 로그 폭발(?)이 일어나며 서비스 영향을 줄 수 있는 요소가 있습니다.</p>
+<p>예를들자면, 1G짜리 테이블 100만건과 20G짜리 100만건 테이블 중, 우리에게 주어진 상황에서 더욱 리스크한 녀석은 누구일까요? -_-; 당연히 20G짜리 테이블입니다.</p>
+<p>동일한 ROW 사이즈로 데이터 복사를 해버리면, 매 트랜잭션마다 꽤나 큰 바이너리로그가 한방에 생성됩니다. 특히 <strong>semi-sync를 쓰는 경우에는 이 전송에 따른 지연이 기존 트랜잭션에 영향</strong>을 줄 수도 있습니다. 그렇다면.. 이런 케이스에서 적용해볼 수 있는 방법은 Chunk Size를 줄여서 이런 리스크 요소를 최소화해보는 것입니다. 잘게잘게 잘라서.. 임팩을 줄여가면서.. 조금씩 조금씩.. (대신 쿼리량은 늘어나게 되버리는.. 쥬릅ㅜㅜ)</p>
+<p><code>pt-online-schema-change</code> 툴에서는 <code>chunk-size</code> 옵션으로 제거 가능하며, 이 값을 기본값(1000)을 적절하게 하향 조정해봅니다. 물론 각 Copy 사이사이마다 일정 시간 쉬어갈 수 있는 interval이 있다면.. 더욱 제어가 쉬웠을텐데. 아쉽게도, 아직은 제공하지 않습니다. (만들어서 percona에 적용해달라고 푸시해볼까요? ㅋㅋ)</p>
+<p>아무튼 이렇게해서 만들어진 스크립트 실행 구문은 아래 형태를 보이겠네요.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pt-online-schema-change <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--alter <span class="s2">&#34;add excol01 varhcar(10)&#34;</span> <span class="nv">D</span><span class="o">=</span>db1,t<span class="o">=</span>tbname <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--chunk-size<span class="o">=</span><span class="m">200</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--defaults-file<span class="o">=</span>/etc/my.cnf <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--host<span class="o">=</span>127.0.0.1 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--port<span class="o">=</span><span class="m">3306</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--user<span class="o">=</span>root <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--ask-pass <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--chunk-index<span class="o">=</span>PRIMARY <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--charset<span class="o">=</span>UTF8 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--execute
+</span></span></code></pre></div><h3 id="2-change-session-variables">2. Change Session Variables</h3>
+<p>테이블 사이즈가 너무 커서, 바이너리 로그를 담기에 여의치 않을 때를 생각해봅시다. 물론 미리미리 binlog purge하면서 과거 로그를 제거해볼 수 있겠지만, 사실 백업/복구 입장에서 데이터 변경 이력 로그 삭제는 리스크할 수도 있습니다. Point-In Recovery가 안될 수도 있기 때문이죠.</p>
+<p>이 경우에서는 데이터 측면에서 조금 다르게 접근해 보자면, 우선 서비스 환경은 아래와 같습니다.</p>
+<ul>
+<li><strong>현재 트랜잭션 ISOLATION LEVEL은 READ-COMMITTED이다.</strong></li>
+<li><strong>현재 바이너리 로그는 ROW 포멧이다.</strong></li>
+</ul>
+<p>그렇다면.. 데이터를 카피하는 백그라운드 프로세스 기준에서도 위 조건을 충족해야할까요? 데이터 카피시 발생하는 쿼리를 SQL기반의 statement 방식으로 바이너리로그에 기록을 해보면 안될까요?</p>
+<p>pt-online-schema-change에서의 세션 파라메터를 아래와 같이 지정을 해본다면,</p>
+<ul>
+<li><strong>COPY 프로세스의  트랜잭션 ISOLATION LEVEL은 REPEATABLE-READ이다.</strong></li>
+<li><strong>COPY 프로세스의  바이너리 로그는 STATEMENT 포멧이다.</strong></li>
+</ul>
+<p>상황으로 접근해보면 어떨까요? pt-online-schema-change에서는 세션 파라메터로 set-vars 옵션에 각 파라메터 지적을 콤마로 구분해서 적용해볼 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pt-online-schema-change <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--alter <span class="s2">&#34;add excol01 varhcar(10)&#34;</span> <span class="nv">D</span><span class="o">=</span>db1,t<span class="o">=</span>tbname <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--chunk-size<span class="o">=</span><span class="m">200</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--defaults-file<span class="o">=</span>/etc/my.cnf <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--host<span class="o">=</span>127.0.0.1 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--port<span class="o">=</span><span class="m">3306</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--user<span class="o">=</span>root <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--ask-pass <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--chunk-index<span class="o">=</span>PRIMARY <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--charset<span class="o">=</span>UTF8 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--set-vars<span class="o">=</span><span class="s2">&#34;tx_isolation=&#39;repeatable-read&#39;,binlog_format=&#39;statement&#39;&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--execute
+</span></span></code></pre></div><p>사실 이렇게 수행을 하면, 바이너리 로그 사이즈는 걱정할 필요 없습니다. 게다가 네트워크 트래픽도 거의 차지 않을 것이고. 참으로 안전해보이고, 무조건 이렇게 사용하면 될 것 처럼 생각할 수도 있겠습니다만.. 적어도 이로인한 영향도는 미리 파악하고 사용하는 것이 좋겠죠?</p>
+<h4 id="1-isolation-level-에-따른-locking">1. isolation level 에 따른 Locking</h4>
+<p>아무래도 isolation level 이 한단계 높은 수위(read-committed -&gt; repeatable-read)로 관리되다보니, <strong>Lock 영향도</strong>를 무시할 수 없겠죠? <strong>next key lock</strong>이라든지.. <strong>gap lock</strong>이라든지.. 이런 영향도를 동일하게 받을 수 있다는 점을 인지하고 있어야 합니다. (물론 대용량 테이블에서는 영향도가 제한적이기는 합니다. ㅎㅎ)</p>
+<h4 id="2-슬레이브는-여전히-row-format">2. 슬레이브는 여전히 ROW FORMAT</h4>
+<p>마스터에서는 STATEMENT FORMAT으로 바이너리로그 기록이 잘 되고는 있습니다만, 문제는 <strong>슬레이브에서는 여전히 ROW FORMAT으로 기록</strong>됩니다. 이건 쿼리 패턴(<code>insert ignore .. select ..</code> )에 따른 어쩔 수 없는 요소로.. 슬레이브는 그냥 주기적으로 purge하면서 대응을 하는 것이 제일 현명해 보이네요. 아.. <strong>log-slave-updates 옵션을 ON 상태로 운영하는 경우</strong>만 해당되겠네요.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p><strong>물이 흐르듯 데이터도 흐릅니다. 물길이 변하면 유속이 바뀌듯, 데이터도 마찬가지입니다.</strong></p>
+<p>흐름을 <strong>잘 제어하기</strong> 위해 온라인 툴을 활용하였고, 내가 원하는 모양으로 만들기 위해 거쳐갈 <strong>데이터의 흐름</strong>을 생각해보았습니다. 그리고, 발생할 수 있는 <strong>리스크를 예측</strong>해볼 수 있었죠.</p>
+<p>예전에는 아무 생각없이 썼던, 손 쉬운 online alter 툴로만 인지를 했었지만.. 서비스가 무시무시하게 사악(?)해지고 나니 돌다리도 쇠망치로 두드려보며 건너보게 되더군요.</p>
+<p>사실 이것이 정답은 아닙니다. 더 좋은 방안도 있을 것이고. 효율적인 개선안도 있을 것이고. 그렇지만, 데이터쟁이답게, 닥쳐올 미션들을 <strong>데이터의 흐름</strong>에 촛점을 두어 앞으로도 <strong>장애없는 서비스</strong>를 만들어가도록 노력만큼은 변함이 없을 것입니다. 🙂</p>
+<p>좋은 밤 되세요. ㅋ</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/online-alter/">online alter</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/pt-online-schema-change/">pt-online-schema-change</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2f2017%2f08%2fsmall-talk-pt-osc%2f&amp;text=%ec%86%8c%ec%86%8c%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%9d%b4%ec%95%bc%ea%b8%b0%20%e2%80%93%20pt-online-schema-change%20%ed%8e%b8%20%e2%80%93&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2f2017%2f08%2fsmall-talk-pt-osc%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2f2017%2f08%2fsmall-talk-pt-osc%2f&amp;title=%ec%86%8c%ec%86%8c%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%9d%b4%ec%95%bc%ea%b8%b0%20%e2%80%93%20pt-online-schema-change%20%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2f2017%2f08%2fsmall-talk-pt-osc%2f&amp;title=%ec%86%8c%ec%86%8c%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%9d%b4%ec%95%bc%ea%b8%b0%20%e2%80%93%20pt-online-schema-change%20%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2f2017%2f08%2fsmall-talk-pt-osc%2f&amp;title=%ec%86%8c%ec%86%8c%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%9d%b4%ec%95%bc%ea%b8%b0%20%e2%80%93%20pt-online-schema-change%20%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2f2017%2f08%2fsmall-talk-pt-osc%2f&amp;description=%ec%86%8c%ec%86%8c%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%9d%b4%ec%95%bc%ea%b8%b0%20%e2%80%93%20pt-online-schema-change%20%ed%8e%b8%20%e2%80%93" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/2022/05/mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/2021/09/package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/2021/07/mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/2021/07/make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/2021/06/resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/2017/08/mysql-slow-log-gather/" data-toggle="tooltip" data-placement="top" title="데이터쟁이 입장으로 “슬로우 쿼리”를 다시 고민해보았습니다.">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/2017/10/jdbc-insane-autoreconnect/" data-toggle="tooltip" data-placement="top" title="JDBC의 autoReconnect 파라메터가 저지른 일!">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2011 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

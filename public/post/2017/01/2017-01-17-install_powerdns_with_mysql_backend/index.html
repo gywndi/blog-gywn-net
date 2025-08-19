@@ -1,0 +1,570 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>PowerDNS와 MySQL로 DNS를 해보고 싶어요~ - </title>
+
+  <meta name="description" content="Overview
+PowerDNS란 범용적(?)으로 사용되는 오픈소스 기반의 DNS서버이고, 다양한 백엔드를 지원하는 멋진(?) DNS 이기도 합니다. 얼마전, 이 관련되어 간단한 사례에 대해 세미나를 진행을 하였고, 이 구성에 대한 설명이 미흡하여 간단하게 정리해봅니다. ^^
+Install PowerDNS
+CentOS 6.7 버전에서 구성을 하였고, 실제 설치 작업에는 아래와 같이 같단합니다.
+(참고 : https://doc.powerdns.com/md/authoritative/installation/#binary-packages)
+
+
+(단, 여기서 MySQL 은 이미 구성되어 있다는 가정하에 진행합니다.)
+Configuration
+자~ 이제 DNS 데몬을 설치하였으니..(두줄에.. 끝? -_-;; 헐~)">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/post\/2017\/01\/2017-01-17-install_powerdns_with_mysql_backend\/",
+          "name": "Power dns와 my sql로 dns를 해보고 싶어요"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "PowerDNS와 MySQL로 DNS를 해보고 싶어요~",
+  "description" : "Overview PowerDNS란 범용적(?)으로 사용되는 오픈소스 기반의 DNS서버이고, 다양한 백엔드를 지원하는 멋진(?) DNS 이기도 합니다. 얼마전, 이 관련되어 간단한 사례에 대해 세미나를 진행을 하였고, 이 구성에 대한 설명이 미흡하여 간단하게 정리해봅니다. ^^\nInstall PowerDNS CentOS 6.7 버전에서 구성을 하였고, 실제 설치 작업에는 아래와 같이 같단합니다.\n(참고 : https:\/\/doc.powerdns.com\/md\/authoritative\/installation\/#binary-packages)\n(단, 여기서 MySQL 은 이미 구성되어 있다는 가정하에 진행합니다.)\nConfiguration 자~ 이제 DNS 데몬을 설치하였으니..(두줄에.. 끝? -_-;; 헐~)\n",
+  "inLanguage" : "en",
+  "wordCount":  360 ,
+  "datePublished" : "2017-01-17T13:54:29\u002b00:00",
+  "dateModified" : "2017-01-17T13:54:29\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "dns, mariadb, MySQL, powerdns" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/post\/2017\/01\/2017-01-17-install_powerdns_with_mysql_backend\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="PowerDNS와 MySQL로 DNS를 해보고 싶어요~" />
+<meta property="og:description" content="Overview
+PowerDNS란 범용적(?)으로 사용되는 오픈소스 기반의 DNS서버이고, 다양한 백엔드를 지원하는 멋진(?) DNS 이기도 합니다. 얼마전, 이 관련되어 간단한 사례에 대해 세미나를 진행을 하였고, 이 구성에 대한 설명이 미흡하여 간단하게 정리해봅니다. ^^
+Install PowerDNS
+CentOS 6.7 버전에서 구성을 하였고, 실제 설치 작업에는 아래와 같이 같단합니다.
+(참고 : https://doc.powerdns.com/md/authoritative/installation/#binary-packages)
+
+
+(단, 여기서 MySQL 은 이미 구성되어 있다는 가정하에 진행합니다.)
+Configuration
+자~ 이제 DNS 데몬을 설치하였으니..(두줄에.. 끝? -_-;; 헐~)">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/post/2017/01/2017-01-17-install_powerdns_with_mysql_backend/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="PowerDNS와 MySQL로 DNS를 해보고 싶어요~" />
+  <meta name="twitter:description" content="Overview
+PowerDNS란 범용적(?)으로 사용되는 오픈소스 기반의 DNS서버이고, 다양한 백엔드를 지원하는 멋진(?) DNS 이기도 합니다. 얼마전, 이 관련되어 간단한 사례에 대해 세미나를 진행을 하였고, 이 구성에 대한 설명이 미흡하여 간단하게 정리해봅니다. ^^
+Install PowerDNS
+CentOS 6.7 버전에서 구성을 하였고, 실제  …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>PowerDNS와 MySQL로 DNS를 해보고 싶어요~</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2017-01-17
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>PowerDNS란 범용적(?)으로 사용되는 오픈소스 기반의 DNS서버이고, 다양한 백엔드를 지원하는 멋진(?) DNS 이기도 합니다. 얼마전, 이 관련되어 간단한 사례에 대해 세미나를 진행을 하였고, 이 구성에 대한 설명이 미흡하여 간단하게 정리해봅니다. ^^</p>
+<h1 id="install-powerdns">Install PowerDNS</h1>
+<p>CentOS 6.7 버전에서 구성을 하였고, 실제 설치 작업에는 아래와 같이 같단합니다.<br>
+(참고 : <a href="https://doc.powerdns.com/md/authoritative/installation/#binary-packages">https://doc.powerdns.com/md/authoritative/installation/#binary-packages</a>)</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>(단, 여기서 MySQL 은 이미 구성되어 있다는 가정하에 진행합니다.)</p>
+<h1 id="configuration">Configuration</h1>
+<p>자~ 이제 DNS 데몬을 설치하였으니..(두줄에.. 끝? -_-;; 헐~)</p>
+<p>이제,설정을 해보도록 합시다~ 먼저.. MySQL의 계정 및 스키마를 생성을 해보고..</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>DNS 서버에서 사용할 스키마를 아래와 같이 생성을 합니다. 귀찮으니.. 그냥 콘솔 쉘에서 할 수 있도록.. 아래와 같이.. ㅋㅋ</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>pdns 설정 파일을 열어서.. 기본적으로  파일 기반인 BIND로 설정되어 있는 부분을 주석처리하고 MySQL접속 정보를 넣어줍니다. 위에서 계정 생성을 127.0.0.1로 접근 호스트를 생성하였으니.. 패스워드는 간단하게 설정하였습니다. (다른곳에서는 접근이 불가할테니요. ^^)</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>관리 서버를 올리고 싶다면.. 아래와 같이 pdns.conf에서 웹서버 부분을 변경 설정하여 올립니다. (여기서는 쿼리로만 추가 변경 테스트를 할테니, 굳이 필수 요소는 아닙니다. ^^)</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>이 모든 과정은.. 하단 메뉴얼에 친절하게 잘 명시되어 있고.. 제 입맛에 맞게 편집을 하였습니다. ㅋㅋ</p>
+<p>참고 : <a href="https://doc.powerdns.com/md/authoritative/howtos/#basic-setup-configuring-database-connectivity">https://doc.powerdns.com/md/authoritative/howtos/#basic-setup-configuring-database-connectivity</a></p>
+<h1 id="dns-test-with-sql">DNS Test with SQL</h1>
+<p>먼저 아래와 같이 없는 DNS질의를 해보면 전혀~ 도메인에 대한 정보가 보여지지 않습니다.</p>
+<!-- raw HTML omitted -->
+<p>이제 테스트를 위해 아래 쿼리를 밀어넣어줍니다. (참고로, 테이블에는 데이터가 전~혀 없다는 가정으로 테스트합니다.) 여기서 중요한 것은 SOA 는 필수입니다. 도메인의 영역을 표시할 뿐만 아니라, 어떻게 관리되어야할 지를 알려주는 도메인 Zone 개념을 내포하기 때문이죠.</p>
+<p>저에게 중요한 것은 TTL이 0인 A타입의 도메인이기에.. A레코드인 경우는 TTL을 0으로 지정하여 넣어줍니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>자. 아까 질의했던 도메인을 다시 확인해볼까요? 조금전에 DB에 밀어넣은 IP를 알려줍니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>조금 더 자세하게.. 하단과 같이 질의를 해보면, TTL(ANSWER SECTION) 또한 0으로 잘~ 세팅되어 있다는 것도 확인할 수 있지요.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>이제 쿼리로 도메인의 아이피를 바꿔볼까요?</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>쿼리 실행 후 DNS 질의를 해보면.. 바로 변경된 아이피를 확인할 수 있습니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>이 내용 또한 앞선 매뉴얼의 테스트 내용을 약간 제 입맛에 맞게 살을 붙여서 만들어보았습니다.^^</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>여전히 대부분의 DNS는 BIND기반으로 동작하고 있고.. 안정성 또한 입증된 방식이기도 하죠.</p>
+<p>그렇지만 MySQL 을 백엔드로 가지는 PowerDNS는 DB가 가지는 강점.. 예를 들면 데이터 처리 및 보안 등등 BIND에서 가져갈 수 없는 강점을 가지기도 하지요. 이를테면.. 존 추가 이후에 서버 재시작이 필요없다거나.. 파일이 아닌 DNS쿼리 하나하나의 ROW Level Locking.. 트랜잭션 등등~~</p>
+<p>이 포스팅에서는 간단하게.. 테스트를 수행할 수 있는 정도의 PowerDNS with MySQL 구성 방법을 설명해 보았습니다. 좋은 사례가 있으면 앞으로도 쭉 나왔으면 합니다. ^^</p>
+<p>감사합니다.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/dns/">dns</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mariadb/">mariadb</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/powerdns/">powerdns</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2fpost%2f2017%2f01%2f2017-01-17-install_powerdns_with_mysql_backend%2f&amp;text=PowerDNS%ec%99%80%20MySQL%eb%a1%9c%20DNS%eb%a5%bc%20%ed%95%b4%eb%b3%b4%ea%b3%a0%20%ec%8b%b6%ec%96%b4%ec%9a%94~&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2fpost%2f2017%2f01%2f2017-01-17-install_powerdns_with_mysql_backend%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2017%2f01%2f2017-01-17-install_powerdns_with_mysql_backend%2f&amp;title=PowerDNS%ec%99%80%20MySQL%eb%a1%9c%20DNS%eb%a5%bc%20%ed%95%b4%eb%b3%b4%ea%b3%a0%20%ec%8b%b6%ec%96%b4%ec%9a%94~" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2fpost%2f2017%2f01%2f2017-01-17-install_powerdns_with_mysql_backend%2f&amp;title=PowerDNS%ec%99%80%20MySQL%eb%a1%9c%20DNS%eb%a5%bc%20%ed%95%b4%eb%b3%b4%ea%b3%a0%20%ec%8b%b6%ec%96%b4%ec%9a%94~" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2017%2f01%2f2017-01-17-install_powerdns_with_mysql_backend%2f&amp;title=PowerDNS%ec%99%80%20MySQL%eb%a1%9c%20DNS%eb%a5%bc%20%ed%95%b4%eb%b3%b4%ea%b3%a0%20%ec%8b%b6%ec%96%b4%ec%9a%94~" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2fpost%2f2017%2f01%2f2017-01-17-install_powerdns_with_mysql_backend%2f&amp;description=PowerDNS%ec%99%80%20MySQL%eb%a1%9c%20DNS%eb%a5%bc%20%ed%95%b4%eb%b3%b4%ea%b3%a0%20%ec%8b%b6%ec%96%b4%ec%9a%94~" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/post/2022/05/2022-05-23-mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/post/2021/09/2021-09-07-package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-28-mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-13-make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/post/2021/06/2021-06-21-resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/post/2016/09/2016-09-26-pt-online-schema-change-pk-change-problem/" data-toggle="tooltip" data-placement="top" title="pt-online-schema-change에 숨겨진 무시무시한 이슈!">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/post/2017/01/2017-01-20-how_to_move_partition_data_to_another/" data-toggle="tooltip" data-placement="top" title="MySQL에서 파티션 일부를 다른 파티션 테이블로 옮겨보기">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://tech.gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

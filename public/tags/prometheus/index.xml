@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Prometheus on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/prometheus/</link>
+    <description>Recent content in Prometheus on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Tue, 13 Jul 2021 05:39:54 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/prometheus/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go언어로 나만의 Query Exporter 만들어보기!</title>
+      <link>//localhost:1313/2021/07/make-own-query-exporter-with-go/</link>
+      <pubDate>Tue, 13 Jul 2021 05:39:54 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2021/07/make-own-query-exporter-with-go/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;안녕하세요. 무더운 7월 잘 지내고 계시죠.?&lt;/p&gt;&#xA;&lt;p&gt;오늘은 조금 특이한 주제를 가지고 이야기를 해보고자 합니다. 바로 &lt;strong&gt;go로 나만의 Exporter를 만들어보는 것&lt;/strong&gt;입니다. 특정 쿼리를 등록을 해놓으면, 이 쿼리 결과를 Exporter 결과로 보여주는 간단한 프로그램입니다. 아직 Expoter가 무엇인지 생소하신 분들이 있을 수 있겠는데요. 오늘 차근차근 설명을 하면서, 머릿속에 살짝 인스톨해드리도록 하겠습니다. 🙂&lt;/p&gt;&#xA;&lt;h1 id=&#34;exporter&#34;&gt;Exporter?&lt;/h1&gt;&#xA;&lt;p&gt;Exporter란, Prometheus같은 시계열 데이터베이스에서 데이터를 끌어가기 위한 하나의 &lt;strong&gt;HTTP 서버&lt;/strong&gt;라고 생각하면 되겠습니다. Prometheus에서는 정해진 주기에 따라 exporter의 특정 URL을 호출하고, 그 결과값을 시계열로 데이터를 저장합니다.&#xA;&lt;img src=&#34;//localhost:1313/img/2021/07/prometheus-exporter.png&#34; alt=&#34;prometheus &amp;amp; exporter&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL InnoDB의 메모리 캐시 서버로 변신! – 모니터링편 –</title>
+      <link>//localhost:1313/2019/09/mysql-innodb-as-cache-server-monitoring/</link>
+      <pubDate>Thu, 19 Sep 2019 14:28:50 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2019/09/mysql-innodb-as-cache-server-monitoring/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL memcached plugin 2탄! 모니터링편입니다.&lt;br&gt;&#xA;어떤 초호화 솔루션일지라도, 시스템의 정확한 상태를 파악할 수 없다면, 사용하기에는 참으로 꺼려집니다. 그래서 어떤 방법이든, &lt;strong&gt;가장 효율적인 모니터링 방안&lt;/strong&gt;을 찾아봐야 하겠는데요. 저는 개인적으로는 &lt;strong&gt;prometheus를 활용한 metric수집을 선호&lt;/strong&gt;합니다.&lt;br&gt;&#xA;오늘 이 자리에서는 Prometheus에서 MySQL InnoDB memcached plugin을 모니터링 하는 방법에 대해서 이야기를 해보도록 하겠습니다. 🙂&lt;/p&gt;&#xA;&lt;h1 id=&#34;why-prometheus&#34;&gt;Why prometheus?&lt;/h1&gt;&#xA;&lt;p&gt;이유는 단순합니다. &lt;strong&gt;이미 만들어져 있는 exporter가 굉장히 많다&lt;/strong&gt;는 것, 만약 원하는 것들이 있다면 &lt;strong&gt;나의 구미에 맞게 기능을 추가해서 쉽게 접근할 수 있다&lt;/strong&gt;는 것! 즉, &lt;strong&gt;오픈소스&lt;/strong&gt;라는 것!! 무엇보다 Time-series 기반의 데이터 저장소인 Prometheus로 정말로 효율적으로 모니터링 매트릭 정보를 수집할 수 있다는 것! Prometheus는 &lt;strong&gt;로그 수집에 최적화&lt;/strong&gt; 되어 있다고 과언이 아닙니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>PMM팁1탄! MySQL을 READ-ONLY 기준으로 표기해보기.</title>
+      <link>//localhost:1313/2019/01/pmm-tip1-classified-by-mysql-readonly/</link>
+      <pubDate>Mon, 28 Jan 2019 23:58:03 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2019/01/pmm-tip1-classified-by-mysql-readonly/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;어느덧 1월이 마무리되어가는 이 시점.. 한달 내내 놀다 시간 보내기에는 아쉬움이 많이 남아, 블로그 한두개 정도는 남겨보고자, 아주 간만에 노트북 앞에 앉습니다. 가장 기억 속에 맴도는 주제를 찾던 중, 작년 나름 많은 분석을 했었던 내용들을 한번 몇가지 주제로 정리해보고자 합니다.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;PMM&lt;/strong&gt;(&lt;strong&gt;P&lt;/strong&gt;ercona &lt;strong&gt;M&lt;/strong&gt;onitoring and &lt;strong&gt;M&lt;/strong&gt;anagement)이라는 녀석으로 퉁 쳐서 이야기를 했지만, 사실 이번에 이야기할 내용은 Prometheus 쿼리와 Grafana를 사용하는 간단한 꼼수(?)에 대한 이야기입니다.&lt;/p&gt;&#xA;&lt;p&gt;혹시 PMM이 어떤 녀석인지 궁금하시다면? &lt;a href=&#34;//localhost:1313/2018/03/pmm-intro/&#34;&gt;PMM 이야기 1편 – INTRO&lt;/a&gt; 편을 읽어보주세요. ㅎㅎ&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>PMM 이야기 1편 – INTRO</title>
+      <link>//localhost:1313/2018/03/pmm-intro/</link>
+      <pubDate>Sat, 03 Mar 2018 17:33:28 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2018/03/pmm-intro/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;정말 오랜만에 글을 써봅니다. 은행이 오픈한지도 어언 8개월째를 훌쩍 접어들었네요. 여전히 MySQL 서버군에는 이렇다할 장애 없이, 무난(?)하게 하루하루를 지내고 있습니다.. (아.. 그렇다고 놀고만 있지는 않았어요!!)&lt;/p&gt;&#xA;&lt;p&gt;사실 그동안의 경험과 삽질을 바탕으로, 필요성을 느꼈던 다양한 부분을 중앙 매니저에 최대한 녹여보았고, 그 집대성의 결과가 지금 뱅킹 MySQL시스템입니다. MHA 관리, 스키마 관리, 파티션 관리, 패스워드 관리, 백업/복구 관리..아.. 또 뭐있더라.. -_-;; 암튼, 귀찮은 모든 것들은 최대한 구현을 해놓았지요.&lt;/p&gt;&#xA;&lt;p&gt;그러나, 예전부터 늘 부족하다고 생각해왔던 한가지 분야가 있는데.. 그것은 바로 모니터링입니다. 시스템에 대한 가장 정확한 최신 정보는 바로 모니터링 지표입니다. 만약, 제대로된 모니터링 시스템 환경 속에서, 실제 서비스의 영속성과 시스템의 매니지먼트를 &lt;strong&gt;모니터링 지표&lt;/strong&gt;를 통해서 제대로된 &lt;strong&gt;에코 시스템&lt;/strong&gt;을 구축할 수 있다면? 등골이 오싹할 정도의 선순환 작용으로 엄청 견고한 시스템을 구축할 수 있겠죠.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

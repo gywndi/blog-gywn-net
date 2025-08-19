@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Transaction on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/transaction/</link>
+    <description>Recent content in Transaction on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Sun, 28 Oct 2012 15:40:46 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/transaction/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>대용량 테이블에서 카운트 정보를 효과적으로 관리하자.</title>
+      <link>//localhost:1313/2012/10/how-to-prevent-massive-row-lock/</link>
+      <pubDate>Sun, 28 Oct 2012 15:40:46 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/10/how-to-prevent-massive-row-lock/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;대부분 서비스에서는 데이터 카운트를 합니다. 커뮤니티에서는 사용자 아티클 수를, 결제 서비스에서는 남은 물폼 수를 관리하기 위해서 사용하죠. 그리고 트랜잭션이 중요한 서비스라면, 데이터 일관성 유지를 위해 카운트 시 매번 데이터를 다시 읽어옵니다.&lt;/p&gt;&#xA;&lt;p&gt;데이터가 적으면 큰 문제가 되지 않겠지만, 데이터 지속적으로 누적됨에 따라 성능 또한 기하급수적으로 저하됩니다.&lt;/p&gt;&#xA;&lt;p&gt;그렇다면 이러한 환경에서 어떻게 카운트 퍼포먼스를 향상할 수 있을까요? 오늘 포스팅할 내용은 MySQL뿐만 아니라 행 단위 잠금을 지원하는 환경도 포함합니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;통계-테이블-사용&#34;&gt;통계 테이블 사용&lt;/h1&gt;&#xA;&lt;p&gt;빠른 데이터 건 수를 가져오는 방법으로는 별도의 통계 테이블을 관리하는 것입니다. 다음과 같이 통계 테이블을 별도로 구성하여 카운트 정보를 관리합니다.&#xA;이렇게 되면, 굳이 덩치가 큰 테이블에서 일일이 카운트를 하지 않고, 통계 테이블에서 &lt;strong&gt;한 건의 데이터&lt;/strong&gt;만 읽어오므로, 카운트 성능을 크게 향상할 수 있죠.&#xA;&lt;img src=&#34;//localhost:1313/img/2012/10/Count-Stat-Table.png&#34; alt=&#34;Count Stat Table&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

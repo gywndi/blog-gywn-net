@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Online Alter on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/online-alter/</link>
+    <description>Recent content in Online Alter on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Fri, 12 Oct 2018 00:00:52 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/online-alter/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[MySQL] Online Alter에도 헛점은 있더구나 – gdb, mysqld-debug 활용 사례</title>
+      <link>//localhost:1313/2018/10/online-alter-for-varchar/</link>
+      <pubDate>Fri, 12 Oct 2018 00:00:52 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2018/10/online-alter-for-varchar/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL에서도 5.6부터는 온라인 Alter 기능이 상당부분 제공되기 시작했습니다. 인덱스과 칼럼 추가/삭제 뿐만 아니라, varchar 경우에는 부분적으로 칼럼 확장이 서비스 중단없이 가능한 것이죠. 물론 오라클 유저들에게는 당연한 오퍼레이션들이, MySQL에서는 두손들고 운동장 20바퀴 돌 정도로 기뻐할만한 기능들입니다. 물론, 대부분의 DDL을 테이블 잠금을 걸고 수행하던 5.5 시절에도 online alter를 위해 트리거 기반의 pt-online-schema-change 툴을 많이들 사용했었기에.. 서비스 중단이 반드시 필요하지는 않았지만요. (&lt;a href=&#34;//localhost:1313/2017/08/small-talk-pt-osc/&#34;&gt;소소한 데이터 이야기 – pt-online-schema-change&lt;/a&gt;)&lt;/p&gt;&#xA;&lt;p&gt;아무튼 이렇게 online alter가 대거 지원하는 상황 속에서, MySQL의 메뉴얼과는 다르게 잘못 동작하는 부분이 있었는데, 이 원인을 찾아내기 위해서는 MySQL 내부적으로 어떻게 동작을 하는지 알아내기 위해 며칠 우물을 신나게 파보았습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>소소한 데이터 이야기 – pt-online-schema-change 편 –</title>
+      <link>//localhost:1313/2017/08/small-talk-pt-osc/</link>
+      <pubDate>Wed, 23 Aug 2017 22:20:31 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2017/08/small-talk-pt-osc/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL 5.6부터는 Online ddl 기능을 제공하기 시작하였지만, 사실은 이전에도 트리거 기반의 online alter 유틸로 서비스 중단없이 테이블 스키마 변경을 수행했었습니다. 이중 percona에서 제공해주는 pt-online-schema-change가 많이들 활용되고 있는데요. 오늘은 돌다리도 망치로 때려가면서 안정성에 신중히 접근한 우리의 케이스에 대해서 데이터 기준으로 얘기를 해보고자 합니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;pt-online-schema-change&#34;&gt;pt-online-schema-change?&lt;/h1&gt;&#xA;&lt;p&gt;얘기하기에 앞서서, 이 툴에 대해서 다시한번 짚어보겠습니다. 대충 동작 순서는 아래와 같이..&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;변경할 스키마 구조의 &lt;strong&gt;임시 테이블을 생성&lt;/strong&gt;하고,&lt;/li&gt;&#xA;&lt;li&gt;insert/update/delete &lt;strong&gt;트리거를 만들어서 최근 변경 데이터를 동기화&lt;/strong&gt;하고,&lt;/li&gt;&#xA;&lt;li&gt;처음부터 끝까지 일정 청크 사이즈로 읽으면서 &lt;strong&gt;임시 테이블에 복사&lt;/strong&gt;한 후,&lt;/li&gt;&#xA;&lt;li&gt;완료되면 &lt;strong&gt;RENAME TABLE&lt;/strong&gt;하여 완료&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;동작합니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

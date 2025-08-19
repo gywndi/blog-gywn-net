@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>MySQL에서 Temporary Table을 활용한 데이터 질의..그 효과는? - </title>
+
+  <meta name="description" content="Overview
+오늘은 Temporary Table에 관해 포스팅을 하겠습니다. Select및 Update 등을 이따금씩 Temporary Table을 활용하여 수행하는 경우가 있습니다. 동시에 많은 데이터를 일괄 변경하는 것에서는 분명 강점이 있을 것이라 판단되는데, 어떤 상황에서 적절하게 사용하는 것이 좋을까요? 관련 성능 벤치마크 결과를 공개하겠습니다.
+Environment
+테이블에는 약 1000만 건 데이터가 존재하며, Primary Key외에는 추가 인덱스는 생성하지 않았습니다. 서로 동등하게 빠른 데이터 접근이 가능하다는 가정 하에 PK외 인덱스에서 발생할 수 있는 성능 저하 요소를 배제하기 위해서 입니다.^^">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/2012\/06\/mysql-temporary-table-effect\/",
+          "name": "My sql에서 temporary table을 활용한 데이터 질의..그 효과는?"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "MySQL에서 Temporary Table을 활용한 데이터 질의..그 효과는?",
+  "description" : "Overview 오늘은 Temporary Table에 관해 포스팅을 하겠습니다. Select및 Update 등을 이따금씩 Temporary Table을 활용하여 수행하는 경우가 있습니다. 동시에 많은 데이터를 일괄 변경하는 것에서는 분명 강점이 있을 것이라 판단되는데, 어떤 상황에서 적절하게 사용하는 것이 좋을까요? 관련 성능 벤치마크 결과를 공개하겠습니다.\nEnvironment 테이블에는 약 1000만 건 데이터가 존재하며, Primary Key외에는 추가 인덱스는 생성하지 않았습니다. 서로 동등하게 빠른 데이터 접근이 가능하다는 가정 하에 PK외 인덱스에서 발생할 수 있는 성능 저하 요소를 배제하기 위해서 입니다.^^\n",
+  "inLanguage" : "en",
+  "wordCount":  762 ,
+  "datePublished" : "2012-06-15T06:15:02\u002b00:00",
+  "dateModified" : "2012-06-15T06:15:02\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "Benchmark, MySQL, Performance, Temporary Table" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/2012\/06\/mysql-temporary-table-effect\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="MySQL에서 Temporary Table을 활용한 데이터 질의..그 효과는?" />
+<meta property="og:description" content="Overview
+오늘은 Temporary Table에 관해 포스팅을 하겠습니다. Select및 Update 등을 이따금씩 Temporary Table을 활용하여 수행하는 경우가 있습니다. 동시에 많은 데이터를 일괄 변경하는 것에서는 분명 강점이 있을 것이라 판단되는데, 어떤 상황에서 적절하게 사용하는 것이 좋을까요? 관련 성능 벤치마크 결과를 공개하겠습니다.
+Environment
+테이블에는 약 1000만 건 데이터가 존재하며, Primary Key외에는 추가 인덱스는 생성하지 않았습니다. 서로 동등하게 빠른 데이터 접근이 가능하다는 가정 하에 PK외 인덱스에서 발생할 수 있는 성능 저하 요소를 배제하기 위해서 입니다.^^">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/2012/06/mysql-temporary-table-effect/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="MySQL에서 Temporary Table을 활용한 데이터 질의..그 효과는?" />
+  <meta name="twitter:description" content="Overview
+오늘은 Temporary Table에 관해 포스팅을 하겠습니다. Select및 Update 등을 이따금씩 Temporary Table을 활용하여 수행하는 경우가 있습니다. 동시에 많은 데이터를 일괄 변경하는 것에서는 분명 강점이 있을 것이라 판단되는데, 어떤 상황에서 적절하게 사용하는 것이 좋을까요? 관련 성능 벤치마크 결과를 공개하겠습니 …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>MySQL에서 Temporary Table을 활용한 데이터 질의..그 효과는?</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2012-06-15
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>오늘은 Temporary Table에 관해 포스팅을 하겠습니다. Select및 Update 등을 이따금씩 Temporary Table을 활용하여 수행하는 경우가 있습니다. 동시에 많은 데이터를 일괄 변경하는 것에서는 분명 강점이 있을 것이라 판단되는데, 어떤 상황에서 적절하게 사용하는 것이 좋을까요? 관련 성능 벤치마크 결과를 공개하겠습니다.</p>
+<h1 id="environment"><strong>Environment</strong></h1>
+<p>테이블에는 약 1000만 건 데이터가 존재하며, Primary Key외에는 추가 인덱스는 생성하지 않았습니다. 서로 동등하게 빠른 데이터 접근이 가능하다는 가정 하에 PK외 인덱스에서 발생할 수 있는 성능 저하 요소를 배제하기 위해서 입니다.^^</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1">## DDL for dbatest</span>
+</span></span><span class="line"><span class="cl"><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">dbatest</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl"><span class="n">i</span> <span class="ne">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="n">c1</span> <span class="ne">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="n">c2</span> <span class="ne">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="n">c3</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="n">DEFAULT</span> <span class="n">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="p">(</span><span class="n">i</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Table Infomation</span>
+</span></span><span class="line"><span class="cl"><span class="o">+-------------+----------+-------+-------+------------+</span>
+</span></span><span class="line"><span class="cl"><span class="o">|</span> <span class="n">TABLE_NAME</span>  <span class="o">|</span> <span class="n">ROWS</span>     <span class="o">|</span> <span class="n">DATA</span>  <span class="o">|</span> <span class="n">IDX</span>   <span class="o">|</span> <span class="n">TOTAL_SIZE</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl"><span class="o">+-------------+----------+-------+-------+------------+</span>
+</span></span><span class="line"><span class="cl"><span class="o">|</span> <span class="n">dba</span><span class="o">.</span><span class="n">dbatest</span> <span class="o">|</span> <span class="mi">10000105</span> <span class="o">|</span> <span class="mi">1283</span><span class="n">M</span> <span class="o">|</span> <span class="mf">0.00</span><span class="n">M</span> <span class="o">|</span> <span class="mf">1283.00</span><span class="n">M</span>   <span class="o">|</span>
+</span></span><span class="line"><span class="cl"><span class="o">+-------------+----------+-------+-------+------------+</span>
+</span></span></code></pre></div><p>성능 테스트 시 Temporary Table은 아래와 패턴(tmp_dbatest_세션번호)으로 DB 세션 단위로 정의하여 성능을 측정하였습니다. 물론 Temporary Table이 필요한 부분에서만 사용 되겠죠.^^</p>
+<p>Memory Storage 엔진은 테이블 Lock으로 동작하지만, 자신의 Temporary Table은 자신의 세션에서만 사용하기 때문에 동시에 여러 세션에서 읽히게 되는 그런 경우는 없다고 봐도 무관합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## DDL for Temporary Table
+</span></span><span class="line"><span class="cl">CREATE TEMPORARY TABLE tmp_dbatest_12(
+</span></span><span class="line"><span class="cl">i int not null,
+</span></span><span class="line"><span class="cl">primary key(i)
+</span></span><span class="line"><span class="cl">) engine = memory;
+</span></span></code></pre></div><p>대상 테이블에는 앞에서 언급한 것과 같이 약 1,000만 건 데이터가 들어있으며, Primary Key는 1부터 순차적으으로 정의도어 있습니다.</p>
+<p>트래픽은 Java Thread를 여러 개 발생하여 마치 실 서비스 상태와 유사한 환경을 조성하였으며, 5개 세션(쓰레드)부터 단계적으로 200개까지 세션 수를 늘려서 초당 트랜잭션 수(TPS)를 측정하였습니다.</p>
+<p>디스크 지연으로 인한 영향을 최소화하기 위해서 메모리는 충분히 할당하였고, 데이터 생성 후에는 DB Restart를 배제함으로써 모든 데이터를 메모리에 있다고 가정하였습니다. (테스트 시 리소스 현황을 확인하면서 Disk I/O로 인한 Bottleneck이 없음을 어느정도 확신하습니다.)</p>
+<p>테스트는 기본적으로 하나의 트랜잭션에서 20건의 데이터 Select 또는 Update를 얼마나 효율적으로 질의할 수 있느냐에 초점을 두었습니다.</p>
+<p>자! 이제 성능 테스트 결과를 공개합니다.</p>
+<h1 id="benchmark-result--select"><strong>Benchmark Result : Select</strong></h1>
+<p>Temporary Table 사용 유무를 나누어서 테스트를 진행하였습니다.</p>
+<h3 id="temporary-table"><strong>Temporary Table</strong></h3>
+<ol>
+<li>Drop Temporary Table</li>
+<li>Create Temporary Table</li>
+<li>1부터 10,000,000 범위 숫자 20개 무작위 추출</li>
+<li>다음과 같이 Temporary Table과 Join하여 데이터 Select</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">SELECT a.i, a.c1, a.c2
+</span></span><span class="line"><span class="cl">FROM dbatest a
+</span></span><span class="line"><span class="cl">INNER JOIN tmp_dbatest_12 b ON a.i = b.i
+</span></span></code></pre></div><h2 id="none-temporary-table">None Temporary Table</h2>
+<ul>
+<li>1부터 10,000,000 범위 숫자 20개 무작위 추출</li>
+<li>다음과 같이 IN 구문을 사용하여 Select</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  SELECT a.i, a.c1, a.c2
+</span></span><span class="line"><span class="cl">FROM dbatest a
+</span></span><span class="line"><span class="cl">WHERE a.i in (1,2,3,4,..,17,18,19,20)
+</span></span></code></pre></div><p><img src="/img/2012/06/Performance-Test-Select-None-Temporary-Table.png" alt="Performance Test Select Result"></p>
+<p>동시 접속 수가 많아질수록 Temporary Table 없이 사용하는 것이 성능이 월등히 좋았습니다.</p>
+<p>위 케이스에서는 상당히 예상 가능한 결과로, Create/Drop/Insert/Select 등 네 가지 질의가 동일 트랜잭션에서 발생하기 때문 요인으로 볼 수 있겠죠. 하지만 만약 추후 기 저장된 데이터를 재활용한다면 상당히 다른 결과를 보여줄 수 있겠죠? (예를 들어 통계 중간 단계 혹은 자주 읽히는 데이터 임시 저장이라든가..)</p>
+<p>IN 구문 성능이 1,000건 Select에서는 어느정도 영향이 있지 않을까라는 생각이 들어서 1,000 건 동시 데이터 질의 트래픽을 발생하여 측정하였습니다.</p>
+<p>테스트 결과는 하단과 같으며, 여전히 Temporary Table 없이 사용하는 것이 성능이 더 좋았습니다. 앞선 결과와 차이가 크지 않은 것은 Select 쿼리 자체의 부하가 늘어났기 때문으로 파악할 수 있습니다.</p>
+<p><img src="/img/2012/06/Performance-Test-Select-None-Temporary-Table2.png" alt="Performance Test 1000 Rows Select Result"></p>
+<p>그리고 테스트 도중  “Query End” 상태로 약 20초 대기상태에 빠지는 경우가 발생하였습니다. 아마도 내부 메모리 경합으로 인한 문제가 아닐까 추측해봅니다.</p>
+<p><img src="/img/2012/06/Performance-Test-Error.png" alt="Performance Test Wait"></p>
+<h1 id="benchmark-result--update"><strong>Benchmark Result : Update</strong></h1>
+<p>앞선 테스트 방식과 동일하게 Update에서도 Temporary Table 사용 유무에 따라 구분하였고, 동시에 20 Row의 데이터 변경하는 것에 초점을 맞추었습니다.</p>
+<h3 id="temporary-table-1"><strong>Temporary Table</strong></h3>
+<ol>
+<li>Drop Temporary Table</li>
+<li>Create Temporary Table</li>
+<li>1부터 10,000,000 범위 숫자 20개 무작위 추출</li>
+<li>다음과 같이 Temporary Table과 Join하여 데이터 Update</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">UPDATE dbatest a
+</span></span><span class="line"><span class="cl">INNER JOIN tmp_dbatest_12 b ON a.i = b.i
+</span></span><span class="line"><span class="cl">SET a.c1 = a.c1 +10, a.c2 = a.c2 + 10000
+</span></span></code></pre></div><h3 id="none-temporary-table-1"><strong>None Temporary Table</strong></h3>
+<ol>
+<li>1부터 10,000,000 범위 숫자 20개 무작위 추출</li>
+<li>PreparedStatement를 사용하여 다음과 같은 쿼리 20번 수행</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">UPDATE dbatest SET c1 = c1 +10, c2 = c2 + 10000 WHERE i = ?
+</span></span></code></pre></div><p><img src="/img/2012/06/Performance-Test-Update-Result.png" alt="Performance Test Update Result"></p>
+<p>Update에서는 상당한 효과를 보입니다. Temporary Table없이 단순 건 단위로 Update 수행하는 것보다 확실히 효율이 좋습니다. 데이터 처리 시 <code>Permission Check</code> -&gt; <code>Open Table</code> -&gt; <code>Process</code> -&gt; <code>Close Table</code> 등과 같이 일련의 작업이 필요한데 이러한 것을 한방 쿼리로 퉁(?) 친 결과가 아닐까 생각해 봅니다. 하지만 앞서서 발생했던 처리 지연 원인이 확실하지 않은 시점에서 Update 시 무조건 좋다고 볼 수는 없겠네요.</p>
+<p>OLTP 환경에서 안정성 검토가 이루어져야 할 것이고, 10건 이상 동시 데이터 변경 작업에서는 성능 향상 효과를 상당히 얻을 수 있겠습니다.^^</p>
+<h1 id="conclusion"><strong>Conclusion</strong></h1>
+<p>위 결과를 정리하자면 다음과 같습니다.</p>
+<p>Select 시에 Temporary Table을 사용하는 것은 성능 상으로는 전혀 도움이 되지 않습니다. 빈도있는 테이블 생성/삭제, 데이터 Insert및 Join Select 등 불필요한 단계 때문이죠. 하지만 중간 결과를 저장하거나, 추후 빈도있는 재사용을 위한 목적이라면 큰 효과를 볼 수 있을 것 같습니다.</p>
+<p>그리고 위 Update 그래프 결과를 참고할 때 10건 이상 동시 데이터 업데이트 처리 시에는 분명 효율성이 상승하는 효과는 분명히 있습니다. 서비스 로직에 따라서 동시에 수많은 데이터를 업데이트 처리하는 경우에는 큰 효과를 걷을 수 있겠습니다.</p>
+<p>하지만, 앞서서 발생했던 처리 지연을 염두해야 하며, 가능한한 Drop 및 Create 구문을 발생하지 않고 테이블을 재사용하는 방안이 조금은 더 합리적일 것 같습니다.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/benchmark/">Benchmark</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/temporary-table/">Temporary Table</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmysql-temporary-table-effect%2f&amp;text=MySQL%ec%97%90%ec%84%9c%20Temporary%20Table%ec%9d%84%20%ed%99%9c%ec%9a%a9%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%a7%88%ec%9d%98..%ea%b7%b8%20%ed%9a%a8%ea%b3%bc%eb%8a%94%3f&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2f2012%2f06%2fmysql-temporary-table-effect%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmysql-temporary-table-effect%2f&amp;title=MySQL%ec%97%90%ec%84%9c%20Temporary%20Table%ec%9d%84%20%ed%99%9c%ec%9a%a9%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%a7%88%ec%9d%98..%ea%b7%b8%20%ed%9a%a8%ea%b3%bc%eb%8a%94%3f" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmysql-temporary-table-effect%2f&amp;title=MySQL%ec%97%90%ec%84%9c%20Temporary%20Table%ec%9d%84%20%ed%99%9c%ec%9a%a9%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%a7%88%ec%9d%98..%ea%b7%b8%20%ed%9a%a8%ea%b3%bc%eb%8a%94%3f" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmysql-temporary-table-effect%2f&amp;title=MySQL%ec%97%90%ec%84%9c%20Temporary%20Table%ec%9d%84%20%ed%99%9c%ec%9a%a9%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%a7%88%ec%9d%98..%ea%b7%b8%20%ed%9a%a8%ea%b3%bc%eb%8a%94%3f" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2f2012%2f06%2fmysql-temporary-table-effect%2f&amp;description=MySQL%ec%97%90%ec%84%9c%20Temporary%20Table%ec%9d%84%20%ed%99%9c%ec%9a%a9%ed%95%9c%20%eb%8d%b0%ec%9d%b4%ed%84%b0%20%ec%a7%88%ec%9d%98..%ea%b7%b8%20%ed%9a%a8%ea%b3%bc%eb%8a%94%3f" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/2022/05/mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/2021/09/package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/2021/07/mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/2021/07/make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/2021/06/resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/2012/06/how-to-recover-data-on-amazon-rds/" data-toggle="tooltip" data-placement="top" title="Amazon RDS에서 유실된 데이터 복원하기">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/2012/06/let-me-introduce-mariadb/" data-toggle="tooltip" data-placement="top" title="Maria 1탄 – MySQL의 쌍둥이 형제 MariaDB를 소개합니다.">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2011 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

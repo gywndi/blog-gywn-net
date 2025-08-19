@@ -1,0 +1,1025 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Fluentd? 나만의 에이전트 패키징! - </title>
+
+  <meta name="description" content="Overview
+세상에는 수많은 모니터링 도구들이 있습니다. 최근 많이 사용하고 있는 시계열 데이터베이스인 Prometheus와 수많은 exporter가 그중 하나입죠. 매트릭 수집에 최적화된 이런 구성은 시스템의 상태 값을 수집하기에는 더없이 좋은 시스템이기는 합니다만, 로그성 데이터 수집(에러로그 혹은 syslog)에는 아무래도 한계를 가집니다.
+이 경우, td-agent와 같은 범용적인 로그 수집 에이전트를 활용하게 되는데요. (혹은 자체적으로 구현을 하거나) 타팀과 혼재해서 사용하는 경우 문제 발생소지가 있긴합니다. 참고로, td-agent는 ruby 뿐만 아니라, 필요한 라이브러리들을 패키지 내부에 포함시켜서, OS 의존성을 최소화합니다.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/2021\/09\/package-own-fluentd-agent\/",
+          "name": "Fluentd? 나만의 에이전트 패키징!"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "Fluentd? 나만의 에이전트 패키징!",
+  "description" : "Overview 세상에는 수많은 모니터링 도구들이 있습니다. 최근 많이 사용하고 있는 시계열 데이터베이스인 Prometheus와 수많은 exporter가 그중 하나입죠. 매트릭 수집에 최적화된 이런 구성은 시스템의 상태 값을 수집하기에는 더없이 좋은 시스템이기는 합니다만, 로그성 데이터 수집(에러로그 혹은 syslog)에는 아무래도 한계를 가집니다.\n이 경우, td-agent와 같은 범용적인 로그 수집 에이전트를 활용하게 되는데요. (혹은 자체적으로 구현을 하거나) 타팀과 혼재해서 사용하는 경우 문제 발생소지가 있긴합니다. 참고로, td-agent는 ruby 뿐만 아니라, 필요한 라이브러리들을 패키지 내부에 포함시켜서, OS 의존성을 최소화합니다.\n",
+  "inLanguage" : "en",
+  "wordCount":  2058 ,
+  "datePublished" : "2021-09-07T03:26:39\u002b00:00",
+  "dateModified" : "2021-09-07T03:26:39\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "fluentd, my-agent, MySQL" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/2021\/09\/package-own-fluentd-agent\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="Fluentd? 나만의 에이전트 패키징!" />
+<meta property="og:description" content="Overview
+세상에는 수많은 모니터링 도구들이 있습니다. 최근 많이 사용하고 있는 시계열 데이터베이스인 Prometheus와 수많은 exporter가 그중 하나입죠. 매트릭 수집에 최적화된 이런 구성은 시스템의 상태 값을 수집하기에는 더없이 좋은 시스템이기는 합니다만, 로그성 데이터 수집(에러로그 혹은 syslog)에는 아무래도 한계를 가집니다.
+이 경우, td-agent와 같은 범용적인 로그 수집 에이전트를 활용하게 되는데요. (혹은 자체적으로 구현을 하거나) 타팀과 혼재해서 사용하는 경우 문제 발생소지가 있긴합니다. 참고로, td-agent는 ruby 뿐만 아니라, 필요한 라이브러리들을 패키지 내부에 포함시켜서, OS 의존성을 최소화합니다.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/2021/09/package-own-fluentd-agent/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="Fluentd? 나만의 에이전트 패키징!" />
+  <meta name="twitter:description" content="Overview
+세상에는 수많은 모니터링 도구들이 있습니다. 최근 많이 사용하고 있는 시계열 데이터베이스인 Prometheus와 수많은 exporter가 그중 하나입죠. 매트릭 수집에 최적화된 이런 구성은 시스템의 상태 값을 수집하기에는 더없이 좋은 시스템이기는 합니다만, 로그성 데이터 수집(에러로그 혹은 syslog)에는 아무래도 한계를 가집니다.
+이 경 …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Fluentd? 나만의 에이전트 패키징!</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2021-09-07
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;10&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>세상에는 수많은 모니터링 도구들이 있습니다. 최근 많이 사용하고 있는 시계열 데이터베이스인 Prometheus와 수많은 exporter가 그중 하나입죠. 매트릭 수집에 최적화된 이런 구성은 시스템의 상태 값을 수집하기에는 더없이 좋은 시스템이기는 합니다만, 로그성 데이터 수집(에러로그 혹은 syslog)에는 아무래도 한계를 가집니다.</p>
+<p>이 경우, td-agent와 같은 범용적인 로그 수집 에이전트를 활용하게 되는데요. (혹은 자체적으로 구현을 하거나) 타팀과 혼재해서 사용하는 경우 문제 발생소지가 있긴합니다. 참고로, td-agent는 ruby 뿐만 아니라, 필요한 라이브러리들을 패키지 내부에 포함시켜서, OS 의존성을 최소화합니다.</p>
+<p>오늘 포스팅에서는 <strong>td-agent와 같이 fluentd를 패키징하는 방법</strong>에 대해서 이야기를 해보도록 하겠습니다.</p>
+<h1 id="packaging-environment">Packaging environment</h1>
+<p>이제부터 이야기할 내용은 기본적으로 CentOS7 기반을 전제로 합니다. 참고로, CentOS6 경우에는 EOL 여파인지 모르지만.. YUM 레파지토리 관리 뿐만 아니라.. 소소한 몇몇 문제가 있어서. 조금 귀찮아지더라고요. 🙂</p>
+<p>패키징 환경을 구성하기 위한 방안은 Docker를 이용해보는 방법과 Vagrant를 활용하여 빠르게 OS이미지를 받아오는 방법이죠.</p>
+<h2 id="1-docker">1. Docker</h2>
+<p>Docker가 정상적으로 구성이 되어 있는 환경에서, 아래와 같이 간단하게 CentOS7 환경을 만들어보겠습니다. 만약 centos:7 이미지가 없으면, 자동으로 이미지를 받아와서 컨테이너를 잘 만들어줍니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ docker run -d -it --name<span class="o">=</span>pkg-dev centos:7 bash
+</span></span><span class="line"><span class="cl">$ docker <span class="nb">exec</span> -it pkg-dev bash
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@f02a337793f9 /<span class="o">]</span><span class="c1"># yum -y install net-tools sysstat telnet bash wget openssl md5 tar bzip2 patch gcc git autoconf openssl-devel</span>
+</span></span></code></pre></div><h2 id="2-vagrant">2. Vagrant</h2>
+<p>VirtualBox를 쓸 수 있는 환경이라면, Vargrant도 좋은 대안이기도 합니다. 여기서는 맥북 환경 기준으로 vagrant 구성해보도록 하겠습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## Install vagrant with brew</span>
+</span></span><span class="line"><span class="cl">$ brew install cask
+</span></span><span class="line"><span class="cl">$ brew install --cask virtualbox
+</span></span><span class="line"><span class="cl">$ brew install --cask vagrant
+</span></span><span class="line"><span class="cl">$ brew install --cask vagrant-manager
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s1">&#39;export PATH=$PATH:/opt/vagrant/bin:.&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span class="line"><span class="cl">$ . ~/.zshrc
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ mkdir -p ~/Document/vagrant/centos7-node01
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> ~/Document/vagrant/centos7-node01
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Vagrant file</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s2">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Vagrant.configure(&#39;2&#39;) do |config|
+</span></span></span><span class="line"><span class="cl"><span class="s2">  config.vm.box = &#39;centos/7&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">  # config.vm.network &#34;</span>private_network<span class="s2">&#34;, ip: &#34;</span>192.168.56.60<span class="s2">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">  config.vm.provider &#39;virtualbox&#39; do |vb|
+</span></span></span><span class="line"><span class="cl"><span class="s2">    vb.gui = true
+</span></span></span><span class="line"><span class="cl"><span class="s2">    vb.memory = &#39;2048&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    vb.customize [&#39;modifyvm&#39;, :id, &#39;--audio&#39;, &#39;none&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="s2">  end
+</span></span></span><span class="line"><span class="cl"><span class="s2">  config.vm.provision &#39;shell&#39;, inline: &lt;-SHELL
+</span></span></span><span class="line"><span class="cl"><span class="s2">    yum update -y
+</span></span></span><span class="line"><span class="cl"><span class="s2">    yum -y install net-tools sysstat telnet bash wget openssl md5 tar bzip2 patch gcc git autoconf openssl-devel
+</span></span></span><span class="line"><span class="cl"><span class="s2">    echo &#39;test12&#39; | passwd --stdin root
+</span></span></span><span class="line"><span class="cl"><span class="s2">    sed -i &#39;s/PasswordAuthentication no/PasswordAuthentication yes/g&#39; /etc/ssh/sshd_config
+</span></span></span><span class="line"><span class="cl"><span class="s2">    /sbin/service sshd restart
+</span></span></span><span class="line"><span class="cl"><span class="s2">  SHELL
+</span></span></span><span class="line"><span class="cl"><span class="s2">end&#34;</span> &gt; Vagrantfile
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">vagrant up
+</span></span></code></pre></div><p>참고로, 위 Vagrant 파일은 2G 메모리(<code>vb.memory = '2048'</code>)와 사용전 필요할만한 것들은 이것저것(?) 설치를 하고, root 패스워드를 <code>'test12'</code>로 구성하는 설정입니다. 만약 내부네트워크를 구성하고 싶다면, 위 설정에서 주석을 풀고 아이피를 적당하게 변경하시고 <code>vagrant up</code> 을 수행하면 됩니다.</p>
+<p>이것 외에도 사실.. KVM을 활용한 리눅스 자체에서 Virtual machine을 생성하는 방법도 있지만, 이건 스킵! 🙂</p>
+<p>이제 나만의 패키징을 위한 OS 세팅은 완료되었으니, 이제부터 제대로 시작을 해보도록 하겠습니다.</p>
+<h1 id="ruby-packaging">Ruby packaging</h1>
+<p>Fluentd는 기본적으로 ruby 위에서 구동되는 프로그램입니다. 그리고 최종적인 목표는 아래 그림과 같이, 패키징한 루비 위에, fluentd를 구성하고, 기타 필요한 fluentd 전용 플러그인을 설치하는 것입니다.
+<img src="/img/2021/09/image-1.png" alt=""></p>
+<p>첫번째 단계로 우선 Ruby를 특정 디렉토리 안에 패키징을 해보죠. 이것을 위해 ruby-install 이라는 유틸리티를 사용토록 하겠습니다.<br>
+<a href="https://github.com/postmodern/ruby-install">https://github.com/postmodern/ruby-install</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">########################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## Disable ssl</span>
+</span></span><span class="line"><span class="cl"><span class="c1">########################</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s2">&#34;sslverify=false&#34;</span> &gt;&gt; /etc/yum.conf
+</span></span><span class="line"><span class="cl">$ yum -y install make
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">########################</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ruby-install</span>
+</span></span><span class="line"><span class="cl"><span class="c1">########################</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">V_RUBY_INSTALL</span><span class="o">=</span><span class="s2">&#34;0.8.2&#34;</span>
+</span></span><span class="line"><span class="cl">$ wget -O ruby-install-<span class="si">${</span><span class="nv">V_RUBY_INSTALL</span><span class="si">}</span>.tar.gz https://github.com/postmodern/ruby-install/archive/v<span class="si">${</span><span class="nv">V_RUBY_INSTALL</span><span class="si">}</span>.tar.gz
+</span></span><span class="line"><span class="cl">$ tar -xzvf ruby-install-<span class="si">${</span><span class="nv">V_RUBY_INSTALL</span><span class="si">}</span>.tar.gz
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> ruby-install-<span class="si">${</span><span class="nv">V_RUBY_INSTALL</span><span class="si">}</span>/
+</span></span><span class="line"><span class="cl">$ make install
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">########################</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># embeded-ruby</span>
+</span></span><span class="line"><span class="cl"><span class="c1">########################</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">V_RUBY</span><span class="o">=</span><span class="s2">&#34;2.7.4&#34;</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/opt/my-agent/lib
+</span></span><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/my-agent/bin
+</span></span><span class="line"><span class="cl">$ ruby-install --install-dir /opt/my-agent ruby <span class="si">${</span><span class="nv">V_RUBY</span><span class="si">}</span> -- --enable-shared <span class="nv">CPPFLAGS</span><span class="o">=</span>-I/opt/my-agent/include <span class="nv">LDFLAGS</span><span class="o">=</span>-L/opt/my-agent/lib
+</span></span></code></pre></div><p>이 과정을 거치고나면, <code>/opt/my-agent</code> 하단에 하단 같은 모습으로 구성되어 있는 것을 확인해볼 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ls -al /opt/my-agent
+</span></span><span class="line"><span class="cl">total <span class="m">24</span>
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">6</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">1</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 ..
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 bin
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 include
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 lib
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">5</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 share
+</span></span></code></pre></div><p>이제 fluentd 패키징을 위한 Ruby 환경 구성은 마무리되었습니다.</p>
+<h1 id="install-fluentd">Install fluentd</h1>
+<p>Ruby가 패키징이 잘 이루어졌으니. 이제 fluentd를 루비 환경에 잘 넣어보도록 하겠습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## fluentd</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> /opt/my-agent
+</span></span><span class="line"><span class="cl">$ ./bin/gem install fluentd
+</span></span><span class="line"><span class="cl">$ ./bin/fluentd -s conf
+</span></span><span class="line"><span class="cl">Installed conf/fluent.conf.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ ls -al
+</span></span><span class="line"><span class="cl">total <span class="m">28</span>
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">7</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 09:04 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">1</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 ..
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 09:03 bin
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 09:04 conf
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 include
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 lib
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">5</span> root root <span class="m">4096</span> Sep  <span class="m">2</span> 08:06 share
+</span></span></code></pre></div><p>이제 각각 필요할만한 라이브러리들을 컴파일하면서 <code>/opt/my-agent/lib</code>에 넣어보도록 해보죠. <code>jemalloc</code>, <code>libyaml</code>, <code>openssl</code>이 없을수도 있을만한 환경을 위해서, 아래와 같이 각각 컴파일을 해서 진행합니다. 그리고, mysql을 직접적으로 접근할 수도 있기에, <code>mysql client</code> 관련 라이브러리도 하단과 같이 잘 포함시켜 줍니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## jemalloc</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">$ git clone https://github.com/jemalloc/jemalloc.git
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> jemalloc
+</span></span><span class="line"><span class="cl">$ ./autogen.sh --prefix<span class="o">=</span>/opt/my-agent
+</span></span><span class="line"><span class="cl">$ make <span class="o">&amp;&amp;</span> make install
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## libyaml</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">V_LIB_YAML</span><span class="o">=</span><span class="s2">&#34;0.2.5&#34;</span>
+</span></span><span class="line"><span class="cl">$ wget --no-check-certificate http://pyyaml.org/download/libyaml/yaml-<span class="si">${</span><span class="nv">V_LIB_YAML</span><span class="si">}</span>.tar.gz
+</span></span><span class="line"><span class="cl">$ tar xzvf yaml-<span class="si">${</span><span class="nv">V_LIB_YAML</span><span class="si">}</span>.tar.gz
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> yaml-<span class="si">${</span><span class="nv">V_LIB_YAML</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">$ ./configure --prefix /opt/my-agent
+</span></span><span class="line"><span class="cl">$ make <span class="o">&amp;&amp;</span> make install
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## openssl</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">V_OPENSSL</span><span class="o">=</span><span class="s2">&#34;1.1.1&#34;</span>
+</span></span><span class="line"><span class="cl">$ wget https://www.openssl.org/source/old/<span class="si">${</span><span class="nv">V_OPENSSL</span><span class="si">}</span>/openssl-<span class="si">${</span><span class="nv">V_OPENSSL</span><span class="si">}</span>.tar.gz
+</span></span><span class="line"><span class="cl">$ tar xzvf openssl-<span class="si">${</span><span class="nv">V_OPENSSL</span><span class="si">}</span>.tar.gz
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> openssl-<span class="si">${</span><span class="nv">V_OPENSSL</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">$ ./config --prefix<span class="o">=</span>/opt/my-agent
+</span></span><span class="line"><span class="cl">$ make <span class="o">&amp;&amp;</span> make install
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## mysql client</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">$ yum -y install mysql-devel mysql-libs
+</span></span><span class="line"><span class="cl">$ cp -R /usr/lib64/mysql/libmysqlclient* /opt/my-agent/lib/
+</span></span><span class="line"><span class="cl">$ mkdir -p /opt/my-agent/include
+</span></span><span class="line"><span class="cl">$ cp -R /usr/include/mysql /opt/my-agent/include/
+</span></span></code></pre></div><p>자! 이제 기본적인 fluentd 패키징은 완료하였습니다. 이제부터는 필요한 플러그인들을 설치할 단계입니다.</p>
+<h1 id="install-fluentd-plugins">Install fluentd plugins</h1>
+<p>제 입장에서는 사용해볼만한 플로그인은 크게 아래 세가지로 꼽아볼 수 있을 듯 하네요.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ <span class="nb">cd</span> /opt/my-agent/bin
+</span></span><span class="line"><span class="cl">$ ./gem install fluent-plugin-out-http
+</span></span><span class="line"><span class="cl">$ ./gem install fluent-plugin-mysqlslowquery
+</span></span><span class="line"><span class="cl">$ ./gem install fluent-plugin-mysql-query
+</span></span></code></pre></div><p>각 플러그인에 간단하게 설명을 해보죠.</p>
+<h3 id="31-fluent-plugin-out-http">3.1. fluent-plugin-out-http</h3>
+<p>source로부터 전달받은 내용을 특정 HTTP API로 전달하는 플러그인으로, 저는 개인적으로 에러로그 수집에 활용을 해보고 있습니다. 에러로그 수집을 위한 샘플입니다. 참고로, <code>http://192.168.56.101:5000/errorlog</code> 수집 API 는 별도로 구현을 해야하는 것은 아시죠? (기회가 된다면, 이것도 한번. 코드로 공유를. ㅎㅎ)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;source&gt;</span>
+</span></span><span class="line"><span class="cl">  @type tail
+</span></span><span class="line"><span class="cl">  path /data/mysql/*.err
+</span></span><span class="line"><span class="cl">  pos_file /opt/my-agent/log/mysql.error.pos
+</span></span><span class="line"><span class="cl">  tag mysql.error
+</span></span><span class="line"><span class="cl">  format none
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/source&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;filter</span> <span class="err">mysql.error</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  @type record_transformer
+</span></span><span class="line"><span class="cl">  enable_ruby
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;record&gt;</span>
+</span></span><span class="line"><span class="cl">    hostname ${hostname}
+</span></span><span class="line"><span class="cl">    timestamp ${time.to_i}
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/record&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/filter&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;match</span> <span class="err">mysql.error</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  @type http
+</span></span><span class="line"><span class="cl">  buffer_type file
+</span></span><span class="line"><span class="cl">  buffer_path /opt/my-agent/log/mysql.error.*.buffer
+</span></span><span class="line"><span class="cl">  flush_interval 1s
+</span></span><span class="line"><span class="cl">  endpoint_url   http://192.168.56.101:5000/errorlog
+</span></span><span class="line"><span class="cl">  http_method    post
+</span></span><span class="line"><span class="cl">  #serializer     json
+</span></span><span class="line"><span class="cl">  #bulk_request   true
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/match&gt;</span>
+</span></span></code></pre></div><p><code>v1.2.2</code>에서는 라인단위로 명시된 endpoint_url을 매번 호출하는 형태로 구현이 되어 있었습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl"># bulk_request: false
+</span></span><span class="line"><span class="cl">error line1 ========&gt; API call
+</span></span><span class="line"><span class="cl">error line2 ========&gt; API call
+</span></span><span class="line"><span class="cl">error line3 ========&gt; API call
+</span></span><span class="line"><span class="cl">error line4 ========&gt; API call
+</span></span><span class="line"><span class="cl">error line5 ========&gt; API call
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># bulk_request: true
+</span></span><span class="line"><span class="cl">error line1
+</span></span><span class="line"><span class="cl">error line2
+</span></span><span class="line"><span class="cl">error line3
+</span></span><span class="line"><span class="cl">error line4
+</span></span><span class="line"><span class="cl">error line5 ========&gt; API call (line1~line5)
+</span></span></code></pre></div><p>일반적인 상황에서는 큰 문제가 되지 않지만, 몇천 라인의 에러로그가 순식간에 생성이 되었을 때.. 수집 효율이 굉장히 떨어질 수 밖에 없겠죠. 현 버전에서는 <code>bulk_request</code>옵션이 추가되면서, 대략 1MB 미만(600K~800K)으로 데이터를 끊어서</p>
+<p><code>application/x-ndjson</code>로 묶어서 API를 호출합니다. (한번에 전달받은 메시지를 묶어서 디비 insert 처리를 하니, 만건 로그도 큰 무리없이 한번에 잘 넣긴 하네요. ㅎ)</p>
+<p>옵션에 대한 추가 내용은 하단 깃을 읽어보시고, 필요한 것들을 잘 사용해보면 좋겠네요. ^^<br>
+<a href="https://github.com/fluent-plugins-nursery/fluent-plugin-out-http">https://github.com/fluent-plugins-nursery/fluent-plugin-out-http</a></p>
+<h3 id="32-fluent-plugin-mysqlslowquery">3.2. fluent-plugin-mysqlslowquery</h3>
+<p>MySQL 슬로우 쿼리 수집을 위한 플러그인으로.. 슬로우 로그 위치를 지정해놓으면, 잘 파싱해서 전달해줍니다. 아래는 샘플 설정입니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;source&gt;</span>
+</span></span><span class="line"><span class="cl">  @type mysql_slow_query
+</span></span><span class="line"><span class="cl">  path /var/lib/mysql/mysql-slow.log
+</span></span><span class="line"><span class="cl">  tag mysql.slow
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;parse&gt;</span>
+</span></span><span class="line"><span class="cl">    @type none
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/parse&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/source&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;match</span> <span class="err">mysql.slow</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  @type http
+</span></span><span class="line"><span class="cl">  buffer_type file
+</span></span><span class="line"><span class="cl">  buffer_path /opt/uldra-agent/log/mysql.slow.*.buffer
+</span></span><span class="line"><span class="cl">  flush_interval 1s
+</span></span><span class="line"><span class="cl">  endpoint_url    http://192.168.56.101:5000/slowlog
+</span></span><span class="line"><span class="cl">  serializer      json
+</span></span><span class="line"><span class="cl">  bulk_request    true
+</span></span><span class="line"><span class="cl">  http_method     post
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/match&gt;</span>
+</span></span></code></pre></div><p>사실 이 플러그인이 편리하기는 하지만.. 문제는 한번에 다량의 슬로우 쿼리가 발생했을 시.. 이 플러그인에서 무한정 리소스를 먹기 때문에.. 개인적으로는 활용하고 있지는 않습니다. 이렇게 활용할 바에는 차라리, 앞선 에러로그 수집과 같은 방식으로 <code>tail</code>로 소스를 받아서 병합을 API 서버 레벨에서 해주는 것이 훨씬 안정적이고 유리할 듯 하네요. ^^</p>
+<p>그리고, 아쉽게도. 이 프로젝트는 더이상 개발이 되지 않는듯한? (혹은 다른 어디선가 새롭게? ㅎㅎ)<br>
+<a href="https://github.com/yuku/fluent-plugin-mysqlslowquery">https://github.com/yuku/fluent-plugin-mysqlslowquery</a></p>
+<h3 id="33-fluent-plugin-mysql-query">3.3. fluent-plugin-mysql-query</h3>
+<p>MySQL에 쿼리를 날려서 데이터를 추출하는 플러그인 입니다. fluentd로 주기적으로 데이터베이스로부터 데이터를 추출해서 결과를 타겟으로 던질 때 좋을만한 플러그인입니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;source&gt;</span>
+</span></span><span class="line"><span class="cl">  @type           mysql_query
+</span></span><span class="line"><span class="cl">  host            127.0.0.1
+</span></span><span class="line"><span class="cl">  port            3306
+</span></span><span class="line"><span class="cl">  username        fluentd
+</span></span><span class="line"><span class="cl">  password        fluentd123
+</span></span><span class="line"><span class="cl">  interval        30s
+</span></span><span class="line"><span class="cl">  tag             mysql-query-01
+</span></span><span class="line"><span class="cl">  query           select &#39;chan&#39; j, now() t;
+</span></span><span class="line"><span class="cl">  record_hostname yes
+</span></span><span class="line"><span class="cl">  nest_result     yes                 # Optional (default: no)
+</span></span><span class="line"><span class="cl">  nest_key        data                # Optional (default: result)
+</span></span><span class="line"><span class="cl">  row_count       yes                 # Optional (default: no)
+</span></span><span class="line"><span class="cl">  row_count_key   row_count           # Optional (default: row_count)
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/source&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;match</span> <span class="err">mysql-query-01</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  @type http
+</span></span><span class="line"><span class="cl">  buffer_type file
+</span></span><span class="line"><span class="cl">  buffer_path /opt/db-agent/log/mysql.query01.*.buffer
+</span></span><span class="line"><span class="cl">  flush_interval 1s
+</span></span><span class="line"><span class="cl">  endpoint_url    http://192.168.56.101:5000/query
+</span></span><span class="line"><span class="cl">  http_method     post
+</span></span><span class="line"><span class="cl">  serializer      json
+</span></span><span class="line"><span class="cl">  bulk_request    true
+</span></span><span class="line"><span class="cl">  http_method     post
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/match&gt;</span>
+</span></span></code></pre></div><p>개인적으로는 사용하고 있지는 않지만.. 향후 필요한 경우 요긴하게 활용하기 위해 저는 기본적으로 넣어놓습니다.<br>
+<a href="https://github.com/y-ken/fluent-plugin-mysql-query">https://github.com/y-ken/fluent-plugin-mysql-query</a></p>
+<h1 id="startup-script">Startup script</h1>
+<p><code>td-agent</code>의 <code>init.d</code> 스크립트를 약간의 변경(?)을 주어서 구성해보았습니다. 중간 부분을 보게되면, jemalloc으로 프로그램을 구동하는 것을 확인할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">### BEGIN INIT INFO</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Provides:          my-agent</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Required-Start:    $network $local_fs</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Required-Stop:     $network $local_fs</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Default-Start:     2 3 4 5</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Default-Stop:      0 1 6</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Short-Description: data collector for Treasure Data</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Description:       my-agent is a data collector</span>
+</span></span><span class="line"><span class="cl"><span class="c1">### END INIT INFO</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># pidfile:           /opt/my-agent/my-agent.pid</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/sbin:/opt/my-agent/sbin:/bin:/usr/bin
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_NAME</span><span class="o">=</span>my-agent
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_HOME</span><span class="o">=</span>/opt/my-agent
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_DEFAULT</span><span class="o">=</span>/etc/sysconfig/my-agent
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_USER</span><span class="o">=</span>root
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_GROUP</span><span class="o">=</span>root
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_RUBY</span><span class="o">=</span><span class="si">${</span><span class="nv">MY_AGENT_HOME</span><span class="si">}</span>/bin/ruby
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_BIN_FILE</span><span class="o">=</span><span class="si">${</span><span class="nv">MY_AGENT_HOME</span><span class="si">}</span>/sbin/my-agent
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_LOG_FILE</span><span class="o">=</span><span class="si">${</span><span class="nv">MY_AGENT_HOME</span><span class="si">}</span>/log/my-agent.log
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_PID_FILE</span><span class="o">=</span><span class="si">${</span><span class="nv">MY_AGENT_HOME</span><span class="si">}</span>/my-agent.pid
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_LOCK_FILE</span><span class="o">=</span>/var/lock/subsys/my-agent
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_OPTIONS</span><span class="o">=</span><span class="s2">&#34;--use-v1-config&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># timeout can be overridden from /etc/sysconfig/my-agent</span>
+</span></span><span class="line"><span class="cl"><span class="nv">STOPTIMEOUT</span><span class="o">=</span><span class="m">120</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Read configuration variable file if it is present</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_DEFAULT</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  . <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_DEFAULT</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Arguments to run the daemon with</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_AGENT_ARGS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_ARGS</span><span class="k">:-</span><span class="si">${</span><span class="nv">MY_AGENT_BIN_FILE</span><span class="si">}</span><span class="p"> --log </span><span class="si">${</span><span class="nv">MY_AGENT_LOG_FILE</span><span class="si">}</span><span class="p"> </span><span class="si">${</span><span class="nv">MY_AGENT_OPTIONS</span><span class="si">}}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">START_STOP_DAEMON_ARGS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">START_STOP_DAEMON_ARGS</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Exit if the package is not installed</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span> -x <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_RUBY</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Source function library.</span>
+</span></span><span class="line"><span class="cl">. /etc/init.d/functions
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Define LSB log_* functions.</span>
+</span></span><span class="line"><span class="cl"><span class="nv">lsb_functions</span><span class="o">=</span><span class="s2">&#34;/lib/lsb/init-functions&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">test</span> -f <span class="nv">$lsb_functions</span> <span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  . <span class="nv">$lsb_functions</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  log_success_msg<span class="o">()</span>
+</span></span><span class="line"><span class="cl">  <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34; SUCCESS! </span><span class="nv">$@</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">  log_failure_msg<span class="o">()</span>
+</span></span><span class="line"><span class="cl">  <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34; ERROR! </span><span class="nv">$@</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">  log_warning_msg<span class="o">()</span>
+</span></span><span class="line"><span class="cl">  <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34; WARNING! </span><span class="nv">$@</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Check the user</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_USER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> ! getent passwd <span class="p">|</span> grep -q <span class="s2">&#34;^</span><span class="si">${</span><span class="nv">MY_AGENT_USER</span><span class="si">}</span><span class="s2">:&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$0</span><span class="s2">: user for running </span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2"> doesn&#39;t exist: </span><span class="si">${</span><span class="nv">MY_AGENT_USER</span><span class="si">}</span><span class="s2">&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  mkdir -p <span class="s2">&#34;</span><span class="k">$(</span>dirname <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  chown -R <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_USER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="k">$(</span>dirname <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">START_STOP_DAEMON_ARGS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">START_STOP_DAEMON_ARGS</span><span class="si">}</span><span class="s2"> --user </span><span class="si">${</span><span class="nv">MY_AGENT_USER</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_GROUP</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> ! getent group -s files <span class="p">|</span> grep -q <span class="s2">&#34;^</span><span class="si">${</span><span class="nv">MY_AGENT_GROUP</span><span class="si">}</span><span class="s2">:&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$0</span><span class="s2">: group for running </span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2"> doesn&#39;t exist: </span><span class="si">${</span><span class="nv">MY_AGENT_GROUP</span><span class="si">}</span><span class="s2">&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">MY_AGENT_ARGS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_ARGS</span><span class="si">}</span><span class="s2"> --group </span><span class="si">${</span><span class="nv">MY_AGENT_GROUP</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  mkdir -p <span class="s2">&#34;</span><span class="k">$(</span>dirname <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  chown -R <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_USER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="k">$(</span>dirname <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">MY_AGENT_ARGS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_ARGS</span><span class="si">}</span><span class="s2"> --daemon </span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2012/04/17 Kazuki Ohta &lt;k@treasure-data.com&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Use jemalloc to avoid memory fragmentation</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_HOME</span><span class="si">}</span><span class="s2">/lib/libjemalloc.so&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">LD_PRELOAD</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_HOME</span><span class="si">}</span><span class="s2">/lib/libjemalloc.so&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kill_by_file<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">local</span> <span class="nv">sig</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">shift</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">local</span> <span class="nv">pid</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>cat <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">true</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> /bin/kill <span class="s2">&#34;</span><span class="si">${</span><span class="nv">sig</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span><span class="s2">&#34;</span> 1&gt;/dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Function that starts the daemon/service</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl">do_start<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Set Max number of file descriptors for the safety sake</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># see http://docs.fluentd.org/en/articles/before-install</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">ulimit</span> -n <span class="m">65536</span> 1&gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="o">||</span> <span class="nb">true</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">local</span> <span class="nv">RETVAL</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">  daemon --pidfile<span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="si">${</span><span class="nv">START_STOP_DAEMON_ARGS</span><span class="si">}</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_RUBY</span><span class="si">}</span><span class="s2">&#34;</span> <span class="si">${</span><span class="nv">MY_AGENT_ARGS</span><span class="si">}</span> <span class="o">||</span> <span class="nv">RETVAL</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$?</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">[</span> <span class="nv">$RETVAL</span> -eq <span class="m">0</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> touch <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_LOCK_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nv">$RETVAL</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Function that stops the daemon/service</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl">do_stop<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Return</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#   0 if daemon has been stopped</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#   1 if daemon was already stopped</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#   2 if daemon could not be stopped</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#   other if a failure occurred</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -e <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Use own process termination instead of killproc because killproc can&#39;t wait SIGTERM</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> kill_by_file -TERM <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">      <span class="nb">local</span> i
+</span></span><span class="line"><span class="cl">      <span class="k">for</span> i in <span class="k">$(</span>seq <span class="s2">&#34;</span><span class="si">${</span><span class="nv">STOPTIMEOUT</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> kill_by_file -0 <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">          sleep <span class="m">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">          <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">      <span class="k">done</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> kill_by_file -0 <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> -n <span class="s2">&#34;Timeout error occurred trying to stop </span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">...&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">      <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        rm -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        rm -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_LOCK_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> killproc <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PROG_NAME</span><span class="k">:-</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">      rm -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">      rm -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_LOCK_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Function that sends a SIGHUP to the daemon/service</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl">do_reload<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  kill_by_file -HUP <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">do_restart<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> ! do_configtest<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">local</span> <span class="nv">val</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">  do_stop <span class="o">||</span> <span class="nv">val</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$?</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">case</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">val</span><span class="si">}</span><span class="s2">&#34;</span> in
+</span></span><span class="line"><span class="cl">  <span class="m">0</span> <span class="p">|</span> <span class="m">1</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> ! do_start<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">  * <span class="o">)</span> <span class="c1"># Failed to stop</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">esac</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">do_configtest<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">eval</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_ARGS</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">START_STOP_DAEMON_ARGS</span><span class="si">}</span><span class="s2"> --dry-run -q&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">RETVAL</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> in
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;start&#34;</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -n <span class="s2">&#34;Starting </span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">: &#34;</span>
+</span></span><span class="line"><span class="cl">  do_start <span class="o">||</span> <span class="nv">RETVAL</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$?</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$RETVAL</span><span class="s2">&#34;</span> in
+</span></span><span class="line"><span class="cl">  <span class="m">0</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">    log_success_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">  * <span class="o">)</span>
+</span></span><span class="line"><span class="cl">    log_failure_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">esac</span>
+</span></span><span class="line"><span class="cl">  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;stop&#34;</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -n <span class="s2">&#34;Stopping </span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">: &#34;</span>
+</span></span><span class="line"><span class="cl">  do_stop <span class="o">||</span> <span class="nv">RETVAL</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$?</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$RETVAL</span><span class="s2">&#34;</span> in
+</span></span><span class="line"><span class="cl">  <span class="m">0</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">    log_success_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">  * <span class="o">)</span>
+</span></span><span class="line"><span class="cl">    log_failure_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">esac</span>
+</span></span><span class="line"><span class="cl">  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;reload&#34;</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -n <span class="s2">&#34;Reloading </span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">: &#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> ! do_configtest<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    log_failure_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> do_reload<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    log_success_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    log_failure_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;restart&#34;</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -n <span class="s2">&#34;Restarting </span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">: &#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> do_restart<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    log_success_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    log_failure_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;status&#34;</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> kill_by_file -0 <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_PID_FILE</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    log_success_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2"> is running&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    log_failure_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2"> is not running&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;condrestart&#34;</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_LOCK_FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> -n <span class="s2">&#34;Restarting </span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">: &#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> do_restart<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">      log_success_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">      log_failure_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;configtest&#34;</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> do_configtest<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    log_success_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    log_failure_msg <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MY_AGENT_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">* <span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Usage: </span><span class="nv">$0</span><span class="s2"> {start|stop|reload|restart|condrestart|status|configtest}&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="p">;;</span>
+</span></span><span class="line"><span class="cl"><span class="k">esac</span>
+</span></span></code></pre></div><h1 id="conclusion">Conclusion</h1>
+<p>나만의 에이전트를 만들어보았습니다. (별것아니쥬?)</p>
+<p>지금까지 td-agent과 유사하게, ruby와 기타 등등의 라이브러리/플러그인들을 패키징하는 나만의 fluentd 에이전트를 만들어보는 과정에 대해서 이야기를 해보았습니다. 물론, 범용적인 td-agent를 잘 활용해보는 방법도 있겠지만, 타 부서와의 혼용된 환경을 방지하고자, 나만의 에이전트로 패키징을 해보았습니다. 남은 것은 패키징한 나만의 에이전트에 나만의 요구사항을 잘 얹어서, 서비스 모니터링을 최적으로 유지시키는 것이겠죠.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/fluentd/">fluentd</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/my-agent/">my-agent</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2f2021%2f09%2fpackage-own-fluentd-agent%2f&amp;text=Fluentd%3f%20%eb%82%98%eb%a7%8c%ec%9d%98%20%ec%97%90%ec%9d%b4%ec%a0%84%ed%8a%b8%20%ed%8c%a8%ed%82%a4%ec%a7%95%21&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2f2021%2f09%2fpackage-own-fluentd-agent%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2f2021%2f09%2fpackage-own-fluentd-agent%2f&amp;title=Fluentd%3f%20%eb%82%98%eb%a7%8c%ec%9d%98%20%ec%97%90%ec%9d%b4%ec%a0%84%ed%8a%b8%20%ed%8c%a8%ed%82%a4%ec%a7%95%21" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2f2021%2f09%2fpackage-own-fluentd-agent%2f&amp;title=Fluentd%3f%20%eb%82%98%eb%a7%8c%ec%9d%98%20%ec%97%90%ec%9d%b4%ec%a0%84%ed%8a%b8%20%ed%8c%a8%ed%82%a4%ec%a7%95%21" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2f2021%2f09%2fpackage-own-fluentd-agent%2f&amp;title=Fluentd%3f%20%eb%82%98%eb%a7%8c%ec%9d%98%20%ec%97%90%ec%9d%b4%ec%a0%84%ed%8a%b8%20%ed%8c%a8%ed%82%a4%ec%a7%95%21" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2f2021%2f09%2fpackage-own-fluentd-agent%2f&amp;description=Fluentd%3f%20%eb%82%98%eb%a7%8c%ec%9d%98%20%ec%97%90%ec%9d%b4%ec%a0%84%ed%8a%b8%20%ed%8c%a8%ed%82%a4%ec%a7%95%21" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/2022/05/mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/2021/07/mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/2021/07/make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/2021/06/resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+                    <li><a href="/2020/08/mysql-binlog-memcached-plugin-collaboration/">MySQL binlog파서와  memcached plugin의 콜라보레이션!</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/2021/07/mysql-document-store-test/" data-toggle="tooltip" data-placement="top" title="MySQL document store 초간단 테스트">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/2022/05/mysql-heatwave/" data-toggle="tooltip" data-placement="top" title="MySQL Heatwave를 살펴보았습니다">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2011 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

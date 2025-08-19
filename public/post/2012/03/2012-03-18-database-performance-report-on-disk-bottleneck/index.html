@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>디스크 병목 현상에 따른 DB 성능 리포트 - </title>
+
+  <meta name="description" content="Overview
+어느 시스템에서도 병목 현상은 어딘가에 있습니다. DBMS 또한 CPU, Memory, Disk로 구성된 하나의 시스템이기 때문에 당연히 특정 구역에서 병목현상이 발생할 수 있죠. 오늘은 Disk에서 발생하는 병목에 관해서 말씀드리겠습니다.
+Memory Processing
+디스크 배열(RAID)에 따른 DB 성능 비교 에서, 메모리가 충분하면 아래와 같다는 그래프를 보여드렸습니다.
+
+어떤 경우든 메모리에만 연산이 가능하다면, CPU자원을 거의 활용 가능하다고 할 수 있죠. 그러나 만약 디스크 I/O가 발생하는 순간부터 CPU는 전혀 연산하지 않는 현상이 발생합니다. 바로 디스크 I/O Wait 으로 인한 시스템 병목 현상 발생입니다.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/post\/2012\/03\/2012-03-18-database-performance-report-on-disk-bottleneck\/",
+          "name": "디스크 병목 현상에 따른 db 성능 리포트"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "디스크 병목 현상에 따른 DB 성능 리포트",
+  "description" : "Overview 어느 시스템에서도 병목 현상은 어딘가에 있습니다. DBMS 또한 CPU, Memory, Disk로 구성된 하나의 시스템이기 때문에 당연히 특정 구역에서 병목현상이 발생할 수 있죠. 오늘은 Disk에서 발생하는 병목에 관해서 말씀드리겠습니다.\nMemory Processing 디스크 배열(RAID)에 따른 DB 성능 비교 에서, 메모리가 충분하면 아래와 같다는 그래프를 보여드렸습니다.\n어떤 경우든 메모리에만 연산이 가능하다면, CPU자원을 거의 활용 가능하다고 할 수 있죠. 그러나 만약 디스크 I\/O가 발생하는 순간부터 CPU는 전혀 연산하지 않는 현상이 발생합니다. 바로 디스크 I\/O Wait 으로 인한 시스템 병목 현상 발생입니다.\n",
+  "inLanguage" : "en",
+  "wordCount":  304 ,
+  "datePublished" : "2012-03-18T10:05:35\u002b00:00",
+  "dateModified" : "2012-03-18T10:05:35\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "Benchmark, Bottleneck, MySQL" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/post\/2012\/03\/2012-03-18-database-performance-report-on-disk-bottleneck\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="디스크 병목 현상에 따른 DB 성능 리포트" />
+<meta property="og:description" content="Overview
+어느 시스템에서도 병목 현상은 어딘가에 있습니다. DBMS 또한 CPU, Memory, Disk로 구성된 하나의 시스템이기 때문에 당연히 특정 구역에서 병목현상이 발생할 수 있죠. 오늘은 Disk에서 발생하는 병목에 관해서 말씀드리겠습니다.
+Memory Processing
+디스크 배열(RAID)에 따른 DB 성능 비교 에서, 메모리가 충분하면 아래와 같다는 그래프를 보여드렸습니다.
+
+어떤 경우든 메모리에만 연산이 가능하다면, CPU자원을 거의 활용 가능하다고 할 수 있죠. 그러나 만약 디스크 I/O가 발생하는 순간부터 CPU는 전혀 연산하지 않는 현상이 발생합니다. 바로 디스크 I/O Wait 으로 인한 시스템 병목 현상 발생입니다.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/post/2012/03/2012-03-18-database-performance-report-on-disk-bottleneck/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="디스크 병목 현상에 따른 DB 성능 리포트" />
+  <meta name="twitter:description" content="Overview
+어느 시스템에서도 병목 현상은 어딘가에 있습니다. DBMS 또한 CPU, Memory, Disk로 구성된 하나의 시스템이기 때문에 당연히 특정 구역에서 병목현상이 발생할 수 있죠. 오늘은 Disk에서 발생하는 병목에 관해서 말씀드리겠습니다.
+Memory Processing
+디스크 배열(RAID)에 따른 DB 성능 비교 에서, 메모리가 충분하 …&lt;/!--&gt;&lt;/!--&gt;">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>디스크 병목 현상에 따른 DB 성능 리포트</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2012-03-18
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview"><strong>Overview</strong></h1>
+<p>어느 시스템에서도 병목 현상은 어딘가에 있습니다. DBMS 또한 CPU, Memory, Disk로 구성된 하나의 시스템이기 때문에 당연히 특정 구역에서 병목현상이 발생할 수 있죠. 오늘은 Disk에서 발생하는 병목에 관해서 말씀드리겠습니다.</p>
+<h1 id="memory-processing"><strong>Memory Processing</strong></h1>
+<p><!-- raw HTML omitted -->디스크 배열(RAID)에 따른 DB 성능 비교<!-- raw HTML omitted --> 에서, 메모리가 충분하면 아래와 같다는 그래프를 보여드렸습니다.</p>
+<!-- raw HTML omitted -->
+<p>어떤 경우든 메모리에만 연산이 가능하다면, CPU자원을 거의 활용 가능하다고 할 수 있죠. 그러나 만약 디스크 I/O가 발생하는 순간부터 CPU는 전혀 연산하지 않는 현상이 발생합니다. 바로 디스크 I/O Wait 으로 인한 시스템 병목 현상 발생입니다.</p>
+<h1 id="benchmark"><strong>Benchmark</strong></h1>
+<p>대용량 환경에서 MySQL 성능을 분석하기 위해 2억 데이터 Insert 테스트를 수행하였습니다. (하단 결과에서는 1.3억 데이터까지만 추출하여 그래프를 만들었습니다.)</p>
+<p>하단은 테스트를 위해 사용한 테이블 스키마입니다. (간단한 테스트입니다.) 30개 Thread로 동시 Insert 작업을 수행하였고, 건 수에 따라 QPS및 시스템 현황을 살펴보았습니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h1 id="benchmark-result"><strong>Benchmark Result</strong></h1>
+<p>버퍼풀 4G 환경 하의 일반 테이블과 압축 테이블 성능 비교 및 버퍼풀 8G 환경 하에서의 성능 비교입니다.<br>
+압축 테이블의 경우 생각보다 많은 CPU 작업이 필요하게 되는데요, 메모리에 모든 데이터가 존재한다면 이 자체가 병목입니다.<br>
+하지만 데이터가 급증하여 DISK I/O이슈가 발생하면 반대로 CPU 유휴 자원을 사용하여 병목을 줄일 수 있습니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>7000만 건 데이터(데이터파일 약 5G) Insert까지는 일반 테이블이 압도적인 성능을 보여줍니다.  7000만 건 이상 데이터 Insert에서는 1/4로 압축한 테이블 성능이 꾸준히 유지됩니다. 9000만 건 데이터 Insert부터 1/4 압축 테이블도 성능 저하가 발생합니다.</p>
+<p><strong>가장 괄목할만한 사항은 DISK I/O가 급증하는 시점부터는 CPU자원은 거의 사용하지 않는다는 점입니다.</strong></p>
+<h1 id="conclusion"><strong><strong>Conclusion</strong></strong></h1>
+<p>디스크 병목을 풀기 위해서 더욱 빠른 디스크로 고도화하여 풀 수 있는 방법이 있습니다. 다른 방법은 어차피 사용하지 못할 CPU자원이라면, CPU자원을 일부 소모하더라도 압축 테이블로 저장하여 디스크 병목을 해결할 수 있습니다.</p>
+<p>앞선 테스트 결과가 반드시 정답은 아닙니다. 무조건 압축 테이블만이 대안은 아닙니다. 하지만 서비스 특성에 맞게 테스트 시나리오를 작성하고 병목을 사전에 최대한 줄이는 활동이 필요합니다.</p>
+<p>무조건 고 사양의 서버로 구성하기 보다는 조금만 데이터를 다른 시각으로 설계한다면, 동일 자원에서 최적의 퍼포먼스를 발휘할 수 있을 것입니다.</p>
+<p>동일한 내용은 제가 “파란 개발자 블로그”에 작성한 <!-- raw HTML omitted -->디스크 병목 현상에 따른 DB 성능 리포트<!-- raw HTML omitted --> 에서도 확인할 수 있습니다.^^</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/benchmark/">Benchmark</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/bottleneck/">Bottleneck</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f03%2f2012-03-18-database-performance-report-on-disk-bottleneck%2f&amp;text=%eb%94%94%ec%8a%a4%ed%81%ac%20%eb%b3%91%eb%aa%a9%20%ed%98%84%ec%83%81%ec%97%90%20%eb%94%b0%eb%a5%b8%20DB%20%ec%84%b1%eb%8a%a5%20%eb%a6%ac%ed%8f%ac%ed%8a%b8&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2fpost%2f2012%2f03%2f2012-03-18-database-performance-report-on-disk-bottleneck%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f03%2f2012-03-18-database-performance-report-on-disk-bottleneck%2f&amp;title=%eb%94%94%ec%8a%a4%ed%81%ac%20%eb%b3%91%eb%aa%a9%20%ed%98%84%ec%83%81%ec%97%90%20%eb%94%b0%eb%a5%b8%20DB%20%ec%84%b1%eb%8a%a5%20%eb%a6%ac%ed%8f%ac%ed%8a%b8" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f03%2f2012-03-18-database-performance-report-on-disk-bottleneck%2f&amp;title=%eb%94%94%ec%8a%a4%ed%81%ac%20%eb%b3%91%eb%aa%a9%20%ed%98%84%ec%83%81%ec%97%90%20%eb%94%b0%eb%a5%b8%20DB%20%ec%84%b1%eb%8a%a5%20%eb%a6%ac%ed%8f%ac%ed%8a%b8" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f03%2f2012-03-18-database-performance-report-on-disk-bottleneck%2f&amp;title=%eb%94%94%ec%8a%a4%ed%81%ac%20%eb%b3%91%eb%aa%a9%20%ed%98%84%ec%83%81%ec%97%90%20%eb%94%b0%eb%a5%b8%20DB%20%ec%84%b1%eb%8a%a5%20%eb%a6%ac%ed%8f%ac%ed%8a%b8" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2fpost%2f2012%2f03%2f2012-03-18-database-performance-report-on-disk-bottleneck%2f&amp;description=%eb%94%94%ec%8a%a4%ed%81%ac%20%eb%b3%91%eb%aa%a9%20%ed%98%84%ec%83%81%ec%97%90%20%eb%94%b0%eb%a5%b8%20DB%20%ec%84%b1%eb%8a%a5%20%eb%a6%ac%ed%8f%ac%ed%8a%b8" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/post/2022/05/2022-05-23-mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/post/2021/09/2021-09-07-package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-28-mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/post/2021/07/2021-07-13-make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/post/2021/06/2021-06-21-resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/post/2012/03/2012-03-18-db-performance-disk-raid-configuration/" data-toggle="tooltip" data-placement="top" title="디스크 배열(RAID)에 따른 DB 성능 비교">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/post/2012/04/2012-04-13-migration_with_dblink_exp_imp/" data-toggle="tooltip" data-placement="top" title="DB Link와 Export/Import를 활용한 데이터 이관 성능 리포트">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://tech.gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

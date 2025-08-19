@@ -8,6 +8,91 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Wed, 18 Sep 2024 12:26:29 +0000</lastBuildDate>
     <atom:link href="//localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux</title>
+      <link>//localhost:1313/categories/linux/</link>
+      <pubDate>Wed, 18 Sep 2024 12:26:29 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ignite</title>
+      <link>//localhost:1313/categories/ignite/</link>
+      <pubDate>Tue, 10 Oct 2023 07:10:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/ignite/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>NoSQL</title>
+      <link>//localhost:1313/categories/nosql/</link>
+      <pubDate>Tue, 10 Oct 2023 07:10:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/nosql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Research</title>
+      <link>//localhost:1313/categories/research/</link>
+      <pubDate>Tue, 10 Oct 2023 07:10:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/research/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cloud</title>
+      <link>//localhost:1313/categories/cloud/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/cloud/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySQL</title>
+      <link>//localhost:1313/categories/mysql/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MariaDB</title>
+      <link>//localhost:1313/categories/mariadb/</link>
+      <pubDate>Tue, 07 Sep 2021 03:26:39 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/mariadb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>PMM</title>
+      <link>//localhost:1313/categories/pmm/</link>
+      <pubDate>Tue, 07 Sep 2021 03:26:39 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/pmm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Small Talk</title>
+      <link>//localhost:1313/categories/small-talk/</link>
+      <pubDate>Wed, 11 Sep 2019 11:52:42 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/small-talk/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SQLite</title>
+      <link>//localhost:1313/categories/sqlite/</link>
+      <pubDate>Sun, 08 Sep 2013 12:51:33 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/sqlite/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Oracle</title>
+      <link>//localhost:1313/categories/oracle/</link>
+      <pubDate>Sun, 23 Sep 2012 07:43:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/oracle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>IT Life</title>
+      <link>//localhost:1313/categories/it-life/</link>
+      <pubDate>Tue, 20 Dec 2011 09:26:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/categories/it-life/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

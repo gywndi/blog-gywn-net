@@ -8,6 +8,945 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Wed, 18 Sep 2024 12:26:29 +0000</lastBuildDate>
     <atom:link href="//localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bmt</title>
+      <link>//localhost:1313/tags/bmt/</link>
+      <pubDate>Wed, 18 Sep 2024 12:26:29 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/bmt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Latency</title>
+      <link>//localhost:1313/tags/latency/</link>
+      <pubDate>Wed, 18 Sep 2024 12:26:29 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/latency/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tc</title>
+      <link>//localhost:1313/tags/tc/</link>
+      <pubDate>Wed, 18 Sep 2024 12:26:29 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/tc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cache</title>
+      <link>//localhost:1313/tags/cache/</link>
+      <pubDate>Tue, 10 Oct 2023 07:10:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/cache/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gridgain</title>
+      <link>//localhost:1313/tags/gridgain/</link>
+      <pubDate>Tue, 10 Oct 2023 07:10:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/gridgain/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ignite</title>
+      <link>//localhost:1313/tags/ignite/</link>
+      <pubDate>Tue, 10 Oct 2023 07:10:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/ignite/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cloud</title>
+      <link>//localhost:1313/tags/cloud/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/cloud/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Columnar</title>
+      <link>//localhost:1313/tags/columnar/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/columnar/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HeatWave</title>
+      <link>//localhost:1313/tags/heatwave/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/heatwave/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>InnoDB</title>
+      <link>//localhost:1313/tags/innodb/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/innodb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySQL</title>
+      <link>//localhost:1313/tags/mysql/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fluentd</title>
+      <link>//localhost:1313/tags/fluentd/</link>
+      <pubDate>Tue, 07 Sep 2021 03:26:39 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/fluentd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>My-Agent</title>
+      <link>//localhost:1313/tags/my-agent/</link>
+      <pubDate>Tue, 07 Sep 2021 03:26:39 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/my-agent/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Document Store</title>
+      <link>//localhost:1313/tags/document-store/</link>
+      <pubDate>Wed, 28 Jul 2021 02:00:16 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/document-store/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mysqlx</title>
+      <link>//localhost:1313/tags/mysqlx/</link>
+      <pubDate>Wed, 28 Jul 2021 02:00:16 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/mysqlx/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Exporter</title>
+      <link>//localhost:1313/tags/exporter/</link>
+      <pubDate>Tue, 13 Jul 2021 05:39:54 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/exporter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go</title>
+      <link>//localhost:1313/tags/go/</link>
+      <pubDate>Tue, 13 Jul 2021 05:39:54 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Prometheus</title>
+      <link>//localhost:1313/tags/prometheus/</link>
+      <pubDate>Tue, 13 Jul 2021 05:39:54 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/prometheus/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sequence</title>
+      <link>//localhost:1313/tags/sequence/</link>
+      <pubDate>Mon, 21 Jun 2021 06:24:06 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/sequence/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Binlog Parser</title>
+      <link>//localhost:1313/tags/binlog-parser/</link>
+      <pubDate>Mon, 31 Aug 2020 00:55:06 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/binlog-parser/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Memcached</title>
+      <link>//localhost:1313/tags/memcached/</link>
+      <pubDate>Mon, 31 Aug 2020 00:55:06 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/memcached/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>InnoDB Plugin</title>
+      <link>//localhost:1313/tags/innodb-plugin/</link>
+      <pubDate>Mon, 06 Jan 2020 14:10:44 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/innodb-plugin/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Plugin</title>
+      <link>//localhost:1313/tags/plugin/</link>
+      <pubDate>Sun, 15 Sep 2019 11:50:15 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/plugin/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ifkakao</title>
+      <link>//localhost:1313/tags/ifkakao/</link>
+      <pubDate>Wed, 11 Sep 2019 11:52:42 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/ifkakao/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kakaobank</title>
+      <link>//localhost:1313/tags/kakaobank/</link>
+      <pubDate>Wed, 11 Sep 2019 11:52:42 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/kakaobank/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Uldraman</title>
+      <link>//localhost:1313/tags/uldraman/</link>
+      <pubDate>Wed, 11 Sep 2019 11:52:42 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/uldraman/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Partition</title>
+      <link>//localhost:1313/tags/partition/</link>
+      <pubDate>Thu, 29 Aug 2019 14:56:26 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/partition/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Performance</title>
+      <link>//localhost:1313/tags/performance/</link>
+      <pubDate>Thu, 29 Aug 2019 14:56:26 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/performance/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Grafana</title>
+      <link>//localhost:1313/tags/grafana/</link>
+      <pubDate>Mon, 28 Jan 2019 23:58:03 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/grafana/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pmm</title>
+      <link>//localhost:1313/tags/pmm/</link>
+      <pubDate>Mon, 28 Jan 2019 23:58:03 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/pmm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mariadb</title>
+      <link>//localhost:1313/tags/mariadb/</link>
+      <pubDate>Fri, 12 Oct 2018 00:00:52 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/mariadb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Online Alter</title>
+      <link>//localhost:1313/tags/online-alter/</link>
+      <pubDate>Fri, 12 Oct 2018 00:00:52 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/online-alter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Percona Server</title>
+      <link>//localhost:1313/tags/percona-server/</link>
+      <pubDate>Fri, 12 Oct 2018 00:00:52 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/percona-server/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Affected Rows</title>
+      <link>//localhost:1313/tags/affected-rows/</link>
+      <pubDate>Mon, 26 Mar 2018 23:45:20 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/affected-rows/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Monitoring</title>
+      <link>//localhost:1313/tags/monitoring/</link>
+      <pubDate>Sat, 03 Mar 2018 17:33:28 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Percona</title>
+      <link>//localhost:1313/tags/percona/</link>
+      <pubDate>Sat, 03 Mar 2018 17:33:28 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/percona/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AutoReconnect</title>
+      <link>//localhost:1313/tags/autoreconnect/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/autoreconnect/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Connector</title>
+      <link>//localhost:1313/tags/connector/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/connector/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Jdbc</title>
+      <link>//localhost:1313/tags/jdbc/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/jdbc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pt-Online-Schema-Change</title>
+      <link>//localhost:1313/tags/pt-online-schema-change/</link>
+      <pubDate>Wed, 23 Aug 2017 22:20:31 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/pt-online-schema-change/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Slow Query</title>
+      <link>//localhost:1313/tags/slow-query/</link>
+      <pubDate>Mon, 14 Aug 2017 23:13:09 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/slow-query/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dentry</title>
+      <link>//localhost:1313/tags/dentry/</link>
+      <pubDate>Thu, 15 Jun 2017 21:39:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/dentry/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dirty</title>
+      <link>//localhost:1313/tags/dirty/</link>
+      <pubDate>Thu, 15 Jun 2017 21:39:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/dirty/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Memory</title>
+      <link>//localhost:1313/tags/memory/</link>
+      <pubDate>Thu, 15 Jun 2017 21:39:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/memory/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Page Cache</title>
+      <link>//localhost:1313/tags/page-cache/</link>
+      <pubDate>Thu, 15 Jun 2017 21:39:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/page-cache/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Swap</title>
+      <link>//localhost:1313/tags/swap/</link>
+      <pubDate>Thu, 15 Jun 2017 21:39:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/swap/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Unmap</title>
+      <link>//localhost:1313/tags/unmap/</link>
+      <pubDate>Thu, 15 Jun 2017 21:39:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/unmap/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mha</title>
+      <link>//localhost:1313/tags/mha/</link>
+      <pubDate>Mon, 12 Jun 2017 21:08:18 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/mha/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Semi-Sync Replication</title>
+      <link>//localhost:1313/tags/semi-sync-replication/</link>
+      <pubDate>Mon, 12 Jun 2017 21:08:18 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/semi-sync-replication/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fulltext</title>
+      <link>//localhost:1313/tags/fulltext/</link>
+      <pubDate>Thu, 08 Jun 2017 19:52:06 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/fulltext/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>N-Gram</title>
+      <link>//localhost:1313/tags/n-gram/</link>
+      <pubDate>Thu, 08 Jun 2017 19:52:06 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/n-gram/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ngram</title>
+      <link>//localhost:1313/tags/ngram/</link>
+      <pubDate>Tue, 18 Apr 2017 23:47:31 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/ngram/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Automation</title>
+      <link>//localhost:1313/tags/automation/</link>
+      <pubDate>Mon, 23 Jan 2017 14:10:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/automation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Restore</title>
+      <link>//localhost:1313/tags/restore/</link>
+      <pubDate>Mon, 23 Jan 2017 14:10:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/restore/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>XtraBackup</title>
+      <link>//localhost:1313/tags/xtrabackup/</link>
+      <pubDate>Mon, 23 Jan 2017 14:10:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/xtrabackup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dns</title>
+      <link>//localhost:1313/tags/dns/</link>
+      <pubDate>Tue, 17 Jan 2017 13:54:29 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/dns/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Powerdns</title>
+      <link>//localhost:1313/tags/powerdns/</link>
+      <pubDate>Tue, 17 Jan 2017 13:54:29 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/powerdns/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Token</title>
+      <link>//localhost:1313/tags/token/</link>
+      <pubDate>Fri, 03 Jul 2015 14:15:42 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/token/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>//localhost:1313/tags/linux/</link>
+      <pubDate>Thu, 05 Feb 2015 12:44:51 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>InnoDB Hash Index</title>
+      <link>//localhost:1313/tags/innodb-hash-index/</link>
+      <pubDate>Thu, 08 Jan 2015 13:28:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/innodb-hash-index/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>FederatedX</title>
+      <link>//localhost:1313/tags/federatedx/</link>
+      <pubDate>Tue, 30 Dec 2014 13:12:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/federatedx/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Federated</title>
+      <link>//localhost:1313/tags/federated/</link>
+      <pubDate>Sat, 27 Dec 2014 14:16:23 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/federated/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Migration</title>
+      <link>//localhost:1313/tags/migration/</link>
+      <pubDate>Sat, 27 Dec 2014 14:16:23 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/migration/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fractal Index</title>
+      <link>//localhost:1313/tags/fractal-index/</link>
+      <pubDate>Thu, 29 May 2014 14:14:11 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/fractal-index/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TokuDB</title>
+      <link>//localhost:1313/tags/tokudb/</link>
+      <pubDate>Thu, 29 May 2014 14:14:11 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/tokudb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Backup</title>
+      <link>//localhost:1313/tags/backup/</link>
+      <pubDate>Tue, 10 Dec 2013 03:53:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/backup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hcp</title>
+      <link>//localhost:1313/tags/hcp/</link>
+      <pubDate>Tue, 10 Dec 2013 03:53:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/hcp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Snapshot</title>
+      <link>//localhost:1313/tags/snapshot/</link>
+      <pubDate>Tue, 10 Dec 2013 03:53:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/snapshot/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lock</title>
+      <link>//localhost:1313/tags/lock/</link>
+      <pubDate>Mon, 02 Dec 2013 02:13:40 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/lock/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Searching</title>
+      <link>//localhost:1313/tags/searching/</link>
+      <pubDate>Sun, 08 Sep 2013 12:51:33 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/searching/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SQLite</title>
+      <link>//localhost:1313/tags/sqlite/</link>
+      <pubDate>Sun, 08 Sep 2013 12:51:33 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/sqlite/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Journal Mode</title>
+      <link>//localhost:1313/tags/journal-mode/</link>
+      <pubDate>Sun, 25 Aug 2013 13:21:24 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/journal-mode/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Auto Increment</title>
+      <link>//localhost:1313/tags/auto-increment/</link>
+      <pubDate>Sun, 17 Feb 2013 15:01:55 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/auto-increment/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Transaction</title>
+      <link>//localhost:1313/tags/transaction/</link>
+      <pubDate>Sun, 28 Oct 2012 15:40:46 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/transaction/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Isolation Level</title>
+      <link>//localhost:1313/tags/isolation-level/</link>
+      <pubDate>Sat, 06 Oct 2012 04:36:45 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/isolation-level/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>트랜잭션</title>
+      <link>//localhost:1313/tags/%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98/</link>
+      <pubDate>Sat, 06 Oct 2012 04:36:45 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Oracle</title>
+      <link>//localhost:1313/tags/oracle/</link>
+      <pubDate>Sun, 23 Sep 2012 07:43:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/oracle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>KTH</title>
+      <link>//localhost:1313/tags/kth/</link>
+      <pubDate>Wed, 12 Sep 2012 15:43:36 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/kth/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cluster</title>
+      <link>//localhost:1313/tags/cluster/</link>
+      <pubDate>Wed, 12 Sep 2012 06:38:23 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/cluster/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Research</title>
+      <link>//localhost:1313/tags/research/</link>
+      <pubDate>Wed, 12 Sep 2012 06:38:23 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/research/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tuning</title>
+      <link>//localhost:1313/tags/tuning/</link>
+      <pubDate>Tue, 11 Sep 2012 07:25:17 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/tuning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Amazon RDS</title>
+      <link>//localhost:1313/tags/amazon-rds/</link>
+      <pubDate>Fri, 10 Aug 2012 05:26:37 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/amazon-rds/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Failover</title>
+      <link>//localhost:1313/tags/failover/</link>
+      <pubDate>Fri, 06 Jul 2012 03:19:24 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/failover/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Replication</title>
+      <link>//localhost:1313/tags/replication/</link>
+      <pubDate>Fri, 06 Jul 2012 03:19:24 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/replication/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MemSQL</title>
+      <link>//localhost:1313/tags/memsql/</link>
+      <pubDate>Wed, 27 Jun 2012 10:18:56 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/memsql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Benchmark</title>
+      <link>//localhost:1313/tags/benchmark/</link>
+      <pubDate>Fri, 15 Jun 2012 06:15:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/benchmark/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Temporary Table</title>
+      <link>//localhost:1313/tags/temporary-table/</link>
+      <pubDate>Fri, 15 Jun 2012 06:15:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/temporary-table/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Amazon</title>
+      <link>//localhost:1313/tags/amazon/</link>
+      <pubDate>Tue, 05 Jun 2012 09:48:52 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/amazon/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>RDS</title>
+      <link>//localhost:1313/tags/rds/</link>
+      <pubDate>Tue, 05 Jun 2012 09:48:52 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/rds/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Recovery</title>
+      <link>//localhost:1313/tags/recovery/</link>
+      <pubDate>Tue, 05 Jun 2012 09:48:52 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/recovery/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TroubleShoot</title>
+      <link>//localhost:1313/tags/troubleshoot/</link>
+      <pubDate>Tue, 05 Jun 2012 09:48:52 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/troubleshoot/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Scale-Out</title>
+      <link>//localhost:1313/tags/scale-out/</link>
+      <pubDate>Fri, 25 May 2012 06:17:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/scale-out/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tumblr</title>
+      <link>//localhost:1313/tags/tumblr/</link>
+      <pubDate>Fri, 25 May 2012 06:17:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/tumblr/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Alter Table</title>
+      <link>//localhost:1313/tags/alter-table/</link>
+      <pubDate>Tue, 22 May 2012 09:47:10 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/alter-table/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SQL</title>
+      <link>//localhost:1313/tags/sql/</link>
+      <pubDate>Fri, 11 May 2012 06:12:07 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/sql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Architect</title>
+      <link>//localhost:1313/tags/architect/</link>
+      <pubDate>Fri, 04 May 2012 07:27:34 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/architect/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Index</title>
+      <link>//localhost:1313/tags/index/</link>
+      <pubDate>Fri, 04 May 2012 07:27:34 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/index/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Table</title>
+      <link>//localhost:1313/tags/table/</link>
+      <pubDate>Fri, 04 May 2012 07:27:34 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/table/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dump</title>
+      <link>//localhost:1313/tags/dump/</link>
+      <pubDate>Fri, 27 Apr 2012 07:15:33 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/dump/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Covering Index</title>
+      <link>//localhost:1313/tags/covering-index/</link>
+      <pubDate>Thu, 19 Apr 2012 15:21:20 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/covering-index/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DB Link</title>
+      <link>//localhost:1313/tags/db-link/</link>
+      <pubDate>Fri, 13 Apr 2012 07:41:39 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/db-link/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Export</title>
+      <link>//localhost:1313/tags/export/</link>
+      <pubDate>Fri, 13 Apr 2012 07:41:39 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/export/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Import</title>
+      <link>//localhost:1313/tags/import/</link>
+      <pubDate>Fri, 13 Apr 2012 07:41:39 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/import/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bottleneck</title>
+      <link>//localhost:1313/tags/bottleneck/</link>
+      <pubDate>Sun, 18 Mar 2012 10:05:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/bottleneck/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>RAID</title>
+      <link>//localhost:1313/tags/raid/</link>
+      <pubDate>Sun, 18 Mar 2012 09:43:46 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/raid/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gizzard</title>
+      <link>//localhost:1313/tags/gizzard/</link>
+      <pubDate>Fri, 09 Mar 2012 04:45:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/gizzard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shard</title>
+      <link>//localhost:1313/tags/shard/</link>
+      <pubDate>Fri, 09 Mar 2012 04:45:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/shard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Twitter</title>
+      <link>//localhost:1313/tags/twitter/</link>
+      <pubDate>Fri, 09 Mar 2012 04:45:12 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/twitter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Replicate</title>
+      <link>//localhost:1313/tags/replicate/</link>
+      <pubDate>Thu, 08 Mar 2012 01:46:30 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/replicate/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sharding</title>
+      <link>//localhost:1313/tags/sharding/</link>
+      <pubDate>Thu, 08 Mar 2012 01:46:30 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/sharding/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Snowflake</title>
+      <link>//localhost:1313/tags/snowflake/</link>
+      <pubDate>Thu, 08 Mar 2012 01:46:30 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/snowflake/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tweet</title>
+      <link>//localhost:1313/tags/tweet/</link>
+      <pubDate>Thu, 08 Mar 2012 01:46:30 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/tweet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>복제</title>
+      <link>//localhost:1313/tags/%EB%B3%B5%EC%A0%9C/</link>
+      <pubDate>Fri, 10 Feb 2012 06:16:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EB%B3%B5%EC%A0%9C/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>이중화</title>
+      <link>//localhost:1313/tags/%EC%9D%B4%EC%A4%91%ED%99%94/</link>
+      <pubDate>Fri, 10 Feb 2012 06:16:35 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EC%9D%B4%EC%A4%91%ED%99%94/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MyISAM</title>
+      <link>//localhost:1313/tags/myisam/</link>
+      <pubDate>Mon, 30 Jan 2012 06:01:51 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/myisam/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Table Lock</title>
+      <link>//localhost:1313/tags/table-lock/</link>
+      <pubDate>Mon, 30 Jan 2012 06:01:51 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/table-lock/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Architecture</title>
+      <link>//localhost:1313/tags/architecture/</link>
+      <pubDate>Mon, 02 Jan 2012 03:22:07 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/architecture/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Storage Engine</title>
+      <link>//localhost:1313/tags/storage-engine/</link>
+      <pubDate>Mon, 02 Jan 2012 03:22:07 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/storage-engine/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>구축</title>
+      <link>//localhost:1313/tags/%EA%B5%AC%EC%B6%95/</link>
+      <pubDate>Mon, 02 Jan 2012 03:22:07 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EA%B5%AC%EC%B6%95/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>대형사이트</title>
+      <link>//localhost:1313/tags/%EB%8C%80%ED%98%95%EC%82%AC%EC%9D%B4%ED%8A%B8/</link>
+      <pubDate>Mon, 02 Jan 2012 03:22:07 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EB%8C%80%ED%98%95%EC%82%AC%EC%9D%B4%ED%8A%B8/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>전략</title>
+      <link>//localhost:1313/tags/%EC%A0%84%EB%9E%B5/</link>
+      <pubDate>Mon, 02 Jan 2012 03:22:07 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EC%A0%84%EB%9E%B5/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DB</title>
+      <link>//localhost:1313/tags/db/</link>
+      <pubDate>Wed, 28 Dec 2011 05:14:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/db/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>RDBMS</title>
+      <link>//localhost:1313/tags/rdbms/</link>
+      <pubDate>Wed, 28 Dec 2011 05:14:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/rdbms/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>리플리케이션</title>
+      <link>//localhost:1313/tags/%EB%A6%AC%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/</link>
+      <pubDate>Wed, 28 Dec 2011 05:14:02 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EB%A6%AC%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CentOS</title>
+      <link>//localhost:1313/tags/centos/</link>
+      <pubDate>Tue, 20 Dec 2011 09:26:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/centos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Installation</title>
+      <link>//localhost:1313/tags/installation/</link>
+      <pubDate>Tue, 20 Dec 2011 09:26:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/installation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySQL 설치</title>
+      <link>//localhost:1313/tags/mysql-%EC%84%A4%EC%B9%98/</link>
+      <pubDate>Tue, 20 Dec 2011 09:26:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/mysql-%EC%84%A4%EC%B9%98/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>가이드</title>
+      <link>//localhost:1313/tags/%EA%B0%80%EC%9D%B4%EB%93%9C/</link>
+      <pubDate>Tue, 20 Dec 2011 09:26:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EA%B0%80%EC%9D%B4%EB%93%9C/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>리눅스</title>
+      <link>//localhost:1313/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/</link>
+      <pubDate>Tue, 20 Dec 2011 09:26:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>매뉴얼</title>
+      <link>//localhost:1313/tags/%EB%A7%A4%EB%89%B4%EC%96%BC/</link>
+      <pubDate>Tue, 20 Dec 2011 09:26:13 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EB%A7%A4%EB%89%B4%EC%96%BC/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Apache</title>
+      <link>//localhost:1313/tags/apache/</link>
+      <pubDate>Sun, 11 Dec 2011 12:44:24 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/apache/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>PHP</title>
+      <link>//localhost:1313/tags/php/</link>
+      <pubDate>Sun, 11 Dec 2011 12:44:24 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/php/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>설치</title>
+      <link>//localhost:1313/tags/%EC%84%A4%EC%B9%98/</link>
+      <pubDate>Sun, 11 Dec 2011 12:44:24 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/%EC%84%A4%EC%B9%98/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Feature</title>
+      <link>//localhost:1313/tags/feature/</link>
+      <pubDate>Mon, 05 Dec 2011 06:20:17 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/tags/feature/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

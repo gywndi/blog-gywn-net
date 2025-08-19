@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RAID on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/raid/</link>
+    <description>Recent content in RAID on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Sun, 18 Mar 2012 09:43:46 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/raid/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>디스크 배열(RAID)에 따른 DB 성능 비교</title>
+      <link>//localhost:1313/2012/03/db-performance-disk-raid-configuration/</link>
+      <pubDate>Sun, 18 Mar 2012 09:43:46 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/03/db-performance-disk-raid-configuration/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL DBMS 하드웨어 구성 시 어떠한 정책으로 움직이는 것이 가장 효율적일지, 메모리/디스크 설정을 변경하여 테스트를 진행하였습니다. 디스크는 RAID 레벨을 변경하였고, innodb_buffer_pool을 조정함으로써 메모리 환경을 구성하였습니다. 서비스 특성에 따라 하드웨어 구성을 달리함으로써, 장비를 더욱더 효율적으로 사용할 수 있을 것으로 기대됩니다.^^&lt;/p&gt;&#xA;&lt;h1 id=&#34;디스크배열raid란&#34;&gt;디스크배열(RAID)란?&lt;/h1&gt;&#xA;&lt;p&gt;RAID란 Redundant Array of Inexpensive Disks의 약자로 디스크를 여러장 묶어서, 데이터 중복성 및 성능 향상을 유도할 수 있는 기법입니다. RAID 기법은 참으로 많이 있으나, 일반적으로 실무에서는 RAID0, RAID1, RAID5, RAID10또는 RAID01을 많이 사용합니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

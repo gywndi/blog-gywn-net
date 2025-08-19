@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Federated on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/federated/</link>
+    <description>Recent content in Federated on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Sat, 27 Dec 2014 14:16:23 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/federated/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MariaDB의 FederatedX 엔진을 활용한 9억 데이터 이관기</title>
+      <link>//localhost:1313/2014/12/how-to-migrate-100million-with-federatedx/</link>
+      <pubDate>Sat, 27 Dec 2014 14:16:23 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2014/12/how-to-migrate-100million-with-federatedx/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;대용량 로그 테이블은 때로는 서비스에 지대한 영향을 미치기도 합니다. 게다가 이 테이블을 파티셔닝 구성을 해야하는데, 이를 서비스 운영 중인 상태에서 마스터 장비에서 Import하는 것은 사실 대단히 위험한 시도이기도 하죠.&lt;/p&gt;&#xA;&lt;p&gt;이런 상황에서 얼마 전 FederatedX엔진을 활용하여 9억 데이터를 이관한 사례가 있는데, 이에 대해 공유하도록 하겠습니다. ^^&lt;/p&gt;&#xA;&lt;h1 id=&#34;goal&#34;&gt;Goal&lt;/h1&gt;&#xA;&lt;p&gt;9억 건의 데이터를 Import하는 동안 &lt;strong&gt;서비스에는 어떠한 영향도 없어야 하며&lt;/strong&gt;, 구성 후 &lt;strong&gt;어플리케이션 적용 전까지 데이터가 정상적으로 동기화&lt;/strong&gt;되어야 합니다.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;데이터 이동하는 동안 기존 서비스 영향 최소화 및 문제 발생 시 빠른 원복&lt;/li&gt;&#xA;&lt;li&gt;데이터 구성 후 어플리케이션 코드 배포 전까지 데이터 동기화&lt;/li&gt;&#xA;&lt;li&gt;데이터 보관 주기 정책에 따른 유연한 대처&lt;br&gt;&#xA;현재는 삭제 주기가 없으나, 추후 정책에 따라 변경 가능&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;let-me-see&#34;&gt;Let me SEE..&lt;/h1&gt;&#xA;&lt;p&gt;가야할 골이 정해졌으니.. 현재 상황에 대해서 분석을 해봐야겠죠. ㅎㅎ 다음은 DB 사용 현황에 대한 내용입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MariaDB의 FederatedX를 소개합니다.</title>
+      <link>//localhost:1313/2014/12/let-me-introduce-federatedx/</link>
+      <pubDate>Fri, 05 Dec 2014 13:53:39 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2014/12/let-me-introduce-federatedx/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL에는 Federated라는 스토리지 엔진이 있는데, 이는 원격의 테이블에 접근하여 제어하기 위한 용도로 사용됩니다.  얼마 전 이 엔진과 관련하여 재미있는 테스트를 하였는데, 이 내용을 소개하기에 앞서서 간단하게 정리해보도록 하겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;features&#34;&gt;Features&lt;/h1&gt;&#xA;&lt;p&gt;FederatedX는 사실 MariaDB에서 Federated 엔진을 의미하는데, 이를 다른 이름으로 구분하는 것은 사실 더욱 확장된 기능을 가지기 때문입니다.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;원격 서버 접근&lt;/strong&gt;&lt;br&gt;&#xA;원격에 있는 테이블을 로컬에 있는 것처럼 사용&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;트랜잭션&lt;/strong&gt;&lt;br&gt;&#xA;2-Phase Commit 형태로 데이터의 일관성을 유지&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;파티셔닝&lt;/strong&gt;&lt;br&gt;&#xA;각 파티셔닝 별로 다른 원격 테이블 참조 가능&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;usage&#34;&gt;Usage&lt;/h1&gt;&#xA;&lt;p&gt;FederatedX 스토리지 엔진은 MariaDB에서는 기본적으로는 활성화되어 있습니다. MySQL에서는 별도의 옵션을 줘야만 활성화되는 것과는 다른 측면이죠.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

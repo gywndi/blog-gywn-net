@@ -1,0 +1,606 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Maria 2탄 – 진화하는 Maria, 함께하는 MySQL!! - </title>
+
+  <meta name="description" content="Overview
+MySQL 오픈 소스 진영은 더이상 단순 데이터 처리에만 강한 DBMS이기를 거부합니다. 이제는 대용량 처리에 적합하도록 탈바꿈 중입니다.
+지금까지 MySQL에서는 단일 쓰레드로 Nested Loop 방식으로 쿼리를 처리하였기 때문에, 조인 건 수가 대형화될 수록 성능이 급속도로 악화되었습니다.
+MariaDB는 5.3버전부터 DB 엔진과 스토리지 엔진 간의 데이터 전송이 개선되었고, 조인 시 추가적인 블록 기반의 조인 알고리즘을 제공합니다. 물론 MySQL도 5.6버전부터는 관련 기능을 어느정도 지원합니다.
+변화하는 MariaDB에 대해 몇 가지 소개하도록 하겠습니다.
+Disk access optimization
+1) Index Condition Pushdown
+MySQL/MariaDB는 구조적으로 DB 엔진과 스토리지 엔진 역할이 명확하게 구분됩니다.">
+  <meta name="author" content="gywndi"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "gywn\u0027s tech",
+    
+    "url": "\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/\/localhost:1313\/2012\/07\/improve-mariadb-mysql\/",
+          "name": "Maria 2탄 – 진화하는 maria, 함께하는 my sql!!"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "gywndi"
+  },
+  "headline": "Maria 2탄 – 진화하는 Maria, 함께하는 MySQL!!",
+  "description" : "Overview MySQL 오픈 소스 진영은 더이상 단순 데이터 처리에만 강한 DBMS이기를 거부합니다. 이제는 대용량 처리에 적합하도록 탈바꿈 중입니다.\n지금까지 MySQL에서는 단일 쓰레드로 Nested Loop 방식으로 쿼리를 처리하였기 때문에, 조인 건 수가 대형화될 수록 성능이 급속도로 악화되었습니다.\nMariaDB는 5.3버전부터 DB 엔진과 스토리지 엔진 간의 데이터 전송이 개선되었고, 조인 시 추가적인 블록 기반의 조인 알고리즘을 제공합니다. 물론 MySQL도 5.6버전부터는 관련 기능을 어느정도 지원합니다.\n변화하는 MariaDB에 대해 몇 가지 소개하도록 하겠습니다.\nDisk access optimization 1) Index Condition Pushdown MySQL\/MariaDB는 구조적으로 DB 엔진과 스토리지 엔진 역할이 명확하게 구분됩니다.\n",
+  "inLanguage" : "en",
+  "wordCount":  1160 ,
+  "datePublished" : "2012-07-17T02:13:57\u002b00:00",
+  "dateModified" : "2012-07-17T02:13:57\u002b00:00",
+  "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+  "keywords" : [ "mariadb, MySQL, Performance" ],
+  "mainEntityOfPage" : "\/\/localhost:1313\/2012\/07\/improve-mariadb-mysql\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="Maria 2탄 – 진화하는 Maria, 함께하는 MySQL!!" />
+<meta property="og:description" content="Overview
+MySQL 오픈 소스 진영은 더이상 단순 데이터 처리에만 강한 DBMS이기를 거부합니다. 이제는 대용량 처리에 적합하도록 탈바꿈 중입니다.
+지금까지 MySQL에서는 단일 쓰레드로 Nested Loop 방식으로 쿼리를 처리하였기 때문에, 조인 건 수가 대형화될 수록 성능이 급속도로 악화되었습니다.
+MariaDB는 5.3버전부터 DB 엔진과 스토리지 엔진 간의 데이터 전송이 개선되었고, 조인 시 추가적인 블록 기반의 조인 알고리즘을 제공합니다. 물론 MySQL도 5.6버전부터는 관련 기능을 어느정도 지원합니다.
+변화하는 MariaDB에 대해 몇 가지 소개하도록 하겠습니다.
+Disk access optimization
+1) Index Condition Pushdown
+MySQL/MariaDB는 구조적으로 DB 엔진과 스토리지 엔진 역할이 명확하게 구분됩니다.">
+<meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+<meta property="og:url" content="//localhost:1313/2012/07/improve-mariadb-mysql/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="gywn&#39;s tech" />
+
+  <meta name="twitter:title" content="Maria 2탄 – 진화하는 Maria, 함께하는 MySQL!!" />
+  <meta name="twitter:description" content="Overview
+MySQL 오픈 소스 진영은 더이상 단순 데이터 처리에만 강한 DBMS이기를 거부합니다. 이제는 대용량 처리에 적합하도록 탈바꿈 중입니다.
+지금까지 MySQL에서는 단일 쓰레드로 Nested Loop 방식으로 쿼리를 처리하였기 때문에, 조인 건 수가 대형화될 수록 성능이 급속도로 악화되었습니다.
+MariaDB는 5.3버전부터 DB 엔진과 스 …">
+  <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.8">
+  <link rel="alternate" href="//localhost:1313/index.xml" type="application/rss+xml" title="gywn&#39;s tech"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="//localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="//localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="//localhost:1313/css/codeblock.css" />
+  
+  <link rel="stylesheet" href="//localhost:1313/css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="//localhost:1313/">gywn&#39;s tech</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="gywn&#39;s tech" href="//localhost:1313/">
+            <img class="avatar-img" src="//localhost:1313/img/avatar-sdc-angry.png" alt="gywn&#39;s tech" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Maria 2탄 – 진화하는 Maria, 함께하는 MySQL!!</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2012-07-17
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;6&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h1 id="overview">Overview</h1>
+<p>MySQL 오픈 소스 진영은 더이상 단순 데이터 처리에만 강한 DBMS이기를 거부합니다. 이제는 대용량 처리에 적합하도록 탈바꿈 중입니다.</p>
+<p>지금까지 MySQL에서는 단일 쓰레드로 Nested Loop 방식으로 쿼리를 처리하였기 때문에, 조인 건 수가 대형화될 수록 성능이 급속도로 악화되었습니다.</p>
+<p>MariaDB는 5.3버전부터 DB 엔진과 스토리지 엔진 간의 데이터 전송이 개선되었고, 조인 시 추가적인 블록 기반의 조인 알고리즘을 제공합니다. 물론 MySQL도 5.6버전부터는 관련 기능을 어느정도 지원합니다.</p>
+<p>변화하는 MariaDB에 대해 몇 가지 소개하도록 하겠습니다.</p>
+<h1 id="disk-access-optimization">Disk access optimization</h1>
+<h3 id="1-index-condition-pushdown">1) Index Condition Pushdown</h3>
+<p>MySQL/MariaDB는 구조적으로 DB 엔진과 스토리지 엔진 역할이 명확하게 구분됩니다.</p>
+<p><strong>DB 엔진은 데이터를 처리하여 클라이언트에게 전달하고, 스토리지 엔진은 물리적 장치에서 읽어와 DB 엔진에 전달합니다.</strong></p>
+<p>이런 구조이기 때문에 다양한 스토리지 엔진을 가질 수 있다는 확장성이 있지만, 그에 따라 내부적인 비효율이 발생하기도 합니다.</p>
+<p>다음과 같은 SQL이 호출된다고 가정합니다. tbl 테이블에는 (key_col1, key_col2)로 인덱스가 구성되어 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">tbl</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="n">key_col1</span><span class="w"> </span><span class="k">between</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">11</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">and</span><span class="w"> </span><span class="n">key_col2</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;%foo%&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><p>여기서 데이터를 스토리지 엔진에 전달할 때는 key_col1에 해당하는 조건만 전달할 수 있습니다. key_col2는 문자열 패턴 검색이므로 인덱스 사용에서는 무의미하기 때문이죠.</p>
+<p>만약 key_col1 의 between 조건 결과가 100만 건이라고 가정하면, 스토리지 엔진으로 부터 대상 데이터 100만 건을 모두 DB 엔진으로 가져와서 key_col2 유효성을 체크합니다. 그렇기에 스토리지 엔진에서 DB엔진으로 데이터를 전송하는 “Sending Data”에서 비효율이 발생하기도 합니다.</p>
+<p><img src="/img/2012/07/MariaDB-None-Index-Condition-Pushdown.png" alt="MariaDB None Index Condition Pushdown"></p>
+<p>그러나 MariaDB 5.3.3부터 Index Condition Pushdown 기능이 추가되면서, 인덱스 데이터 구조를 활용하여 한번 더 필터링하여 필요한 데이터만 테이블 데이터에서 읽고 DB 엔진에 전달합니다.</p>
+<p><img src="/img/2012/07/MariaDB-Index-Condition-Pushdown.png" alt="MariaDB Index Condition Pushdown"></p>
+<p>위 그림에서는 앞선 그림과는 다르게 오직 한 건만 DB 엔진에 전달합니다. 불필요한 데이터를 DB엔진에 전달하지 않기 때문에 퍼포먼스가 크게 향상되겠죠. (간단한 테스트에서는, 1분이 넘던 쿼리가 1초 내로 처리되었습니다.^^)</p>
+<p>단, Index Condition Pushdown 기능이 동작하기 위해서는 위와 같이 **“조건을 포함하는 형식”**으로 인덱스가 구성이 되어 있어야 합니다.</p>
+<h3 id="2-multi-record-read">2) Multi-Record Read</h3>
+<p>디스크는 데이터를 읽어오는 구조 상 Random Access에 성능이 취약합니다. 데이터를 읽어들이기 위해서는 헤더를 끊임없이 움직여야 하기 때문이죠.</p>
+<p>MariaDB에서는 효과적으로 데이터를 긁어오기 위해서 Multi-Record Read 기능을 제공합니다. 필요한 데이터를 <strong>Rowid를 기준으로 정렬하여 디스크에 데이터를 요청</strong>합니다. Rowid로 데이터가 정렬되었기 때문에 디스크는 Sequential하게 데이터를 읽어오죠. 즉 데이터를 읽기 위해 과도하게 헤더가 움직이지 않아도 된다는 것을 의미합니다.</p>
+<p>Multi-Record Read를 간단하게 그림으로 표현하겠습니다.</p>
+<p><img src="/img/2012/07/MariaDB-Multi-Record-Read.png" alt="MariaDB Multi-Record Read"></p>
+<p>인덱스 구조로부터 키가 1,2,4,6,7에 해당하는 결과를 가져와서, 이를 다시 Rowid 기준으로 정렬을 합니다.</p>
+<p>그리고 Rowid 기준으로 실제 스토리지 엔진에 데이터를 요청하게 되는데, Rowid 순으로 접근하는 경우 디스크에서 Random Access가 최소화됩니다.</p>
+<p>위 그림은 MyISAM 기준이며, InnoDB인 경우 Rowid 역할을 하는 Primary Key 순으로 재정렬하여 데이터를 효과적으로 가져오겠죠.^^</p>
+<h1 id="join-buffer">Join Buffer</h1>
+<p>MariaDB 5.3부터는 조인 버퍼를 기존보다 더욱 효율적으로 사용합니다.</p>
+<p>가변형 데이터 타입(Varchar) 경우 최대 문자열보다 부족한 부분에 \0 문자로 채우지 않고, Null 필드 경우 조인 버퍼에 적재를 하지 않고 데이터를 처리합니다. 즉 조인 버퍼 사용 효율이 증대하는 것이죠</p>
+<p>Inner Join에서만 사용하던 조인 버퍼를 이제는 Outer Join과 Semi Join에서도 사용할 수 있도록 기능이 개선되었습니다.</p>
+<h3 id="1-incremental-join-buffer">1) Incremental Join Buffer</h3>
+<p>조인 버퍼를 더욱 더 효율적으로 사용하기 위한 새로운 접근입니다.</p>
+<p>테이블A, 테이블B, 테이블C 등 세 개의 테이블을 조인하는 경우에는 두 개의 조인 버퍼를 내부적으로 사용합니다.</p>
+<p>첫번째 조인 버퍼(테이블A과 테이블B 사이의 조인 버퍼)은 테이블A의 레코드 값을 임시로 저장하고 테이블B와 비교하기 위한 용도로 사용됩니다.</p>
+<p>두번째 조인버퍼(“테이블A과 테이블B 결과”와 테이블C 사이의 조인 버퍼)는 앞선 결과 값과 테이블 C 조인을 위해 임시로 데이터를 저장하는 용도로 사용됩니다. 기존까지는 “테이블A와 테이블B 결과”를 “Copy”하면서 두번째 조인 버퍼에 적재하였습니다. 여기서 메모리에는 이중으로 데이터가 적재되는 현상이 발생하고, 비효율 현상이 발생하는 것이죠.</p>
+<p><img src="/img/2012/07/MariaDB-incremental-join-buffer.png" alt="MariaDB incremental join buffer"></p>
+<p>그러나 Incremental join buffer 방식에서는 데이터를 복사하지 않고, 위 그림과 같이 <strong>테이블A와 테이블B 결과가 저장된 임시 공간에 접근할 수 있는 “포인터” 값만 조인 버퍼에 저장</strong>합니다.</p>
+<p>즉, **“불필요한 데이터 Copy를 제거”**하면서 메모리 공간을 더욱 효율적으로 활용할 수 있는 것이죠.</p>
+<h3 id="2-join-buffer-with-outer-joinsemi-join">2) Join Buffer with Outer-Join/Semi-Join</h3>
+<p>MariaDB5.3부터는 Inner-Join 뿐만 아니라 Outer-Join과 Semi-Join에서도 조인 버퍼를 활용합니다.</p>
+<p>Outer-Join에서는 조인 버퍼 내부에 “매칭 플래그”, 즉 테이블A가 기준 테이블인 경우 관련 데이터와 매칭되는 여부를 체크하는 플래그가 내부적으로 포함됩니다.</p>
+<p>기본적으로 매칭 플래그는 OFF 값으로 세팅되어 있고, 테이블B에서 일치하는 데이터를 찾으면 플래그를 ON으로 변경합니다.</p>
+<p>조인 버퍼에서 테이블A와 테이블B 간 데이터 매칭 여부 수행 이후 여전히 OFF값을 플래그로 가지는 필드인 경우, 테이블B에 해당하는 칼럼들은 NULL로 채웁니다.</p>
+<p><img src="/img/2012/07/MariDB-Join-Buffer-with-Outer-Join_Semi-Join1.png" alt="MariDB Join Buffer with Outer-Join/Semi-Join"></p>
+<p>Semi-Join(IN 안의 서브쿼리와 같은 조건)에서도 매칭 플래그가 비슷하게 사용됩니다.</p>
+<p>다만 매칭 플래그가 On이 되는 시점에서 관련 데이터를 테이블B에서 더이상 탐색하지 않는다는 점에서 차이점이 있습니다.</p>
+<h1 id="block-based-join-algorithm">Block Based Join Algorithm</h1>
+<h3 id="1-block-nested-loop-join">1) Block Nested Loop Join</h3>
+<p>블록 기반의 조인 알고리즘을 소개하기에 앞서, Block Nested Loop Join에 대해 설명하도록 하겠습니다.</p>
+<p>테이블A와 테이블B이 있는 상태에서 다음 SQL이 호출된다고 가정합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">Select</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">r1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">r2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">From</span><span class="w"> </span><span class="n">TABEL_A</span><span class="w"> </span><span class="n">a</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">Inner</span><span class="w"> </span><span class="k">Join</span><span class="w"> </span><span class="n">TABLE_B</span><span class="w"> </span><span class="k">On</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">r1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">r2</span><span class="w">
+</span></span></span></code></pre></div><p><img src="/img/2012/07/MariaDB-Block-Nested-Loop-Join.png" alt="MariaDB Block Nested Loop Join"></p>
+<p>테이블A로부터 읽어오면서 조인버퍼가 가득 찰 때까지 채웁니다. 여기서는 연두색 사각형이 조인 버퍼를 가득 채우는 데이터라고 보면 되겠습니다.</p>
+<p>조인 버퍼가 가득 채워지면, 테이블B를 스캔하면서 조인 버퍼에 있는 데이터와 매칭되는지 하나하나 체크하고, 매칭되면 조인 결과로 내보냅니다.</p>
+<p>조인 버퍼 안의 모든 데이터를 비교하는 과정이 끝나면, 조인 버퍼를 비우고 다시 앞선 과정을 수행합니다. 여기서는 노란 색 사각형 부분입니다.</p>
+<p>이러한 과정을 테이블A에서 조인 버퍼에 더이상 데이터를 채울 수 없는 시점, 즉 테이블A 조건에 해당하는 데이터를 모두 처리할 때까지 반복 수행합니다. 여기서 테이블B를 스캔하는 횟수는 조인 버퍼에 데이터가 적재되는 횟수와 동일합니다. 그리고 테이블B 데이터를 스캔할 때는 Full table scan, Full index scan, Range index scan 등으로 데이터에 접근합니다.</p>
+<h3 id="2-block-hash-join">2) Block Hash Join</h3>
+<p>Block Hash Join은 MariaDB 5.3부터 제공하는 새로운 조인 알고리즘입니다.</p>
+<p>이 알고리즘은 테이블 간 조인을 동등 비교 시에서 사용됩니다.</p>
+<p>다른 조인 알고리즘과 마찬가지로, Block Hash Join에서도 조인 버퍼를 사용하여 테이블 간의 연관성을 체크하지만, 조인 버퍼를 사용하는 방식에서는 약간 다릅니다.</p>
+<p><img src="/img/2012/07/MariaDB-Block-Hash-Join.png" alt="MariaDB Block Hash Join"></p>
+<p>테이블A에서 데이터를 읽어와 조인 버퍼에 밀어 넣을 때, 테이블A 조건에 해당하는 해시 값을 내부적으로 생성하고 조인 버퍼에 저장 합니다.</p>
+<p>그리고 테이블B에서 조건을 해시값을 통하여 직접 데이터 매칭 여부를 결정하고 결과셋을 생성합니다. 즉 Nested Loop 조인 방식에서는 데이터에 순차적으로 접근해야 하는 것과는 커다란 차이가 있습니다.</p>
+<p>조인 버퍼에 별도로 해시 값을 추가 저장하기 때문에, 기존 Block Nested Loop 방식보다는 조인 버퍼에 저장되는 데이터 양이 적으나, 테이블A가 작을수록 혹은 조인 버퍼에 저장되는 데이터 가지 수가 작을 수록 상당한 퍼포먼스를 발휘합니다.</p>
+<h3 id="3-batched-key-access-join">3) Batched Key Access Join</h3>
+<p>기존의 Block Nested Join에서는 대용량 테이블과의 조인에서는 성능이 크게 떨어질 수밖에 없습니다.</p>
+<p>테이블 조인 시 랜덤 Access가 발생하기 때문이죠. 그나마 인덱스를 생성하여 차선책으로 해결할 수는 있겠지만, 완벽한 대안은 아닐 것입니다.</p>
+<p>Batched Key Access 조인은 랜덤 Access를 최대한 줄이려는 목적으로 고안된 알고리즘으로, 조인 대상이 되는 데이터를 “미리 예측”함과 동시에 디스크에 저장된 순서대로 데이터를 가져와서 “디스크 접근 효율”을 최대로 늘리자는 데 있습니다.</p>
+<p><img src="/img/2012/07/MariaDB-Batched-Key-Access-Join.png" alt="MariaDB Batched Key Access Join"></p>
+<p>기본적인 Batched Key Access 조인은 다음과 같습니다.</p>
+<p>다른 Block Based Join 알고리즘처럼, Batched Key Access 조인도 첫번 째 피연산자의 레코드 값을 조인 버퍼에 채웁니다.</p>
+<p>그리고 조인 버퍼가 다시 채워지면 조인 버퍼 안에 있는 레코드와 매칭이 될 수 있는 값을 조인 테이블로부터 “미리” 찾아냅니다.</p>
+<p><img src="/img/2012/07/MariaDB-Batched-Key-Access-Join2.png" alt="MariaDB Batched Key Access Join"></p>
+<p>조인 버퍼 안에 있는 레코드와 매칭이 될 수 있는 값을 미리 찾아내기 위해서 Multi-Record Read 인터페이스를 호출합니다.</p>
+<p>Multi-Record Read는 조인 버퍼 안의 모든 레코드로 구성된 키 값들로 테이블B와 연관된 인덱스 룩업을 수행하고, 테이블B의 레코드를 빠르게 가져오기 위해 Rowid 순으로 데이터를 검색 합니다. 자세한 내용은 상단에 설명되어 있습니다. ^^</p>
+<p>그리고 조인 버퍼의 레코드와 “미리 가져온” 테이블B의 데이터를 비교하여 조인 조건이 맞는지를 체크하고 최종적으로 결과값으로 출력하는 것이죠.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>물론 위에서 소개한 기능은 대부분 상용 DBMS에서 구현되어 있습니다. 그리고 그동안은 MySQL DB 엔진 태생적인 문제로 단순 데이터 처리 혹은 작은 데이터 조각만을 취급하는 소규모 DBMS로 인식되어 왔던 것이죠. 또한 옵티마이저 기능이 여전히 좋지 않기 때문에, 쿼리 작성 시에도 상당한 노력을 기울여야 최상의 퍼포먼스가 나옵니다.</p>
+<p>하지만, 점차적으로 기능이 개선됨에 따라 MariaDB혹은 MySQL을 통해서도 얼마든지 어느정도의 대용량 데이터를 처리할 수 있는 모습으로 변모하고 있습니다.</p>
+<p>더이상 DB 태생적인 한계점이 사라진다는 점에서 앞으로 MySQL 오픈소스 진영의 다음 행보가 상당히 기대됩니다.</p>
+<p><strong>&lt;참고자료&gt;</strong></p>
+<ul>
+<li><a href="http://kb.askmonty.org/en/what-is-mariadb-53/">http://kb.askmonty.org/en/what-is-mariadb-53/</a></li>
+<li><a href="http://kb.askmonty.org/en/index-condition-pushdown/">http://kb.askmonty.org/en/index-condition-pushdown/</a></li>
+<li><a href="http://kb.askmonty.org/en/block-based-join-algorithms/#batch-key-access-join">http://kb.askmonty.org/en/block-based-join-algorithms/#batch-key-access-join</a></li>
+<li><a href="http://kb.askmonty.org/en/multi-range-read-optimization/">http://kb.askmonty.org/en/multi-range-read-optimization/</a></li>
+<li><a href="http://assets.en.oreilly.com/1/event/2/Batched%20Key%20Access_%20a%20Significant%20Speed-up%20for%20Join%20Queries%20Presentation.ppt">http://assets.en.oreilly.com/1/event/2/Batched%20Key%20Access_%20a%20Significant%20Speed-up%20for%20Join%20Queries%20Presentation.ppt</a></li>
+</ul>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="//localhost:1313/tags/mariadb/">mariadb</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+            
+              
+              <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=%2f%2flocalhost%3a1313%2f2012%2f07%2fimprove-mariadb-mysql%2f&amp;text=Maria%202%ed%83%84%20%e2%80%93%20%ec%a7%84%ed%99%94%ed%95%98%eb%8a%94%20Maria%2c%20%ed%95%a8%ea%bb%98%ed%95%98%eb%8a%94%20MySQL%21%21&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=%2f%2flocalhost%3a1313%2f2012%2f07%2fimprove-mariadb-mysql%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f07%2fimprove-mariadb-mysql%2f&amp;title=Maria%202%ed%83%84%20%e2%80%93%20%ec%a7%84%ed%99%94%ed%95%98%eb%8a%94%20Maria%2c%20%ed%95%a8%ea%bb%98%ed%95%98%eb%8a%94%20MySQL%21%21" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=%2f%2flocalhost%3a1313%2f2012%2f07%2fimprove-mariadb-mysql%2f&amp;title=Maria%202%ed%83%84%20%e2%80%93%20%ec%a7%84%ed%99%94%ed%95%98%eb%8a%94%20Maria%2c%20%ed%95%a8%ea%bb%98%ed%95%98%eb%8a%94%20MySQL%21%21" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=%2f%2flocalhost%3a1313%2f2012%2f07%2fimprove-mariadb-mysql%2f&amp;title=Maria%202%ed%83%84%20%e2%80%93%20%ec%a7%84%ed%99%94%ed%95%98%eb%8a%94%20Maria%2c%20%ed%95%a8%ea%bb%98%ed%95%98%eb%8a%94%20MySQL%21%21" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=%2f%2flocalhost%3a1313%2f2012%2f07%2fimprove-mariadb-mysql%2f&amp;description=Maria%202%ed%83%84%20%e2%80%93%20%ec%a7%84%ed%99%94%ed%95%98%eb%8a%94%20Maria%2c%20%ed%95%a8%ea%bb%98%ed%95%98%eb%8a%94%20MySQL%21%21" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/2022/05/mysql-heatwave/">MySQL Heatwave를 살펴보았습니다</a></li>
+                
+                    <li><a href="/2021/09/package-own-fluentd-agent/">Fluentd? 나만의 에이전트 패키징!</a></li>
+                
+                    <li><a href="/2021/07/mysql-document-store-test/">MySQL document store 초간단 테스트</a></li>
+                
+                    <li><a href="/2021/07/make-own-query-exporter-with-go/">Go언어로 나만의 Query Exporter 만들어보기!</a></li>
+                
+                    <li><a href="/2021/06/resetable-sequence-for-mysql/">MySQL에서 리셋되는 시퀀스 만들어보기</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="//localhost:1313/2012/07/mysql-replication-driver-error-report/" data-toggle="tooltip" data-placement="top" title="MySQL에서 Replication Driver 사용 시 장애 취약점 리포트">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="//localhost:1313/2012/08/amazon-rds-feature/" data-toggle="tooltip" data-placement="top" title="아마존의 가상 RDBMS인 Amazon RDS의 특성 몇 가지">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:gywndi@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.facebook.com/dongchan.sung" title="Facebook">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/gywndi" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://gywn.net">gywndi</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2011 - 2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="//localhost:1313/">gywn&#39;s tech</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="//localhost:1313/js/main.js"></script>
+<script src="//localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="//localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

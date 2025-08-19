@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Monitoring on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/monitoring/</link>
+    <description>Recent content in Monitoring on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Sat, 03 Mar 2018 17:33:28 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/monitoring/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PMM 이야기 1편 – INTRO</title>
+      <link>//localhost:1313/2018/03/pmm-intro/</link>
+      <pubDate>Sat, 03 Mar 2018 17:33:28 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2018/03/pmm-intro/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;정말 오랜만에 글을 써봅니다. 은행이 오픈한지도 어언 8개월째를 훌쩍 접어들었네요. 여전히 MySQL 서버군에는 이렇다할 장애 없이, 무난(?)하게 하루하루를 지내고 있습니다.. (아.. 그렇다고 놀고만 있지는 않았어요!!)&lt;/p&gt;&#xA;&lt;p&gt;사실 그동안의 경험과 삽질을 바탕으로, 필요성을 느꼈던 다양한 부분을 중앙 매니저에 최대한 녹여보았고, 그 집대성의 결과가 지금 뱅킹 MySQL시스템입니다. MHA 관리, 스키마 관리, 파티션 관리, 패스워드 관리, 백업/복구 관리..아.. 또 뭐있더라.. -_-;; 암튼, 귀찮은 모든 것들은 최대한 구현을 해놓았지요.&lt;/p&gt;&#xA;&lt;p&gt;그러나, 예전부터 늘 부족하다고 생각해왔던 한가지 분야가 있는데.. 그것은 바로 모니터링입니다. 시스템에 대한 가장 정확한 최신 정보는 바로 모니터링 지표입니다. 만약, 제대로된 모니터링 시스템 환경 속에서, 실제 서비스의 영속성과 시스템의 매니지먼트를 &lt;strong&gt;모니터링 지표&lt;/strong&gt;를 통해서 제대로된 &lt;strong&gt;에코 시스템&lt;/strong&gt;을 구축할 수 있다면? 등골이 오싹할 정도의 선순환 작용으로 엄청 견고한 시스템을 구축할 수 있겠죠.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

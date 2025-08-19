@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jdbc on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/jdbc/</link>
+    <description>Recent content in Jdbc on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Tue, 31 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/jdbc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JDBC의 autoReconnect 파라메터가 저지른 일!</title>
+      <link>//localhost:1313/2017/10/jdbc-insane-autoreconnect/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2017/10/jdbc-insane-autoreconnect/</guid>
+      <description>&lt;p&gt;세상에 말도 안되는 일이 일어났습니다.&lt;/p&gt;&#xA;&lt;p&gt;서비스가 정상적으로 동작하기 위해서는, 아무래도 데이터베이스가 필수인데.. 이 데이터베이스로부터 쉽게 데이터를 주고받을 수 있게 디비별/언어별 중간 역할을 해주는 것이 바로 Driver입니다.&lt;/p&gt;&#xA;&lt;p&gt;MySQL역시 자바에서 원활하게 데이터 처리를 수행할 수 있도록 &lt;code&gt;connector/j&lt;/code&gt;라는 녀석을 Oracle에서 배포를 하는데.. 오늘은 이 녀석이 제공해주는 기능인 &lt;code&gt;autoReconnect&lt;/code&gt; 파라메터가 저지르는 일에 대해서 얘기를 해보고자 합니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;autoreconnect는-무슨-일을-하는가&#34;&gt;autoReconnect는 무슨 일을 하는가?&lt;/h1&gt;&#xA;&lt;p&gt;파라메터 이름 그대로.. 자동으로 커넥션을 다시 맺어준다는 의미입니다. 데이터베이스 역시 서버로 구동하는 프로그램의 한 축이기에.. 클라이언트가 맺은 커넥션이 절대 끊어지지 않는다고 보장할 수 없습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL에서 Replication Driver 사용 시 장애 취약점 리포트</title>
+      <link>//localhost:1313/2012/07/mysql-replication-driver-error-report/</link>
+      <pubDate>Fri, 06 Jul 2012 03:19:24 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/07/mysql-replication-driver-error-report/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL에서 슬레이브 부하 분산을 하는 방안으로 Replication Driver 기능을 제공하는 jdbc 내부적으로 지원합니다. Replication Driver를 사용하면 상당히 간단하게 마스터/슬레이브 활용을 할 수 있고 어느정도의 Failover는 가능합니다.&lt;/p&gt;&#xA;&lt;p&gt;하지만 서비스 적용을 위해 Failover테스트 도중 치명적인 문제점이 발생하였습니다. 관련 포스팅을 하도록 하겠습니다. ^^&lt;/p&gt;&#xA;&lt;h1 id=&#34;사용-방법&#34;&gt;사용 방법&lt;/h1&gt;&#xA;&lt;p&gt;Replication Driver 사용 시 ReadOnly 옵션을 True/False 상태에 따라 마스터/슬레이브 장비를 선택합니다.&lt;/p&gt;&#xA;&lt;p&gt;아래 그림처럼 ReadOnly이 False이면 마스터 장비에 쿼리를 날리고, True이면 슬레이브에 쿼리를 날리는 구조입니다. 그리고 로드발란싱 기능을 사용하면, 슬레이브 서버 부하 분산할 수 있습니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
