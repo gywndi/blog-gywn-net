@@ -59,7 +59,7 @@ cd /usr/local
 ln -s mysql-5.5.19-linux2.6-x86_64 mysql
 ```
 
-자세한 설치는 [리눅스에 MySQL 설치하기(CentOS 5.6)](https://gywn.net/2011/12/mysql-installation-on-linux/) 편을 참고하세요.
+자세한 설치는 [리눅스에 MySQL 설치하기(CentOS 5.6)](/2011/12/mysql-installation-on-linux/) 편을 참고하세요.
 
 ### PHP설치
 

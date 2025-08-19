@@ -8,7 +8,7 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Fri, 12 Oct 2018 00:00:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/percona-server/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[MySQL] Online Alter에도 헛점은 있더구나 – gdb, mysqld-debug 활용 사례</title>

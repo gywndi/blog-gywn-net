@@ -8,7 +8,7 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Tue, 10 Oct 2023 07:10:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/cache/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Apache Ignite로 분산 캐시 만들어보고 싶어요 (1탄)</title>

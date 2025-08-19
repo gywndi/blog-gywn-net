@@ -8,7 +8,7 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Thu, 29 Aug 2019 14:56:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/performance/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL 파티셔닝 테이블 SELECT가 느려요.</title>

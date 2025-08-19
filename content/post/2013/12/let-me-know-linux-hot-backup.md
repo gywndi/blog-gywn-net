@@ -39,7 +39,7 @@ tags:
 설치 버전을 다운로드 하기 위해서는 하단 페이지에서 등록해야하는데, 등록하게 되면 설치 바이너리를 다운로드 받을 수 있는 별도의 링크를 메일로 보내줍니다. 완벽한 오픈소스는 아닌지라.. 설치하기가 조금은 짜증이 나지만.. 일단은..뭐.. ㅎㅎ
 
 http://www.idera.com/productssolutions/freetools/sblinuxhotcopy
-![hcp installation](https://gywn.net/wp-content/uploads/2013/12/hcp-installation.png)
+![hcp installation](/img/2013/12/hcp-installation.png)
 
 설치 파일 압축을 풀면 아래와 같이 OS 별로 설치 바이너리가 있습니다.
 
@@ -65,7 +65,7 @@ $ hcp-setup --get-module
 
 ```bash
 $ hcp --help
-Usage: hcp -h | -m &lt;MOUNT POINT&gt; &lt;DEVICE&gt; | -l | -r &lt;DEVICE&gt;
+Usage: hcp -h | -m <MOUNT POINT> <DEVICE> | -l | -r <DEVICE>
 Options:
   -h, --help             Show this help message.
   -l, --list             List active Hot Copy sessions.

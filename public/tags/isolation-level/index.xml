@@ -8,7 +8,7 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Sat, 06 Oct 2012 04:36:45 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/isolation-level/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!!</title>

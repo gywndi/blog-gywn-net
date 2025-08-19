@@ -8,7 +8,7 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Fri, 06 Jul 2012 03:19:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/failover/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL에서 Replication Driver 사용 시 장애 취약점 리포트</title>

@@ -8,7 +8,7 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Fri, 27 Apr 2012 07:15:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/dump/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL DB 데이터 이관 자동화 구현하기</title>

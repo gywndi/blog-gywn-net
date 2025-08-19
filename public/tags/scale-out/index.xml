@@ -8,7 +8,7 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Fri, 25 May 2012 06:17:13 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/scale-out/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tumblr에서는 MySQL로 어떻게 대용량 데이터를 관리하였을까?</title>
