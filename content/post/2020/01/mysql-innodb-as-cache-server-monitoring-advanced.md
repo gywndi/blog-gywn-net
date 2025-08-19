@@ -8,8 +8,8 @@ categories:
   - MariaDB
   - MySQL
 tags:
-  - InnoDB plugin
-  - memcached
+  - Memcached
+  - MySQL
 
 ---
 # Overview

@@ -1,5 +1,5 @@
 ---
-title: 'MySQL binlog파서와  memcached plugin의 콜라보레이션!'
+title: 'MySQL binlog파서와 memcached plugin의 콜라보레이션!'
 author: gywndi
 type: post
 date: 2020-08-31T00:55:06+00:00
@@ -9,8 +9,8 @@ categories:
   - MySQL
   - NoSQL
 tags:
-  - binlog parser
-  - memcached
+  - Binlog
+  - Memcached
   - MySQL
 
 ---

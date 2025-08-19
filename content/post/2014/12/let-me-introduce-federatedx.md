@@ -8,7 +8,7 @@ categories:
   - MariaDB
 tags:
   - Federated
-  - mariadb
+  - MariaDB
 
 ---
 # Overview

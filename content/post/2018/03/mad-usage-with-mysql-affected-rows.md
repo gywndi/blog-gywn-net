@@ -8,7 +8,6 @@ categories:
   - MariaDB
   - MySQL
 tags:
-  - affected rows
   - MySQL
 
 ---

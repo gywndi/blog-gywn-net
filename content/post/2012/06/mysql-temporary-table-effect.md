@@ -10,7 +10,6 @@ tags:
 - Benchmark
 - MySQL
 - Performance
-- Temporary Table
 
 ---
 # Overview

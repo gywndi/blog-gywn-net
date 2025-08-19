@@ -9,10 +9,8 @@ categories:
   - MySQL
   - PMM
 tags:
-  - exporter
-  - memcached
+  - Memcached
   - MySQL
-  - prometheus
 
 ---
 # Overview

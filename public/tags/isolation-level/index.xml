@@ -8,14 +8,14 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:19:17 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/isolation-level/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!!</title>
       <link>//localhost:1313/2012/10/mysql-transaction-isolation-level2/</link>
       <pubDate>Sat, 06 Oct 2012 04:36:45 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
       <guid>//localhost:1313/2012/10/mysql-transaction-isolation-level2/</guid>
-      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://gywn.net/2012/05/mysql-transaction-isolation-level&#34;&gt;Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법&lt;/a&gt; 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 &lt;code&gt;Create Table .. As Select ..&lt;/code&gt; 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.&lt;/p&gt;&#xA;&lt;p&gt;테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^&lt;/p&gt;</description>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;&lt;a href=&#34;//localhost:1313/2012/05/mysql-transaction-isolation-level&#34;&gt;MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법&lt;/a&gt; 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 &lt;code&gt;Create Table .. As Select ..&lt;/code&gt; 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.&lt;/p&gt;&#xA;&lt;p&gt;테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^&lt;/p&gt;</description>
     </item>
     <item>
       <title>MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법</title>

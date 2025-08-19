@@ -8,9 +8,8 @@ categories:
   - MariaDB
   - MySQL
 tags:
-  - mariadb
+  - MariaDB
   - MySQL
-  - percona
   - pt-online-schema-change
 
 ---

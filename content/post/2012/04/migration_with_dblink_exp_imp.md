@@ -8,9 +8,6 @@ categories:
   - Oracle
   - Research
 tags:
-  - DB Link
-  - Export
-  - Import
   - Migration
   - Oracle
 

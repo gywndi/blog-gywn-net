@@ -208,95 +208,6 @@
         <div class="posts-list">
           
             <article class="post-preview">
-    <a href="//localhost:1313/2011/12/mysql-installation-on-linux/">
-        <h2 class="post-title">리눅스에 MySQL 설치하기(CentOS 5.6)</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on 2011-12-20
-  
-    &nbsp;(Last modified on 2025-08-19)
-  
-  
-    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;minutes
-  
-  
-  
-    
-      
-        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
-      
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        <p>MySQL DBMS 를 설치할 때 제가 적용하는 내용을 공유합니다. root 계정으로 설치 준비를 하고, mysql 계정으로 DB를 구동합니다.</p>
-<p>일단 하단 내용들은 root계정으로 수행을 합니다.</p>
-<h3 id="os-계정-추가">OS 계정 추가</h3>
-<p>다음과 같이 dba 그룹을 추가하고 그 밑에 mysql 계정을 추가합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">groupadd -g <span class="m">600</span> dba
-</span></span><span class="line"><span class="cl">useradd -g <span class="m">600</span> -u <span class="m">605</span> mysql
-</span></span><span class="line"><span class="cl">passwd mysql
-</span></span></code></pre></div><h3 id="linux-설정-변경">Linux 설정 변경</h3>
-<p>세션 Limit 를 설정합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vi /etc/security/limits.conf
-</span></span><span class="line"><span class="cl"><span class="c1">##하단 내용 추가</span>
-</span></span><span class="line"><span class="cl">mysql            soft    nproc  <span class="m">8192</span>
-</span></span><span class="line"><span class="cl">mysql            hard    nproc  <span class="m">16384</span>
-</span></span><span class="line"><span class="cl">mysql            soft    nofile <span class="m">8192</span>
-</span></span><span class="line"><span class="cl">mysql            hard    nofile <span class="m">65536</span>
-</span></span></code></pre></div><p>OS에서 limits.conf 파일을 읽어들이도록 설정합니다. 없으면 생성합니다.</p>
-        <a href="//localhost:1313/2011/12/mysql-installation-on-linux/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-       
-       <a href="//localhost:1313/tags/centos/">CentOS</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/db/">DB</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/installation/">Installation</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/linux/">Linux</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/mysql-%EC%84%A4%EC%B9%98/">MySQL 설치</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%EA%B0%80%EC%9D%B4%EB%93%9C/">가이드</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/">리눅스</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%EB%A7%A4%EB%89%B4%EC%96%BC/">매뉴얼</a>&nbsp;
-         
-    </div>
-    
-
-</article>
-          
-            <article class="post-preview">
     <a href="//localhost:1313/2011/12/centos-apache-php-mysql/">
         <h2 class="post-title">CentOS6 에 Apache&#43;PHP&#43;MySQL 구성</h2>
         
@@ -364,7 +275,7 @@ Apache -&gt; MySQL -&gt; PHP 순으로 설치!</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">## 관리를 위해 Symbolic Link로 연결</span>
 </span></span><span class="line"><span class="cl">ln -s mysql-5.5.19-linux2.6-x86_64 mysql
-</span></span></code></pre></div><p>자세한 설치는 <a href="https://gywn.net/2011/12/mysql-installation-on-linux/">리눅스에 MySQL 설치하기(CentOS 5.6)</a> 편을 참고하세요.</p>
+</span></span></code></pre></div><p>자세한 설치는 <a href="/2011/12/mysql-installation-on-linux/">리눅스에 MySQL 설치하기(CentOS 5.6)</a> 편을 참고하세요.</p>
         <a href="//localhost:1313/2011/12/centos-apache-php-mysql/" class="post-read-more">[Read More]</a>
         
     </div>
@@ -386,9 +297,6 @@ Apache -&gt; MySQL -&gt; PHP 순으로 설치!</p>
         
        
        <a href="//localhost:1313/tags/php/">PHP</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%EC%84%A4%EC%B9%98/">설치</a>&nbsp;
          
     </div>
     

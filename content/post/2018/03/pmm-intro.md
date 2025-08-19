@@ -9,11 +9,9 @@ categories:
   - PMM
   - Research
 tags:
-  - monitoring
+  - Monitoring
   - MySQL
-  - percona
-  - pmm
-  - prometheus
+  - PMM
 
 ---
 # Overview

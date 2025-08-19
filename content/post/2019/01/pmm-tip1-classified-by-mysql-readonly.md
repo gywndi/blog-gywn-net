@@ -9,10 +9,8 @@ categories:
   - MySQL
   - PMM
 tags:
-  - Grafana
   - MySQL
-  - pmm
-  - prometheus
+  - PMM
 
 ---
 # Overview

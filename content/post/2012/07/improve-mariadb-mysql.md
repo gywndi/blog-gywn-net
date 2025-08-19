@@ -8,7 +8,7 @@ categories:
   - MariaDB
   - MySQL
 tags:
-  - mariadb
+  - MariaDB
   - MySQL
   - Performance
 

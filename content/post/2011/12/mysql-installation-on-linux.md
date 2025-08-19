@@ -8,15 +8,8 @@ categories:
   - IT Life
   - MySQL
 tags:
-  - CentOS
-  - DB
-  - Installation
   - Linux
   - MySQL
-  - MySQL 설치
-  - 가이드
-  - 리눅스
-  - 매뉴얼
 
 ---
 

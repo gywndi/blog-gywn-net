@@ -11,7 +11,6 @@ categories:
 tags:
   - Gizzard
   - MySQL
-  - Shard
   - Twitter
 
 ---

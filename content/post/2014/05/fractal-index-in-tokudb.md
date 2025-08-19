@@ -10,7 +10,7 @@ categories:
   - Research
 tags:
   - Fractal Index
-  - mariadb
+  - MariaDB
   - MySQL
   - TokuDB
 

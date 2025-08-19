@@ -8,7 +8,6 @@ tags:
   - MySQL
   - Performance
   - SQL
-  - Tuning
 
 ---
 # Overview

@@ -9,7 +9,6 @@ categories:
   - MySQL
 tags:
   - MySQL
-  - online alter
   - pt-online-schema-change
 
 ---

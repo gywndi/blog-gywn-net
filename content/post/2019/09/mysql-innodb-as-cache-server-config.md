@@ -10,7 +10,6 @@ categories:
 tags:
   - memcached
   - MySQL
-  - plugin
 
 ---
 # Overview

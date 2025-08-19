@@ -10,7 +10,6 @@ tags:
   - Isolation Level
   - MySQL
   - Performance
-  - 트랜잭션
 
 ---
 # Overview

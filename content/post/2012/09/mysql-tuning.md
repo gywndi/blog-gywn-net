@@ -10,7 +10,6 @@ categories:
 tags:
   - MySQL
   - Performance
-  - Tuning
 
 ---
 # Overview

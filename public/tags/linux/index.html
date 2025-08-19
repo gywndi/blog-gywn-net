@@ -208,6 +208,118 @@
         <div class="posts-list">
           
             <article class="post-preview">
+    <a href="//localhost:1313/2024/09/tc-latency-on-linux/">
+        <h2 class="post-title">리눅스에서 tc로 레이턴시 조정해보기</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2024-09-18
+  
+    &nbsp;(Last modified on 2025-08-19)
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>일년만에, 블로그에 새 글을 올려봅니다. 그동안, 많은 주제가 있었지만, (주관적인 판단이지만) 좋은 주제일지 예전같은 확신이 서지 않아서, 많은 시간 망설이며 잠시 블로그를 멈추었습니다.</p>
+<p>그러나, 제가 알던 경험이. 나만의 아련한 기억이 되고 점차 소멸되기 전에. 잊기 전에. 블로그 하나를 올려봅니다. 멀티DC 환경을 고려하면서, 몇가지 테스트를 하던 중. <strong>노드간 네트워크 레이턴시를 고민</strong>을 했었는데. <strong>TC(Traffic control)를 활용하였고 나름 의미있는 결과를 도출</strong>했었는데.. 오늘은 tc에 대해서 이야기를 해보고자 합니다.</p>
+<h1 id="traffic-control-tc">Traffic control (TC)?</h1>
+<p>동일 네트워크 상에서, <strong>DC간의 레이턴시를 고려하여 성능 변화를 테스트하고 싶은 경우</strong>가 있습니다. 특히나, 과거와는 다르게 서비스가 여러개의 DC 또는 Zone에서 분산 구동될 수 있다는 상황을 고려해본다면. 이런 테스트는 필수 입니다. 참고로, 아주 오래 전, 서울/부산 레이턴시 14ms로 인하여 대형 서비스 장애를 경험해본 입장으로. 서비스 오픈 전 이런 검증은 필수라 생각합니다.</p>
+        <a href="//localhost:1313/2024/09/tc-latency-on-linux/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/linux/">Linux</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/tc/">tc</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="//localhost:1313/2017/06/mysql-os-cache-management/">
+        <h2 class="post-title">[MySQL] 바쁜 서비스 투입 전, 이런 캐시 전략 어때요?</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2017-06-15
+  
+    &nbsp;(Last modified on 2025-08-19)
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;6&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>데이터베이스를 운영한다는 것은 최적의 상태로 리소스를 <strong>쥐어짜면서</strong> 가장 효율적으로 데이터를 끄집어내야할텐데요. 지금은 SSD 디스크 도입으로 상당 부분 Disk I/O가 개선되었다지만, 여전히 메모리 효율은 굉장히 중요합니다. 특히나 <strong>Page Cache와 같은 항목이 과다하게 메모리를 점유하게 되면.. 다른 프로세스 효율에도 영향을 미칠 뿐만 아니라, 때로는 메모리 부족 현상으로 인하여 스왑 메모리에도 영향</strong>을 줄 수 있습니다.</p>
+<p>서론은 짧게.. 이번에 DBMS 구조를 그려가면서, 실제 리소스 사용에 걸림돌이 되는 몇몇 요소에 대한 우리의 사례를 얘기해보도록 하겠습니다.</p>
+        <a href="//localhost:1313/2017/06/mysql-os-cache-management/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/linux/">Linux</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
     <a href="//localhost:1313/2015/02/linux-cronjob-makes-disk-issue/">
         <h2 class="post-title">새벽 4시, 이유없이 디스크 유틸이 튄다면? 디스크 성능에 영향을 주는 크론잡</h2>
         
@@ -383,31 +495,10 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/centos/">CentOS</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/db/">DB</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/installation/">Installation</a>&nbsp;
-        
-       
        <a href="//localhost:1313/tags/linux/">Linux</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/mysql-%EC%84%A4%EC%B9%98/">MySQL 설치</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%EA%B0%80%EC%9D%B4%EB%93%9C/">가이드</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/">리눅스</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%EB%A7%A4%EB%89%B4%EC%96%BC/">매뉴얼</a>&nbsp;
          
     </div>
     
@@ -482,7 +573,7 @@ Apache -&gt; MySQL -&gt; PHP 순으로 설치!</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">## 관리를 위해 Symbolic Link로 연결</span>
 </span></span><span class="line"><span class="cl">ln -s mysql-5.5.19-linux2.6-x86_64 mysql
-</span></span></code></pre></div><p>자세한 설치는 <a href="https://gywn.net/2011/12/mysql-installation-on-linux/">리눅스에 MySQL 설치하기(CentOS 5.6)</a> 편을 참고하세요.</p>
+</span></span></code></pre></div><p>자세한 설치는 <a href="/2011/12/mysql-installation-on-linux/">리눅스에 MySQL 설치하기(CentOS 5.6)</a> 편을 참고하세요.</p>
         <a href="//localhost:1313/2011/12/centos-apache-php-mysql/" class="post-read-more">[Read More]</a>
         
     </div>
@@ -504,9 +595,6 @@ Apache -&gt; MySQL -&gt; PHP 순으로 설치!</p>
         
        
        <a href="//localhost:1313/tags/php/">PHP</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%EC%84%A4%EC%B9%98/">설치</a>&nbsp;
          
     </div>
     

@@ -11,10 +11,6 @@ categories:
 tags:
 - Gizzard
 - MySQL
-- Replicate
-- Sharding
-- Snowflake
-- Tweet
 - Twitter
 
 ---

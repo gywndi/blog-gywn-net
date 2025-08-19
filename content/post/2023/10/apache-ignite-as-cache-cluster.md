@@ -9,9 +9,8 @@ categories:
   - NoSQL
   - Research
 tags:
-  - cache
-  - gridgain
-  - ignite
+  - GridGain
+  - Ignite
 
 ---
 # Overview

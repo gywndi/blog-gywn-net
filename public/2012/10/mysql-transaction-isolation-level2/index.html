@@ -15,7 +15,7 @@
       <title>MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!! - </title>
 
   <meta name="description" content="Overview
-Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 Create Table .. As Select .. 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.
+MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 Create Table .. As Select .. 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.
 테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.
 이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^">
   <meta name="author" content="gywndi"/><script type="application/ld+json">
@@ -66,13 +66,13 @@ Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예
     "name" : "gywndi"
   },
   "headline": "MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!!",
-  "description" : "Overview Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 Create Table .. As Select .. 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.\n테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.\n이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^\n",
+  "description" : "Overview MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 Create Table .. As Select .. 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.\n테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.\n이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^\n",
   "inLanguage" : "en",
-  "wordCount":  850 ,
+  "wordCount":  847 ,
   "datePublished" : "2012-10-06T04:36:45\u002b00:00",
-  "dateModified" : "2025-08-19T20:01:39\u002b09:00",
+  "dateModified" : "2025-08-19T20:19:17\u002b09:00",
   "image" : "\/\/localhost:1313\/img\/avatar-sdc-angry.png",
-  "keywords" : [ "Isolation Level, MySQL, Performance, 트랜잭션" ],
+  "keywords" : [ "Isolation Level, MySQL, Performance" ],
   "mainEntityOfPage" : "\/\/localhost:1313\/2012\/10\/mysql-transaction-isolation-level2\/",
   "publisher" : {
     "@type": "Organization",
@@ -90,7 +90,7 @@ Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예
 
 <meta property="og:title" content="MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!!" />
 <meta property="og:description" content="Overview
-Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 Create Table .. As Select .. 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.
+MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 Create Table .. As Select .. 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.
 테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.
 이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^">
 <meta property="og:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
@@ -100,8 +100,8 @@ Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예
 
   <meta name="twitter:title" content="MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!!" />
   <meta name="twitter:description" content="Overview
-Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 Create Table .. As Select .. 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.
-테이블 Full-Scan 구문이 실 …">
+MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 Create Table .. As Select .. 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.
+테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관 …">
   <meta name="twitter:image" content="//localhost:1313/img/avatar-sdc-angry.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link href='//localhost:1313/img/favicon-sdc.ico' rel='icon' type='image/x-icon'/>
@@ -287,7 +287,7 @@ Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
         <h1 id="overview">Overview</h1>
-<p><a href="/2012/05/mysql-transaction-isolation-level">Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법</a> 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 <code>Create Table .. As Select ..</code> 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.</p>
+<p><a href="/2012/05/mysql-transaction-isolation-level">MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법</a> 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 <code>Create Table .. As Select ..</code> 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.</p>
 <p>테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.</p>
 <p>이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^</p>
 <h1 id="symptoms">Symptoms</h1>
@@ -429,9 +429,6 @@ Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예
             
               
               <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
-            
-              
-              <a href="//localhost:1313/tags/%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98/">트랜잭션</a>&nbsp;
             
           </div>
         
@@ -608,7 +605,7 @@ Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예
         
         <p class="credits theme-by text-muted">
           <a href="https://gohugo.io">Hugo v0.147.8</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
-          &nbsp;&bull;&nbsp;[<a href="falsea53c48c84675e96411a5d28eb18e7e0b85e33bfc">a53c48c8</a>]
+          &nbsp;&bull;&nbsp;[<a href="false7ae3a79403087bdcad9617135dee7b5c625ab037">7ae3a794</a>]
         </p>
       </div>
     </div>

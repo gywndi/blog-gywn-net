@@ -5,10 +5,7 @@ type: post
 date: 2012-05-04T07:27:34+00:00
 url: 2012/05/matters-require-attention-with_mysql
 tags:
-- Architect
-- Index
 - MySQL
-- Table
 
 ---
 안녕하세요. 오늘은 MySQL을 사용할 때 지켜야할 사항 몇 가지 정리합니다.

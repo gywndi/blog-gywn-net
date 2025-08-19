@@ -208,6 +208,66 @@
         <div class="posts-list">
           
             <article class="post-preview">
+    <a href="//localhost:1313/2017/06/mysql_57-ngram-ft-bug-and-learn/">
+        <h2 class="post-title">MySQL_5.7의 n-gram? 버그앤런!</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2017-06-08
+  
+    &nbsp;(Last modified on 2025-08-19)
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>바로 얼마전 포스팅에서 n-gram에 대한 간단한 소개를 했었는데.. 아무래도 5.7에 처음으로 소개된 기능인만큼 현재 이슈 사항에 대해서 공유를 해볼 필요가 있어보입니다. (이전 포스팅: <a href="/2017/04/mysql_57-ngram-ft-se/">&ldquo;MySQL_5.7의 n-gram 전문 검색을 이상하지 않게 써보아요&rdquo;</a>)</p>
+<p>제가 겪은 상황과 우회할 수 있는 방안.. 그리고 현재 진행 상황에 대한 내용이예요. ^^</p>
+<h1 id="1-performance-problem">1. Performance Problem</h1>
+<p>일단 InnoDB의 n-gram 인덱싱은 두 글자로만 나뉘어서 토큰으로 만들어집니다. 그리고 이 토큰들은 도큐멘트 아이디를 각각 가짐으로써, 빠르게 <strong>두 글자가 포함된 문서</strong>를 바로 찾아낼 수 있는 것이지요.</p>
+        <a href="//localhost:1313/2017/06/mysql_57-ngram-ft-bug-and-learn/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/fulltext/">fulltext</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/n-gram/">n-gram</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
     <a href="//localhost:1313/2017/04/mysql_57-ngram-ft-se/">
         <h2 class="post-title">MySQL_5.7의 n-gram 전문 검색을 이상하지 않게 써보아요.</h2>
         
@@ -256,7 +316,7 @@
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/ngram/">ngram</a>&nbsp;
+       <a href="//localhost:1313/tags/n-gram/">n-gram</a>&nbsp;
          
     </div>
     
@@ -313,9 +373,6 @@
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/restore/">Restore</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/xtrabackup/">XtraBackup</a>&nbsp;
@@ -452,16 +509,13 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/dns/">dns</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/mariadb/">mariadb</a>&nbsp;
+       <a href="//localhost:1313/tags/mariadb/">MariaDB</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/powerdns/">powerdns</a>&nbsp;
+       <a href="//localhost:1313/tags/dns/">DNS</a>&nbsp;
          
     </div>
     
@@ -513,13 +567,10 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/mariadb/">mariadb</a>&nbsp;
+       <a href="//localhost:1313/tags/mariadb/">MariaDB</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/percona/">percona</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/pt-online-schema-change/">pt-online-schema-change</a>&nbsp;
@@ -574,16 +625,13 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/mariadb/">mariadb</a>&nbsp;
+       <a href="//localhost:1313/tags/mariadb/">MariaDB</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/partition/">partition</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/token/">token</a>&nbsp;
          
     </div>
     
@@ -694,9 +742,6 @@
        <a href="//localhost:1313/tags/innodb/">InnoDB</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/innodb-hash-index/">InnoDB Hash Index</a>&nbsp;
-        
-       
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
          
     </div>
@@ -756,69 +801,13 @@
        <a href="//localhost:1313/tags/fractal-index/">Fractal Index</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/mariadb/">mariadb</a>&nbsp;
+       <a href="//localhost:1313/tags/mariadb/">MariaDB</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/tokudb/">TokuDB</a>&nbsp;
-         
-    </div>
-    
-
-</article>
-          
-            <article class="post-preview">
-    <a href="//localhost:1313/2013/12/mysql-user-level-lock/">
-        <h2 class="post-title">MySQL의 User Level Lock를 활용한다면?</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on 2013-12-02
-  
-    &nbsp;(Last modified on 2025-08-19)
-  
-  
-    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
-  
-  
-  
-    
-      
-        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
-      
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        <h1 id="overview">Overview</h1>
-<p>DB에는 크게는 두 가지 타입의 Lock이 있습니다. Table Level Lock, Row Level Lock.. 두 가지 타입의 Lock은 RDBMS에서 대표적인 Lock이라고 지칭할 수 있습니다.</p>
-<p>Table Level Lock은 데이터 변경 시 테이블 자체를 Lock을 걸어 안전하게 데이터를 변경하는 방식이고, Row Level Lock은 변경되는 칼럼의 Row에만 Lock을 걸어서 데이터를 조작하는 방식입니다. 일반적인 상황에서는 두 가지의 Lock만으로도 충분히 다양한 사용자의 요구사항을 충족할 수가 있습니다.</p>
-<p>그러나, 테이블 파티셔닝을 하는 경우나, 혹은 다양한 서버에 데이터가 분산 저장되는 경우 DB 내적인 제약사항 혹은 데이터 공간 자체의 한계로 인해 상황에 따라 더욱 확장된 Lock이 필요한 경우가 있습니다.</p>
-        <a href="//localhost:1313/2013/12/mysql-user-level-lock/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-       
-       <a href="//localhost:1313/tags/lock/">Lock</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
          
     </div>
     

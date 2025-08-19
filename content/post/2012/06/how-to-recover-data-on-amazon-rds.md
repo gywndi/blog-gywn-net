@@ -8,11 +8,8 @@ categories:
   - Cloud
   - MySQL
 tags:
-  - Amazon
   - MySQL
-  - RDS
-  - Recovery
-  - TroubleShoot
+  - Amazon RDS
 
 ---
 # Overview

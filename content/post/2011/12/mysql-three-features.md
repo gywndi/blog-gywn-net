@@ -7,10 +7,7 @@ url: 2011/12/mysql-three-features
 categories:
 - MySQL
 tags:
-- DB
-- Feature
 - MySQL
-- RDBMS
 
 ---
 # Overview

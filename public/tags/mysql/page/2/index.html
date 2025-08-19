@@ -208,6 +208,66 @@
         <div class="posts-list">
           
             <article class="post-preview">
+    <a href="//localhost:1313/2019/08/mysql-poor-performance-with-super-many-partitions/">
+        <h2 class="post-title">MySQL 파티셔닝 테이블 SELECT가 느려요.</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2019-08-29
+  
+    &nbsp;(Last modified on 2025-08-19)
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>네이티브 파티셔닝 적용 이전의 MySQL은, 파티셔닝 파일들은 각각이 테이블로써 관리되었죠. 그래서, table cache 로 인한 메모리 부족 현상은 인지하고 있었습니다만.. 이것 외에는 특별히 성능 저하 요소는 없다고 생각해왔어요. (<a href="http://small-dbtalk.blogspot.com/2013/09/mysql-table-cache.html">http://small-dbtalk.blogspot.com/2013/09/mysql-table-cache.html</a>)</p>
+<p>그런데, 얼마전 서버당 4개의 데이터베이스를 만들고, 각각 데이터베이스 안에 26개월로 분할된 파티셔닝된 테이블을 넣고, 간단한 Range scan 성능 테스트를 하였는데.. 말도안되는 수치를 보였습니다. 이 관련하여 간단하게 이에 대해 알아보도록 할께요. 🙂</p>
+<h1 id="problem">Problem</h1>
+<p>하단과 같은 테이블 구조에서, 단순히 최근 10건의 데이터만 끌어오는 형식의 SQL을 다수 실행시켜 간단한 트래픽을 주었을 때.. 성능적으로 별다른 문제는 없을 것이라고 생각을 했습니다. 우리의 메모리는 기대치보다 훨씬 웃돌았기 때문에.. ㅎㅎ (참고로, InnoDB 버퍼풀 사이즈 대비 데이터 사이즈는 약 10배 이상이지만, 최근 파티셔닝 사이즈를 따지면, 버퍼풀 안에 충분히 들어올만한 상황이었습니다.)</p>
+        <a href="//localhost:1313/2019/08/mysql-poor-performance-with-super-many-partitions/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/partition/">partition</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
     <a href="//localhost:1313/2019/01/pmm-tip1-classified-by-mysql-readonly/">
         <h2 class="post-title">PMM팁1탄! MySQL을 READ-ONLY 기준으로 표기해보기.</h2>
         
@@ -253,16 +313,10 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/grafana/">Grafana</a>&nbsp;
-        
-       
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/pmm/">pmm</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/prometheus/">prometheus</a>&nbsp;
+       <a href="//localhost:1313/tags/pmm/">PMM</a>&nbsp;
          
     </div>
     
@@ -314,16 +368,13 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/mariadb/">mariadb</a>&nbsp;
+       <a href="//localhost:1313/tags/mariadb/">MariaDB</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/online-alter/">online alter</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/percona-server/">percona server</a>&nbsp;
+       <a href="//localhost:1313/tags/pt-online-schema-change/">pt-online-schema-change</a>&nbsp;
          
     </div>
     
@@ -375,9 +426,6 @@
 
     
     <div class="blog-tags">
-        
-       
-       <a href="//localhost:1313/tags/affected-rows/">affected rows</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
@@ -433,19 +481,13 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/monitoring/">monitoring</a>&nbsp;
+       <a href="//localhost:1313/tags/monitoring/">Monitoring</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/percona/">percona</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/pmm/">pmm</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/prometheus/">prometheus</a>&nbsp;
+       <a href="//localhost:1313/tags/pmm/">PMM</a>&nbsp;
          
     </div>
     
@@ -571,9 +613,6 @@
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/online-alter/">online alter</a>&nbsp;
-        
-       
        <a href="//localhost:1313/tags/pt-online-schema-change/">pt-online-schema-change</a>&nbsp;
          
     </div>
@@ -631,7 +670,7 @@
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/slow-query/">slow query</a>&nbsp;
+       <a href="//localhost:1313/tags/slow-query/">Slow Query</a>&nbsp;
          
     </div>
     
@@ -683,25 +722,10 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/dentry/">dentry</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/dirty/">dirty</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/memory/">memory</a>&nbsp;
+       <a href="//localhost:1313/tags/linux/">Linux</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/page-cache/">page cache</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/swap/">swap</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/unmap/">unmap</a>&nbsp;
          
     </div>
     
@@ -753,73 +777,10 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/mha/">mha</a>&nbsp;
+       <a href="//localhost:1313/tags/mha/">MHA</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/semi-sync-replication/">semi-sync replication</a>&nbsp;
-         
-    </div>
-    
-
-</article>
-          
-            <article class="post-preview">
-    <a href="//localhost:1313/2017/06/mysql_57-ngram-ft-bug-and-learn/">
-        <h2 class="post-title">MySQL_5.7의 n-gram? 버그앤런!</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on 2017-06-08
-  
-    &nbsp;(Last modified on 2025-08-19)
-  
-  
-    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;minutes
-  
-  
-  
-    
-      
-        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
-      
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        <h1 id="overview">Overview</h1>
-<p>바로 얼마전 포스팅에서 n-gram에 대한 간단한 소개를 했었는데.. 아무래도 5.7에 처음으로 소개된 기능인만큼 현재 이슈 사항에 대해서 공유를 해볼 필요가 있어보입니다. (이전 포스팅: <a href="/2017/04/mysql_57-ngram-ft-se/">&ldquo;MySQL_5.7의 n-gram 전문 검색을 이상하지 않게 써보아요&rdquo;</a>)</p>
-<p>제가 겪은 상황과 우회할 수 있는 방안.. 그리고 현재 진행 상황에 대한 내용이예요. ^^</p>
-<h1 id="1-performance-problem">1. Performance Problem</h1>
-<p>일단 InnoDB의 n-gram 인덱싱은 두 글자로만 나뉘어서 토큰으로 만들어집니다. 그리고 이 토큰들은 도큐멘트 아이디를 각각 가짐으로써, 빠르게 <strong>두 글자가 포함된 문서</strong>를 바로 찾아낼 수 있는 것이지요.</p>
-        <a href="//localhost:1313/2017/06/mysql_57-ngram-ft-bug-and-learn/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-       
-       <a href="//localhost:1313/tags/fulltext/">fulltext</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/n-gram/">n-gram</a>&nbsp;
          
     </div>
     

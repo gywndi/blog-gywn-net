@@ -7,7 +7,7 @@ url: 2012/05/alter-table-without-service-downtime
 categories:
   - MySQL
 tags:
-  - Alter Table
+  - Schema
   - Migration
   - MySQL
 

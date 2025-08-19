@@ -7,8 +7,7 @@ url: /2024/09/tc-latency-on-linux
 categories:
   - Linux
 tags:
-  - bmt
-  - latency
+  - Linux
   - tc
 
 ---

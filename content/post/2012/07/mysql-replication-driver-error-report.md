@@ -7,8 +7,6 @@ url: 2012/07/mysql-replication-driver-error-report
 categories:
   - MySQL
 tags:
-  - Failover
-  - jdbc
   - MySQL
   - Replication
 

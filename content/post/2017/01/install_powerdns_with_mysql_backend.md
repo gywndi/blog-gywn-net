@@ -8,10 +8,9 @@ categories:
   - MySQL
   - Research
 tags:
-  - dns
-  - mariadb
+  - MariaDB
   - MySQL
-  - powerdns
+  - DNS
 
 ---
 # Overview

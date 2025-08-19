@@ -9,7 +9,6 @@ categories:
   - Research
 tags:
   - InnoDB
-  - InnoDB Hash Index
   - MySQL
 
 ---

@@ -9,8 +9,6 @@ categories:
 tags:
   - MySQL
   - Replication
-  - 복제
-  - 이중화
 
 ---
 # Overview

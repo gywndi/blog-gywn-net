@@ -208,6 +208,64 @@
         <div class="posts-list">
           
             <article class="post-preview">
+    <a href="//localhost:1313/2018/10/online-alter-for-varchar/">
+        <h2 class="post-title">[MySQL] Online Alter에도 헛점은 있더구나 – gdb, mysqld-debug 활용 사례</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2018-10-12
+  
+    &nbsp;(Last modified on 2025-08-19)
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;8&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>MySQL에서도 5.6부터는 온라인 Alter 기능이 상당부분 제공되기 시작했습니다. 인덱스과 칼럼 추가/삭제 뿐만 아니라, varchar 경우에는 부분적으로 칼럼 확장이 서비스 중단없이 가능한 것이죠. 물론 오라클 유저들에게는 당연한 오퍼레이션들이, MySQL에서는 두손들고 운동장 20바퀴 돌 정도로 기뻐할만한 기능들입니다. 물론, 대부분의 DDL을 테이블 잠금을 걸고 수행하던 5.5 시절에도 online alter를 위해 트리거 기반의 pt-online-schema-change 툴을 많이들 사용했었기에.. 서비스 중단이 반드시 필요하지는 않았지만요. (<a href="/2017/08/small-talk-pt-osc/">소소한 데이터 이야기 – pt-online-schema-change</a>)</p>
+<p>아무튼 이렇게 online alter가 대거 지원하는 상황 속에서, MySQL의 메뉴얼과는 다르게 잘못 동작하는 부분이 있었는데, 이 원인을 찾아내기 위해서는 MySQL 내부적으로 어떻게 동작을 하는지 알아내기 위해 며칠 우물을 신나게 파보았습니다.</p>
+        <a href="//localhost:1313/2018/10/online-alter-for-varchar/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/mariadb/">MariaDB</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/pt-online-schema-change/">pt-online-schema-change</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
     <a href="//localhost:1313/2017/08/small-talk-pt-osc/">
         <h2 class="post-title">소소한 데이터 이야기 – pt-online-schema-change 편 –</h2>
         
@@ -263,9 +321,6 @@
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
         
        
-       <a href="//localhost:1313/tags/online-alter/">online alter</a>&nbsp;
-        
-       
        <a href="//localhost:1313/tags/pt-online-schema-change/">pt-online-schema-change</a>&nbsp;
          
     </div>
@@ -318,13 +373,10 @@
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/mariadb/">mariadb</a>&nbsp;
+       <a href="//localhost:1313/tags/mariadb/">MariaDB</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/percona/">percona</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/pt-online-schema-change/">pt-online-schema-change</a>&nbsp;

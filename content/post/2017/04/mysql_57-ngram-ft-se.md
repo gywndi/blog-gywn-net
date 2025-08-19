@@ -9,7 +9,7 @@ categories:
   - Research
 tags:
   - MySQL
-  - ngram
+  - n-gram
 
 ---
 # Overview

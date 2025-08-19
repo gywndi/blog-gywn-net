@@ -32,7 +32,7 @@
       <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;서비스를 준비하다보면, 시퀀스에 대한 요구사항은 언제나 생기기 마련입니다. 물론, MySQL에는 기본적으로 테이블 단위로 auto_increment가 있기는 합니다만, 일반적인 시퀀스가 요구되는 환경을 흡족하게 맞추기는 어려운 실정입니다.&lt;br&gt;&#xA;보통은 Peter Zaitsev가 하단에 게시한 블로그 내용처럼, Function 기반으로 채번 함수를 만들고는 하지요. (물론 InnoDB로 지정하는 것이, 복제 상황에서는 아주 안정성을 확보하기는 합니다.)&lt;br&gt;&#xA;&lt;a href=&#34;https://www.percona.com/blog/2008/04/02/stored-function-to-generate-sequences/&#34;&gt;https://www.percona.com/blog/2008/04/02/stored-function-to-generate-sequences/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;이 내용을 기반으로, “재미난 시퀀스를 만들어볼 수 없을까?” 라는 퀘스천에 따라, 이번 블로깅에서는 특정 시점에 리셋이 되는 시퀀스를 한번 만들어보고자 합니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;schema&#34;&gt;Schema&lt;/h1&gt;&#xA;&lt;p&gt;첫번째로는 현재 시퀀스를 담을 테이블 그릇(?)을 아래와 같이 생성을 해보도록 하겠습니다.&lt;/p&gt;</description>
     </item>
     <item>
-      <title>MySQL binlog파서와  memcached plugin의 콜라보레이션!</title>
+      <title>MySQL binlog파서와 memcached plugin의 콜라보레이션!</title>
       <link>//localhost:1313/2020/08/mysql-binlog-memcached-plugin-collaboration/</link>
       <pubDate>Mon, 31 Aug 2020 00:55:06 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
       <guid>//localhost:1313/2020/08/mysql-binlog-memcached-plugin-collaboration/</guid>

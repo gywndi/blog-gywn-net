@@ -8,7 +8,7 @@ categories:
 - Research
 tags:
 - MySQL
-- Scale-out
+- Scale out
 - Tumblr
 
 ---

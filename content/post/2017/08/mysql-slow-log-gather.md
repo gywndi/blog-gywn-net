@@ -8,7 +8,7 @@ categories:
   - MySQL
 tags:
   - MySQL
-  - slow query
+  - Slow Query
 
 ---
 # Overview

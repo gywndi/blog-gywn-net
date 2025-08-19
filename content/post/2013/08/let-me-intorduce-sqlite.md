@@ -7,7 +7,6 @@ url: 2013/08/let-me-intorduce-sqlite
 categories:
   - SQLite
 tags:
-  - Journal mode
   - SQLite
 
 ---

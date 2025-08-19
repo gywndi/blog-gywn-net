@@ -8,9 +8,8 @@ categories:
   - MariaDB
   - Research
 tags:
-  - cluster
-  - mariadb
-  - research
+  - Galera Cluster
+  - MariaDB
 
 ---
 # Overview

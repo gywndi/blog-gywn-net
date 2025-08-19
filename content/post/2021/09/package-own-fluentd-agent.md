@@ -10,7 +10,6 @@ categories:
   - PMM
 tags:
   - fluentd
-  - my-agent
   - MySQL
 
 ---

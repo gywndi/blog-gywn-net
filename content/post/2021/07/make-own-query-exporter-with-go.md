@@ -10,9 +10,7 @@ categories:
   - PMM
 tags:
   - exporter
-  - go
   - MySQL
-  - prometheus
 
 ---
 # Overview

@@ -9,10 +9,9 @@ categories:
   - MySQL
   - Research
 tags:
-  - mariadb
+  - MariaDB
   - MySQL
-  - online alter
-  - percona server
+  - pt-online-schema-change
 
 ---
 # Overview

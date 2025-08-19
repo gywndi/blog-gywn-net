@@ -17,12 +17,5 @@
       <guid>//localhost:1313/2021/07/make-own-query-exporter-with-go/</guid>
       <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;안녕하세요. 무더운 7월 잘 지내고 계시죠.?&lt;/p&gt;&#xA;&lt;p&gt;오늘은 조금 특이한 주제를 가지고 이야기를 해보고자 합니다. 바로 &lt;strong&gt;go로 나만의 Exporter를 만들어보는 것&lt;/strong&gt;입니다. 특정 쿼리를 등록을 해놓으면, 이 쿼리 결과를 Exporter 결과로 보여주는 간단한 프로그램입니다. 아직 Expoter가 무엇인지 생소하신 분들이 있을 수 있겠는데요. 오늘 차근차근 설명을 하면서, 머릿속에 살짝 인스톨해드리도록 하겠습니다. 🙂&lt;/p&gt;&#xA;&lt;h1 id=&#34;exporter&#34;&gt;Exporter?&lt;/h1&gt;&#xA;&lt;p&gt;Exporter란, Prometheus같은 시계열 데이터베이스에서 데이터를 끌어가기 위한 하나의 &lt;strong&gt;HTTP 서버&lt;/strong&gt;라고 생각하면 되겠습니다. Prometheus에서는 정해진 주기에 따라 exporter의 특정 URL을 호출하고, 그 결과값을 시계열로 데이터를 저장합니다.&#xA;&lt;img src=&#34;//localhost:1313/img/2021/07/prometheus-exporter.png&#34; alt=&#34;prometheus &amp;amp; exporter&#34;&gt;&lt;/p&gt;</description>
     </item>
-    <item>
-      <title>MySQL InnoDB의 메모리 캐시 서버로 변신! – 모니터링편 –</title>
-      <link>//localhost:1313/2019/09/mysql-innodb-as-cache-server-monitoring/</link>
-      <pubDate>Thu, 19 Sep 2019 14:28:50 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
-      <guid>//localhost:1313/2019/09/mysql-innodb-as-cache-server-monitoring/</guid>
-      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;MySQL memcached plugin 2탄! 모니터링편입니다.&lt;br&gt;&#xA;어떤 초호화 솔루션일지라도, 시스템의 정확한 상태를 파악할 수 없다면, 사용하기에는 참으로 꺼려집니다. 그래서 어떤 방법이든, &lt;strong&gt;가장 효율적인 모니터링 방안&lt;/strong&gt;을 찾아봐야 하겠는데요. 저는 개인적으로는 &lt;strong&gt;prometheus를 활용한 metric수집을 선호&lt;/strong&gt;합니다.&lt;br&gt;&#xA;오늘 이 자리에서는 Prometheus에서 MySQL InnoDB memcached plugin을 모니터링 하는 방법에 대해서 이야기를 해보도록 하겠습니다. 🙂&lt;/p&gt;&#xA;&lt;h1 id=&#34;why-prometheus&#34;&gt;Why prometheus?&lt;/h1&gt;&#xA;&lt;p&gt;이유는 단순합니다. &lt;strong&gt;이미 만들어져 있는 exporter가 굉장히 많다&lt;/strong&gt;는 것, 만약 원하는 것들이 있다면 &lt;strong&gt;나의 구미에 맞게 기능을 추가해서 쉽게 접근할 수 있다&lt;/strong&gt;는 것! 즉, &lt;strong&gt;오픈소스&lt;/strong&gt;라는 것!! 무엇보다 Time-series 기반의 데이터 저장소인 Prometheus로 정말로 효율적으로 모니터링 매트릭 정보를 수집할 수 있다는 것! Prometheus는 &lt;strong&gt;로그 수집에 최적화&lt;/strong&gt; 되어 있다고 과언이 아닙니다.&lt;/p&gt;</description>
-    </item>
   </channel>
 </rss>

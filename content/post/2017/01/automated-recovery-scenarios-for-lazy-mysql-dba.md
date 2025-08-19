@@ -10,7 +10,6 @@ categories:
 tags:
   - Automation
   - MySQL
-  - Restore
   - XtraBackup
 
 ---

@@ -9,7 +9,6 @@ categories:
   - Research
 tags:
   - Benchmark
-  - Bottleneck
   - MySQL
 
 ---

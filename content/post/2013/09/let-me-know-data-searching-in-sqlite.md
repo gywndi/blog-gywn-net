@@ -7,7 +7,6 @@ url: 2013/09/let-me-know-data-searching-in-sqlite
 categories:
   - SQLite
 tags:
-  - Searching
   - SQLite
 
 ---

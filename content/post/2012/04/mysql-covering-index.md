@@ -8,7 +8,6 @@ categories:
   - MySQL
   - Research
 tags:
-  - Covering Index
   - MySQL
   - Performance
 

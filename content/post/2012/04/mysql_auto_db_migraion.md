@@ -7,7 +7,6 @@ url: 2012/04/mysql_auto_db_migraion
 categories:
 - MySQL
 tags:
-- Dump
 - Migration
 - MySQL
 

@@ -7,9 +7,8 @@ url: 2017/06/mysql-slave-addition-effect
 categories:
   - MySQL
 tags:
-  - mha
+  - MHA
   - MySQL
-  - semi-sync replication
 
 ---
 # Overview

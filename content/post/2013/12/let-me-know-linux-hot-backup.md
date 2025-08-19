@@ -7,7 +7,6 @@ url: 2013/12/let-me-know-linux-hot-backup
 categories:
   - Research
 tags:
-  - backup
   - hcp
   - snapshot
 

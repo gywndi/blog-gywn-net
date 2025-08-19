@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Binlog on gywn&#39;s tech</title>
+    <link>//localhost:1313/tags/binlog/</link>
+    <description>Recent content in Binlog on gywn&#39;s tech</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
+    <webMaster>gywndi@gmail.com (gywndi)</webMaster>
+    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/binlog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL binlog파서와 memcached plugin의 콜라보레이션!</title>
+      <link>//localhost:1313/2020/08/mysql-binlog-memcached-plugin-collaboration/</link>
+      <pubDate>Mon, 31 Aug 2020 00:55:06 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2020/08/mysql-binlog-memcached-plugin-collaboration/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;6개월도 훌쩍 넘은 시간에. 간만에 포스팅합니다. 그동안 OGG javaue든, MySQL Binlog파서든.. &lt;strong&gt;흐르는 데이터를 핸들링하는 고민&lt;/strong&gt;으로 하루하루를 지내왔던 것 같아요. 그러던 중 이전 포스팅에서 주제로 삼았던, &lt;strong&gt;InnoDB memcached plugin을 Binlog parsing을 통해 데이터를 맞추면 좋을 것 같다&lt;/strong&gt;는 생각이 들었습니다.&lt;br&gt;&#xA;오늘 이 자리에서는 이런 답답함을 극복하고자, Binlog 이벤트를 활용하여, 최신 데이터를 유지시키는 방안에 대해서 이야기를 해보도록 하겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;mysql-binary-log&#34;&gt;MySQL Binary log?&lt;/h1&gt;&#xA;&lt;p&gt;MySQL에서 데이터복제를 위해서는 Binnary Log(binlog)를 쓰게 되는데, 이중 ROW 포멧으로 만들어지는 이벤트를 활용하여 다양한 데이터 핸들링이 가능합니다.&lt;br&gt;&#xA;&lt;img src=&#34;//localhost:1313/2020/08/image-1598580840319.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

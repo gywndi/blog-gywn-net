@@ -268,6 +268,69 @@
 </article>
           
             <article class="post-preview">
+    <a href="//localhost:1313/2012/10/how-to-prevent-massive-row-lock/">
+        <h2 class="post-title">대용량 테이블에서 카운트 정보를 효과적으로 관리하자.</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2012-10-28
+  
+    &nbsp;(Last modified on 2025-08-19)
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
+  
+  
+  
+    
+      
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
+      
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <h1 id="overview">Overview</h1>
+<p>대부분 서비스에서는 데이터 카운트를 합니다. 커뮤니티에서는 사용자 아티클 수를, 결제 서비스에서는 남은 물폼 수를 관리하기 위해서 사용하죠. 그리고 트랜잭션이 중요한 서비스라면, 데이터 일관성 유지를 위해 카운트 시 매번 데이터를 다시 읽어옵니다.</p>
+<p>데이터가 적으면 큰 문제가 되지 않겠지만, 데이터 지속적으로 누적됨에 따라 성능 또한 기하급수적으로 저하됩니다.</p>
+<p>그렇다면 이러한 환경에서 어떻게 카운트 퍼포먼스를 향상할 수 있을까요? 오늘 포스팅할 내용은 MySQL뿐만 아니라 행 단위 잠금을 지원하는 환경도 포함합니다.</p>
+<h1 id="통계-테이블-사용">통계 테이블 사용</h1>
+<p>빠른 데이터 건 수를 가져오는 방법으로는 별도의 통계 테이블을 관리하는 것입니다. 다음과 같이 통계 테이블을 별도로 구성하여 카운트 정보를 관리합니다.
+이렇게 되면, 굳이 덩치가 큰 테이블에서 일일이 카운트를 하지 않고, 통계 테이블에서 <strong>한 건의 데이터</strong>만 읽어오므로, 카운트 성능을 크게 향상할 수 있죠.
+<img src="/img/2012/10/Count-Stat-Table.png" alt="Count Stat Table"></p>
+        <a href="//localhost:1313/2012/10/how-to-prevent-massive-row-lock/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+       
+       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
+        
+       
+       <a href="//localhost:1313/tags/transaction/">Transaction</a>&nbsp;
+         
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
     <a href="//localhost:1313/2012/10/mysql-transaction-isolation-level2/">
         <h2 class="post-title">MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!!</h2>
         
@@ -302,7 +365,7 @@
     <div class="post-entry">
         
         <h1 id="overview">Overview</h1>
-<p><a href="https://gywn.net/2012/05/mysql-transaction-isolation-level">Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법</a> 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 <code>Create Table .. As Select ..</code> 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.</p>
+<p><a href="/2012/05/mysql-transaction-isolation-level">MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법</a> 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 <code>Create Table .. As Select ..</code> 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.</p>
 <p>테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.</p>
 <p>이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^</p>
         <a href="//localhost:1313/2012/10/mysql-transaction-isolation-level2/" class="post-read-more">[Read More]</a>
@@ -320,9 +383,6 @@
         
        
        <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98/">트랜잭션</a>&nbsp;
          
     </div>
     
@@ -475,9 +535,6 @@ InnoDB에게 할당하는 버퍼 사이즈로 50~60%가 적당하며, 지나치�
         
        
        <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/tuning/">Tuning</a>&nbsp;
          
     </div>
     
@@ -592,7 +649,7 @@ InnoDB에게 할당하는 버퍼 사이즈로 50~60%가 적당하며, 지나치�
     <div class="blog-tags">
         
        
-       <a href="//localhost:1313/tags/mariadb/">mariadb</a>&nbsp;
+       <a href="//localhost:1313/tags/mariadb/">MariaDB</a>&nbsp;
         
        
        <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
@@ -658,9 +715,6 @@ InnoDB에게 할당하는 버퍼 사이즈로 50~60%가 적당하며, 지나치�
         
        
        <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/temporary-table/">Temporary Table</a>&nbsp;
          
     </div>
     
@@ -722,9 +776,6 @@ InnoDB에게 할당하는 버퍼 사이즈로 50~60%가 적당하며, 지나치�
         
        
        <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98/">트랜잭션</a>&nbsp;
          
     </div>
     
@@ -804,69 +855,6 @@ InnoDB에게 할당하는 버퍼 사이즈로 50~60%가 적당하며, 지나치�
         
        
        <a href="//localhost:1313/tags/sql/">SQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/tuning/">Tuning</a>&nbsp;
-         
-    </div>
-    
-
-</article>
-          
-            <article class="post-preview">
-    <a href="//localhost:1313/2012/04/mysql-covering-index/">
-        <h2 class="post-title">MySQL에서 커버링 인덱스로 쿼리 성능을 높여보자!!</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on 2012-04-19
-  
-    &nbsp;(Last modified on 2025-08-19)
-  
-  
-    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
-  
-  
-  
-    
-      
-        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;gywndi
-      
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        <p>안녕하세요.  오늘 짧지만 재미있는 내용을 하나 공유할까 합니다.</p>
-<p>커버링 인덱스(Covering Index)라는 내용인데, 대용량 데이터 처리 시 적절하게 커버링 인덱스를 활용하여 쿼리를 작성하면 성능을 상당 부분 높일 수 있습니다.</p>
-<h1 id="커버링-인덱스란">커버링 인덱스란?</h1>
-<p>커버링 인덱스란 원하는 데이터를 인덱스에서만 추출할 수 있는 인덱스를 의미합니다. B-Tree 스캔만으로 원하는 데이터를 가져올 수 있으며, 칼럼을 읽기 위해 굳이 데이터 블록을 보지 않아도 됩니다.</p>
-<p>인덱스는 행 전체 크기보다 훨씬 작으며, 인덱스 값에 따라 정렬이 되기 때문에 Sequential Read 접근할 수 있기 때문에, 커버링 인덱스를 사용하면 결과적으로 쿼리 성능을 비약적으로 올릴 수 있습니다.</p>
-        <a href="//localhost:1313/2012/04/mysql-covering-index/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-       
-       <a href="//localhost:1313/tags/covering-index/">Covering Index</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/mysql/">MySQL</a>&nbsp;
-        
-       
-       <a href="//localhost:1313/tags/performance/">Performance</a>&nbsp;
          
     </div>
     
@@ -874,6 +862,15 @@ InnoDB에게 할당하는 버퍼 사이즈로 50~60%가 적당하며, 지나치�
 </article>
           
         </div>
+        
+          <ul class="pager main-pager">
+            
+            
+              <li class="next">
+                <a href="//localhost:1313/tags/performance/page/2/">Older Posts &rarr;</a>
+              </li>
+            
+          </ul>
         
       </div>
     </div>

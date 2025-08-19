@@ -7,13 +7,9 @@ url: 2012/01/mysql-tuning-strategy-bagic
 categories:
   - MySQL
 tags:
-  - Architecture
   - InnoDB
   - MySQL
   - Storage Engine
-  - 구축
-  - 대형사이트
-  - 전략
 
 ---
 작년 11월 30일 KTH에서 주최한 H3 컨퍼런스에서 DB 관련 발표 동영상입니다.  

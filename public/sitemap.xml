@@ -2,23 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/tags/bmt/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/categories/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/latency/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/categories/linux/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
+    <loc>//localhost:1313/tags/linux/</loc>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
+  </url><url>
     <loc>//localhost:1313/post/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/tc/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
@@ -27,9 +24,6 @@
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2023/10/apache-ignite-as-cache-cluster/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/cache/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/gridgain/</loc>
@@ -45,28 +39,19 @@
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/categories/research/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/categories/cloud/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/cloud/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/columnar/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/heatwave/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/innodb/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/categories/mysql/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/mysql/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2022/05/mysql-heatwave/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
@@ -78,9 +63,6 @@
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/categories/mariadb/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/my-agent/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/categories/pmm/</loc>
@@ -98,13 +80,7 @@
     <loc>//localhost:1313/tags/exporter/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/go/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2021/07/make-own-query-exporter-with-go/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/prometheus/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2021/06/resetable-sequence-for-mysql/</loc>
@@ -113,16 +89,13 @@
     <loc>//localhost:1313/tags/sequence/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/binlog-parser/</loc>
+    <loc>//localhost:1313/tags/binlog/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/memcached/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2020/08/mysql-binlog-memcached-plugin-collaboration/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/innodb-plugin/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2020/01/mysql-innodb-as-cache-server-monitoring-advanced/</loc>
@@ -132,9 +105,6 @@
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2019/09/mysql-innodb-as-cache-server-config/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/plugin/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/ifkakao/</loc>
@@ -159,10 +129,7 @@
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/performance/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/grafana/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/pmm/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
@@ -176,22 +143,13 @@
     <loc>//localhost:1313/tags/mariadb/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/online-alter/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/percona-server/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/affected-rows/</loc>
+    <loc>//localhost:1313/tags/pt-online-schema-change/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2018/03/mad-usage-with-mysql-affected-rows/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/monitoring/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/percona/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2018/03/pmm-intro/</loc>
@@ -209,9 +167,6 @@
     <loc>//localhost:1313/2017/10/jdbc-insane-autoreconnect/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/pt-online-schema-change/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2017/08/small-talk-pt-osc/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
@@ -224,31 +179,10 @@
     <loc>//localhost:1313/2017/06/mysql-os-cache-management/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/dentry/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/dirty/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/memory/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/page-cache/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/swap/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/unmap/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2017/06/mysql-slave-addition-effect/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/mha/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/semi-sync-replication/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/fulltext/</loc>
@@ -263,13 +197,7 @@
     <loc>//localhost:1313/2017/04/mysql_57-ngram-ft-se/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/ngram/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/tags/automation/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/restore/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/xtrabackup/</loc>
@@ -284,29 +212,20 @@
     <loc>//localhost:1313/tags/dns/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/powerdns/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2017/01/install_powerdns_with_mysql_backend/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2016/09/pt-online-schema-change-pk-change-problem/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/token/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2015/07/generate-unique-token-on-partitioning-table/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/linux/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2015/02/linux-cronjob-makes-disk-issue/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/innodb-hash-index/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <loc>//localhost:1313/tags/innodb/</loc>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2015/01/innodb-adaptive-hash-index/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
@@ -338,25 +257,19 @@
     <loc>//localhost:1313/2014/05/fractal-index-in-tokudb/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/backup/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/tags/hcp/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2013/12/let-me-know-linux-hot-backup/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/snapshot/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/lock/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2013/12/mysql-user-level-lock/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/searching/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/categories/sqlite/</loc>
@@ -369,9 +282,6 @@
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2013/09/let-me-know-data-index-of-sqlite/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/journal-mode/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2013/08/let-me-intorduce-sqlite/</loc>
@@ -393,13 +303,10 @@
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/isolation-level/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/10/mysql-transaction-isolation-level2/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/categories/oracle/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
@@ -416,19 +323,13 @@
     <loc>//localhost:1313/2012/09/good-bye-my-kth/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/cluster/</loc>
+    <loc>//localhost:1313/tags/galera-cluster/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/09/mariadb-galera-cluster/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/research/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2012/09/mysql-tuning/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/tuning/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/09/dbms-implicit-type-conversion/</loc>
@@ -443,14 +344,11 @@
     <loc>//localhost:1313/2012/07/improve-mariadb-mysql/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/failover/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2012/07/mysql-replication-driver-error-report/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/replication/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/memsql/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
@@ -467,22 +365,7 @@
     <loc>//localhost:1313/2012/06/mysql-temporary-table-effect/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/temporary-table/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/amazon/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2012/06/how-to-recover-data-on-amazon-rds/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/rds/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/recovery/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/troubleshoot/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/scale-out/</loc>
@@ -494,10 +377,10 @@
     <loc>//localhost:1313/2012/05/how_to_shard_big_data_in_tumblr/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/alter-table/</loc>
+    <loc>//localhost:1313/2012/05/alter-table-without-service-downtime/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/2012/05/alter-table-without-service-downtime/</loc>
+    <loc>//localhost:1313/tags/schema/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/05/mysql-transaction-isolation-level/</loc>
@@ -509,43 +392,16 @@
     <loc>//localhost:1313/tags/sql/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/architect/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/index/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2012/05/matters-require-attention-with_mysql/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/table/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/dump/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/04/mysql_auto_db_migraion/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/covering-index/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2012/04/mysql-covering-index/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/db-link/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2012/04/migration_with_dblink_exp_imp/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/export/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/import/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/bottleneck/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/03/database-performance-report-on-disk-bottleneck/</loc>
@@ -558,12 +414,9 @@
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/03/mysql-replication-3/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:19:17+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/gizzard/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/shard/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/twitter/</loc>
@@ -572,109 +425,46 @@
     <loc>//localhost:1313/2012/03/gizzard-a-library-for-creating-distributed-datastores/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/replicate/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/sharding/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/snowflake/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/tweet/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2012/03/new-tweet-store/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/02/mysql-replication-2/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/%EB%B3%B5%EC%A0%9C/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/%EC%9D%B4%EC%A4%91%ED%99%94/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/tags/myisam/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/01/mysql-table-lock/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/table-lock/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2012/01/mysql-tuning-strategy-bagic/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/architecture/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/storage-engine/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/%EA%B5%AC%EC%B6%95/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/%EB%8C%80%ED%98%95%EC%82%AC%EC%9D%B4%ED%8A%B8/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/%EC%A0%84%EB%9E%B5/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/db/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/2011/12/mysql-replication-1/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/rdbms/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/%EB%A6%AC%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/centos/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/installation/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/categories/it-life/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/mysql-%EC%84%A4%EC%B9%98/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/%EA%B0%80%EC%9D%B4%EB%93%9C/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2011/12/mysql-installation-on-linux/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/%EB%A7%A4%EB%89%B4%EC%96%BC/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
     <loc>//localhost:1313/tags/apache/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/tags/centos/</loc>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2011/12/centos-apache-php-mysql/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/php/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/%EC%84%A4%EC%B9%98/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
+    <lastmod>2025-08-19T20:14:31+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2011/12/om-mani-batme-hum/</loc>
-    <lastmod>2025-08-19T20:01:39+09:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/feature/</loc>
     <lastmod>2025-08-19T20:01:39+09:00</lastmod>
   </url><url>
     <loc>//localhost:1313/2011/12/mysql-three-features/</loc>

@@ -9,10 +9,9 @@ categories:
   - MySQL
   - Research
 tags:
-  - mariadb
+  - MariaDB
   - MySQL
   - partition
-  - token
 
 ---
 # Overview

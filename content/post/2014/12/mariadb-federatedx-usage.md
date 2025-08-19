@@ -9,7 +9,7 @@ categories:
   - Research
 tags:
   - FederatedX
-  - mariadb
+  - MariaDB
 
 ---
 # Overview

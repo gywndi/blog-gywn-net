@@ -7,8 +7,8 @@ url: 2012/10/how-to-prevent-massive-row-lock
 categories:
 - MySQL
 tags:
-- Lock
 - MySQL
+- Performance
 - Transaction
 
 ---

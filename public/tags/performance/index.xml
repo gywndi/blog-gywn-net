@@ -8,7 +8,7 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:19:17 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/performance/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL 파티셔닝 테이블 SELECT가 느려요.</title>
@@ -18,11 +18,18 @@
       <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;네이티브 파티셔닝 적용 이전의 MySQL은, 파티셔닝 파일들은 각각이 테이블로써 관리되었죠. 그래서, table cache 로 인한 메모리 부족 현상은 인지하고 있었습니다만.. 이것 외에는 특별히 성능 저하 요소는 없다고 생각해왔어요. (&lt;a href=&#34;http://small-dbtalk.blogspot.com/2013/09/mysql-table-cache.html&#34;&gt;http://small-dbtalk.blogspot.com/2013/09/mysql-table-cache.html&lt;/a&gt;)&lt;/p&gt;&#xA;&lt;p&gt;그런데, 얼마전 서버당 4개의 데이터베이스를 만들고, 각각 데이터베이스 안에 26개월로 분할된 파티셔닝된 테이블을 넣고, 간단한 Range scan 성능 테스트를 하였는데.. 말도안되는 수치를 보였습니다. 이 관련하여 간단하게 이에 대해 알아보도록 할께요. 🙂&lt;/p&gt;&#xA;&lt;h1 id=&#34;problem&#34;&gt;Problem&lt;/h1&gt;&#xA;&lt;p&gt;하단과 같은 테이블 구조에서, 단순히 최근 10건의 데이터만 끌어오는 형식의 SQL을 다수 실행시켜 간단한 트래픽을 주었을 때.. 성능적으로 별다른 문제는 없을 것이라고 생각을 했습니다. 우리의 메모리는 기대치보다 훨씬 웃돌았기 때문에.. ㅎㅎ (참고로, InnoDB 버퍼풀 사이즈 대비 데이터 사이즈는 약 10배 이상이지만, 최근 파티셔닝 사이즈를 따지면, 버퍼풀 안에 충분히 들어올만한 상황이었습니다.)&lt;/p&gt;</description>
     </item>
     <item>
+      <title>대용량 테이블에서 카운트 정보를 효과적으로 관리하자.</title>
+      <link>//localhost:1313/2012/10/how-to-prevent-massive-row-lock/</link>
+      <pubDate>Sun, 28 Oct 2012 15:40:46 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
+      <guid>//localhost:1313/2012/10/how-to-prevent-massive-row-lock/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;대부분 서비스에서는 데이터 카운트를 합니다. 커뮤니티에서는 사용자 아티클 수를, 결제 서비스에서는 남은 물폼 수를 관리하기 위해서 사용하죠. 그리고 트랜잭션이 중요한 서비스라면, 데이터 일관성 유지를 위해 카운트 시 매번 데이터를 다시 읽어옵니다.&lt;/p&gt;&#xA;&lt;p&gt;데이터가 적으면 큰 문제가 되지 않겠지만, 데이터 지속적으로 누적됨에 따라 성능 또한 기하급수적으로 저하됩니다.&lt;/p&gt;&#xA;&lt;p&gt;그렇다면 이러한 환경에서 어떻게 카운트 퍼포먼스를 향상할 수 있을까요? 오늘 포스팅할 내용은 MySQL뿐만 아니라 행 단위 잠금을 지원하는 환경도 포함합니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;통계-테이블-사용&#34;&gt;통계 테이블 사용&lt;/h1&gt;&#xA;&lt;p&gt;빠른 데이터 건 수를 가져오는 방법으로는 별도의 통계 테이블을 관리하는 것입니다. 다음과 같이 통계 테이블을 별도로 구성하여 카운트 정보를 관리합니다.&#xA;이렇게 되면, 굳이 덩치가 큰 테이블에서 일일이 카운트를 하지 않고, 통계 테이블에서 &lt;strong&gt;한 건의 데이터&lt;/strong&gt;만 읽어오므로, 카운트 성능을 크게 향상할 수 있죠.&#xA;&lt;img src=&#34;//localhost:1313/img/2012/10/Count-Stat-Table.png&#34; alt=&#34;Count Stat Table&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>MySQL InnoDB에서 데이터 1건 변경 시에도 테이블 잠금 현상이 발생할 수 있다!!</title>
       <link>//localhost:1313/2012/10/mysql-transaction-isolation-level2/</link>
       <pubDate>Sat, 06 Oct 2012 04:36:45 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
       <guid>//localhost:1313/2012/10/mysql-transaction-isolation-level2/</guid>
-      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://gywn.net/2012/05/mysql-transaction-isolation-level&#34;&gt;Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법&lt;/a&gt; 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 &lt;code&gt;Create Table .. As Select ..&lt;/code&gt; 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.&lt;/p&gt;&#xA;&lt;p&gt;테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^&lt;/p&gt;</description>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;&lt;a href=&#34;//localhost:1313/2012/05/mysql-transaction-isolation-level&#34;&gt;MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법&lt;/a&gt; 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 &lt;code&gt;Create Table .. As Select ..&lt;/code&gt; 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.&lt;/p&gt;&#xA;&lt;p&gt;테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;이번 포스팅에서는 이에 관해 정리해보도록 하겠습니다. ^^&lt;/p&gt;</description>
     </item>
     <item>
       <title>서비스 로직 흐름을 변경하여 DB 튜닝을 해보자!</title>

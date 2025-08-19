@@ -8,14 +8,14 @@
     <language>en</language>
     <managingEditor>gywndi@gmail.com (gywndi)</managingEditor>
     <webMaster>gywndi@gmail.com (gywndi)</webMaster>
-    <lastBuildDate>Tue, 19 Aug 2025 20:01:39 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 19 Aug 2025 20:14:31 +0900</lastBuildDate>
     <atom:link href="//localhost:1313/tags/table-lock/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL Table Lock에 관한 이해</title>
       <link>//localhost:1313/2012/01/mysql-table-lock/</link>
       <pubDate>Mon, 30 Jan 2012 06:01:51 +0000</pubDate><author>gywndi@gmail.com (gywndi)</author>
       <guid>//localhost:1313/2012/01/mysql-table-lock/</guid>
-      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;Table Lock 스토리지 엔진 사용 시 반드시 알아야할 사항을 정리 드리겠습니다.&lt;/p&gt;&#xA;&lt;p&gt;근래에는 물론 InnoDB가 아~주 많이 사용되고 있겠지만, 여전히 서비스에서는 MyISAM이 쓰이고 있습니다. MyISAM은 MySQL의 대표적인 스토리지 엔진이면서 내부적으로는 Table Lock으로 동작합니다.&lt;/p&gt;&#xA;&lt;p&gt;관련 스토리지 엔진에 관한 설명은 MySQL특성을 정리한 &lt;a href=&#34;https://gywn.net/2011/12/mysql-three-features/&#34;&gt;반드시 알아야할 MySQL 특징 세 가지&lt;/a&gt; 포스팅을  참고하시면, 간단한 비교를 하실 수 있습니다. 자 그럼 Table Lock 스토리지 엔진 사용 시 반드시 알아야할 사항을 정리 드리겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;table-lock-이해&#34;&gt;Table Lock 이해&lt;/h1&gt;&#xA;&lt;p&gt;MySQL에서 Table Lock은 다음 기준에 의해서 부여됩니다.&lt;/p&gt;</description>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;Table Lock 스토리지 엔진 사용 시 반드시 알아야할 사항을 정리 드리겠습니다.&lt;/p&gt;&#xA;&lt;p&gt;근래에는 물론 InnoDB가 아~주 많이 사용되고 있겠지만, 여전히 서비스에서는 MyISAM이 쓰이고 있습니다. MyISAM은 MySQL의 대표적인 스토리지 엔진이면서 내부적으로는 Table Lock으로 동작합니다.&lt;/p&gt;&#xA;&lt;p&gt;관련 스토리지 엔진에 관한 설명은 MySQL특성을 정리한 &lt;a href=&#34;//localhost:1313/2011/12/mysql-three-features/&#34;&gt;반드시 알아야할 MySQL 특징 세 가지&lt;/a&gt; 포스팅을  참고하시면, 간단한 비교를 하실 수 있습니다. 자 그럼 Table Lock 스토리지 엔진 사용 시 반드시 알아야할 사항을 정리 드리겠습니다.&lt;/p&gt;&#xA;&lt;h1 id=&#34;table-lock-이해&#34;&gt;Table Lock 이해&lt;/h1&gt;&#xA;&lt;p&gt;MySQL에서 Table Lock은 다음 기준에 의해서 부여됩니다.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

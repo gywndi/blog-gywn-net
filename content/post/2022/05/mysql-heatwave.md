@@ -8,10 +8,7 @@ categories:
   - Cloud
   - MySQL
 tags:
-  - Cloud
-  - Columnar
   - HeatWave
-  - InnoDB
   - MySQL
 
 ---

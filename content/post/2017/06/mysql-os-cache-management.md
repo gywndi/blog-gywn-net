@@ -7,13 +7,8 @@ url: 2017/06/mysql-os-cache-management
 categories:
   - MySQL
 tags:
-  - dentry
-  - dirty
-  - memory
+  - Linux
   - MySQL
-  - page cache
-  - swap
-  - unmap
 
 ---
 # Overview

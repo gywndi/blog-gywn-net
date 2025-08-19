@@ -7,12 +7,9 @@ url: 2011/12/mysql-replication-1
 categories:
   - MySQL
 tags:
-  - DB
   - InnoDB
   - MySQL
-  - RDBMS
   - Replication
-  - 리플리케이션
 
 ---
 # Overview

@@ -10,7 +10,6 @@ tags:
   - Lock
   - MyISAM
   - MySQL
-  - Table Lock
 
 ---
 # Overview
