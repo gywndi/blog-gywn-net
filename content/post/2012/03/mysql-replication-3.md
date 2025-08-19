@@ -13,7 +13,7 @@ tags:
 ---
 # Overview
 
-MySQL Replication 시리즈 마지막 3탄, 활용에 관한 포스트입니다. 앞 선 시리즈 [Permanent Link to MySQL Replication 이해(1) – 개념](/2011/12/mysql-replication-1/)와 [Permanent Link to MySQL Replication 이해(2) – 구성](/2012/02/mysql-replication-2/)에서 기본적인 개념과 구성을 다뤘다면, 이 자리에서는 실제적으로 어떤 분야에 활용할 수 있는지 설명드리겠습니다.
+MySQL Replication 시리즈 마지막 3탄, 활용에 관한 포스트입니다. 앞 선 시리즈 [MySQL Replication 이해(1) – 개념](/2011/12/mysql-replication-1/)와 [MySQL Replication 이해(2) – 구성](/2012/02/mysql-replication-2/)에서 기본적인 개념과 구성을 다뤘다면, 이 자리에서는 실제적으로 어떤 분야에 활용할 수 있는지 설명드리겠습니다.
 
 1. **Scale Out**
 2. **High Availability**
@@ -24,7 +24,7 @@ MySQL Replication 시리즈 마지막 3탄, 활용에 관한 포스트입니다.
 # Scale out
 
 MySQL Replication이 가장 많이 활용되는 분야입니다.  
-MySQL Replication은 READ관련 Scale out만 가능합니다. 만약 WRITE 이슈가 있다면, MySQL 레벨에서는 Scale out이 불가합니다. 특히나 Replication 운영 시 마스터 트래픽이 과도하게 발생하면, Master와 Slave 간 데이터 동기화 지연 현상이 발생합니다. [Permanent Link: 반드시 알아야할 MySQL 특징 세 가지](/2011/12/mysql-three-features/) 내용을 읽어보시면 이해가 조금더 수훨하겠네요.^^
+MySQL Replication은 READ관련 Scale out만 가능합니다. 만약 WRITE 이슈가 있다면, MySQL 레벨에서는 Scale out이 불가합니다. 특히나 Replication 운영 시 마스터 트래픽이 과도하게 발생하면, Master와 Slave 간 데이터 동기화 지연 현상이 발생합니다. [반드시 알아야할 MySQL 특징 세 가지](/2011/12/mysql-three-features/) 내용을 읽어보시면 이해가 조금더 수훨하겠네요.^^
 
 ![MySQL Replication Scale Out](/img/2012/03/MySQL_Replication_Scale_Out1.png)
 

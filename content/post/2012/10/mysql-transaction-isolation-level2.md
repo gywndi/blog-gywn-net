@@ -15,7 +15,7 @@ tags:
 ---
 # Overview
 
-[Permanent Link to MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법](/2012/05/mysql-transaction-isolation-level) 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 `Create Table .. As Select ..` 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.
+[MySQL 트랜잭션 Isolation Level로 인한 장애 사전 예방 법](/2012/05/mysql-transaction-isolation-level) 포스팅에서 관련 주제를 다룬 적이 있습니다. InnoDB에서 `Create Table .. As Select ..` 과 같이 사용하는 경우 테이블 잠금이 발생할 수 있는 상황과 회피할 수 있는 팁이었죠.
 
 테이블 Full-Scan 구문이 실행 시 발생할 수 있는 문제에 관한 것입니다. 하지만 때로는 변경 대상이 1 건이라도 쿼리 타입에 따라 테이블 잠금 같은 현항이 발생할 수도 있습니다.
 
