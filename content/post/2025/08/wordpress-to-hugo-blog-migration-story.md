@@ -294,7 +294,7 @@ netlify는 상용 도메인(`.com`, `.net`, `.io`, etc) 기반으로 연결을 �
 설정에 큰 문제가 없다면 아래와 같이 최종적으로 `Netlify DNS`로 체크가 되고. 외부 도메인 기반으로 문제없이 서비스가 제공됩니다.
 ![Domain on netlify DNS](/img/2025/08/domain-on-netlify-dns.png)
 
-추가로. 사이트에 큰 문제가 없다면. `let's encryption` 인증서를 발급해줍니다. 
+추가로. 사이트에 큰 문제가 없다면. [let's encrypt](https://letsencrypt.org/) 인증서를 발급해줍니다. 
 
 # Appendix
 `hugo new content post/2025/08/xxx-xxx-xxx.md` 이렇게 사용하기에는 너무 불편하기에. 그리고. title도 동적으로 제어하고 싶은 욕망이 샘솟아 간단한 쉘 스크립트를 작성해보았습니다. `post` 타입인 경우, 현재 날짜 기준으로 디렉토리가 만들어지고. url도 그것에 맞게 세팅이 됩니다. `page` 경우에는 기존대로 그대로 만들어집니다.
