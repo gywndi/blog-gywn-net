@@ -22,7 +22,7 @@ tags:
 # MySQL Binary log?
 
 MySQL에서 데이터복제를 위해서는 Binnary Log(binlog)를 쓰게 되는데, 이중 ROW 포멧으로 만들어지는 이벤트를 활용하여 다양한 데이터 핸들링이 가능합니다.  
-![](/2020/08/image-1598580840319.png)
+![](/img/2020/08/image-1598580840319.png)
 
 ROW Event는 특정 테이블에 대한 정보를 알려주는 Table map event가 우선 선행하고, 해당 테이블과 연계된 데이터가 뒤따르게 됩니다. 참고로, (InnoDB에서) 트랜잭션 처리가 이루어지면 아래와 같은 이벤트로 바이너리 로그에 기록이 됩니다.
 ```
@@ -52,7 +52,7 @@ ROW Event는 특정 테이블에 대한 정보를 알려주는 Table map event�
 # Binlog parser & Memcached plugin
 
 자! Binlog 포멧에 대한 구구절절한 이야기는 이정도로 하고, MySQL Row format의 이런 특성을 통해서 무엇을 상상해볼 수있을 지 이야기를 해보도록 하겠습니다. (바로 아래와 같은 상상?)  
-![](/2020/08/image-1598582309206.png)
+![](/img/2020/08/image-1598582309206.png)
 
 이런 구조에서 고민을 해야할 것은 두가지 정도라고 생각하는데요.
 
@@ -77,7 +77,7 @@ Binlog이벤트를 받아서, 최신 데이터를 JSON형태로 유지를 시키
 
 최근 밤에 잠이 잘 안와서, 간단하게 구현해보았습니다. 개인적으로 CDC관련된 자체 아류작이 워낙 많다보니.. 이제는 하루이틀 집중하면, 간단한 처리 구현은 아예 찍어내고 마네요. -\_-;;  
 https://github.com/gywndi/uldra-binlog-json-transfer
-![](/2020/08/image-1598583873504.png)
+![](/img/2020/08/image-1598583873504.png)
 
 # Conclusion
 
