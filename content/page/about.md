@@ -13,6 +13,8 @@ comments: false
 - 옥상에 바비큐장을 만들어 놓은 `고기 러버`
 - 발표 시작 60초 동안은 얼굴 경련 오는 `긴장쟁이`, 하지만 끝엔 몸개그로 웃깁니다
 
+![chan-family-202502](/img/chan-family-202502.jpg)
+
 과거 5년 정도 개발 진입 단계를 거쳐, KTH, 티몬를 거쳐 카카오에 3.5년정도 머물며 진하게 숙성을 하였고, 지금은 카카오뱅크에서 데이터 관련 엔지니어로 여전히 성장하고 있는 엉뚱한 아재입니다.
 
 최근 몇년 동안에는 CDC(Change Data Capture) 분야에 집중을 하였고, 데이터가 흘러가는 흐름 속에서 자연스럽고 유연하게 처리하는 방식에 관심을 가지고 일하고 있습니다.
@@ -28,6 +30,7 @@ comments: false
 - [삼성 오픈소스 컨퍼런스 2019](https://www.slideshare.net/slideshow/ss-183100083/183100083)
 - [카카오 ifkakao2019](https://youtu.be/xscjEU3ZPLM)
 - [마소콘2017](https://youtu.be/Z4dM6GBYO1M)
+- [데이터야놀자2017](https://lee-monster.github.io/datayanolja2017/slide/2016/1-%ED%82%A4%EB%85%B8%ED%8A%B8/%ED%82%A4%EB%85%B8%ED%8A%B8-3-KakaoBank%20with%20opensource-%EC%84%B1%EB%8F%99%EC%B0%AC.pdf)
 - [Naver Deview 2017](https://naver.me/FK5OmRn1)
 - [KTH H3 2011](https://youtu.be/aVP0QOWEaFk)
 
