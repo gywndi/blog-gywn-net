@@ -6,9 +6,11 @@ type: post
 date: 2026-08-18T22:57:37+09:00
 url: 2026/08/debezium-smt-cant-parallelize
 categories:
-  - Uncategorized
+  - IT
 tags:
-  - Untagged
+  - CDC
+  - IT
+  - debezium
 ---
 
 # CDC와 Debezium
