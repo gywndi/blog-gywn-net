@@ -6,8 +6,6 @@ comments: false
 
 ## About
 
-Database and data platform engineer who has been with KakaoBank since its early days.
-
 Designed and built one of Korea's first large-scale distributed MySQL databases for a financial service, running **tens of thousands of transactions per second across hundreds of production databases** with zero downtime, while automating repetitive operations so that systems handle about 90% of routine work.
 
 Later expanded focus **from storing data to moving it** — building and operating an in-house CDC platform that delivers large-scale change data from Oracle/MySQL/PostgreSQL to services in real time, along with a Kafka-based environment processing up to 1 million messages per second.
@@ -21,44 +19,68 @@ The goal is a data ecosystem that lets data flow reliably and freely to wherever
 - Automated **about 90%** of routine database operations
 - Built a Kafka-based environment processing **1 million messages per second**
 
+## Key Experience
+
+### KakaoBank Database Buildout
+- Designed and built KakaoBank's early MySQL architecture
+- Designed a sharding structure handling tens of thousands+ transactions per second
+- Managed hundreds of production databases
+- Owned the full lifecycle: design, build, operations, incident response, performance tuning
+- Zero downtime since launch
+- Shared the buildout experience at external conferences
+
+### Database Operations Automation
+- Automated about 90% of routine DB operations
+- Systematized repetitive work — monitoring, alerting, routine checks
+- Built a Prometheus / Grafana-based monitoring environment
+- Reduced purely manual repetitive work to about 10%
+
+### CDC and Data Pipelines
+- Goal: sync data across heterogeneous Oracle / MySQL / PostgreSQL systems
+- Designed and developed an in-house CDC engine and platform
+- Applied and operated it in production (tens of thousands of events/sec)
+- Delivers DB change data to various services in real time
+- Built and operates a BI data pipeline connecting to an internal network
+
+### Kafka / Big Data Platform
+- Built a Kafka-based real-time data platform
+- Achieved throughput of 1 million messages per second
+- Built a real-time data pipeline connecting CDC and Kafka
+- Develops and operates the big data platform
+
 ## Career
 
 ### KakaoBank | Database / Data Platform
 **May 2016 ~ Present**
-- Designed and built KakaoBank's early database architecture
-- Built and operated a MySQL-based sharded data platform
-- Operated hundreds of production databases
-- Company-wide DB design review and database/application performance optimization
-- Developed DB operations automation systems
-- Built a Prometheus / Grafana-based monitoring environment
-- Developed an in-house CDC solution on Oracle / MySQL / PostgreSQL
-- Built and operated a BI data pipeline connecting to an internal network
-- Developed and operated a big data platform
+- Designed and operated large-scale distributed MySQL databases
+- DB operations automation and performance optimization
+- Developed and operated an in-house CDC platform
+- Built and operated a BI data pipeline
+- Built and operated a Kafka-based big data platform
 
 ### Kakao | DBA
 **Dec 2012 ~ Apr 2016**
-- Company-wide MySQL operations and incident response
-- Reorganized and optimized legacy MySQL databases
-- Company-wide DB design review and application performance optimization
-- Moved to the KakaoBank TF in 2016
+- Company-wide MySQL operations, incident response, and performance optimization
+- DB design review and technical support
+- Moved to the KakaoBank TF
 
 ### TMON | DBA
 **Sep 2012 ~ Nov 2012**
 - Company-wide MySQL operations, incident response, and performance optimization
-- Company-wide DB design review and application optimization
+- DB design review
 
 ### KTH (now KT alpha) | DBA
 **Jan 2008 ~ Sep 2012**
 - Oracle / MySQL operations and performance optimization
-- Company-wide database technical support
-- Developed operations automation systems; built and operated DB virtualization
+- Developed operations automation systems
+- Built and operated DB virtualization
 - Developed and operated the KT Megazone web service
 
 ### OneStone Communication | Developer
 **Jan 2004 ~ Feb 2006**
 - Developed and operated online ad servers
-- Developed a movie ad campaign homepage
-- Developed enterprise SI services
+- Developed and operated web services
+- Delivered enterprise SI projects
 
 ## Talks
 
