@@ -1,0 +1,35 @@
+<script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: "base",
+        themeVariables: {
+            fontFamily: "'Noto Sans KR', 'Open Sans', sans-serif",
+            primaryColor: "#FFFFFF",
+            primaryBorderColor: "#404040",
+            primaryTextColor: "#404040",
+            lineColor: "#808080",
+            clusterBkg: "#F5F5F5",
+            clusterBorder: "#CCCCCC",
+            edgeLabelBackground: "#FFFFFF",
+            tertiaryColor: "#F5F5F5"
+        }
+    });
+    window.addEventListener("load", function () {
+        mermaid.run({
+            querySelector: ".mermaid",
+            postRenderCallback: function (id) {
+                var svg = document.getElementById(id);
+                if (!svg) return;
+                var vb = svg.viewBox && svg.viewBox.baseVal;
+                if (vb && vb.width) {
+                    svg.style.width = vb.width + "px";
+                    svg.removeAttribute("height");
+                }
+            }
+        });
+    });
+</script>
+<div class="mermaid" align="{{ if .Get "align" }}{{ .Get "align" }}{{ else }}center{{ end }}" >
+    {{ safeHTML .Inner  }}
+</div>

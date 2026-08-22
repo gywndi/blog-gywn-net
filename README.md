@@ -30,9 +30,15 @@ hugo-new.sh      새 글/페이지 생성 스크립트
 
 ## 로컬 미리보기
 
+Hugo가 설치되어 있어야 합니다 (`brew install hugo`).
+
 ```bash
 hugo server -D
 ```
+
+- `-D`(`--buildDrafts`): 초안(draft: true) 글도 함께 렌더링
+- 실행 후 http://localhost:1313 에서 확인, 파일 저장 시 자동 반영
+- 종료는 `Ctrl+C`
 
 ## 배포
 

@@ -1,0 +1,6 @@
+# Fixes theme bug: themes/beautifulhugo/i18n/ko.yaml uses {{ .Count }}
+# but the value passed in is a plain date string, not a plural-count context.
+- id: postedOnDate
+  translation: "{{ . }}에 게시됨"
+- id: lastModified
+  translation: "({{ . }}에 마지막으로 수정됨)"

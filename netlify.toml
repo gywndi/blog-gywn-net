@@ -5,6 +5,14 @@
 [context.production.environment]
   HUGO_VERSION = "0.147.8"
 
+# Untranslated English pages fall back to the Korean original.
+# Real files under /en/... (e.g. translated pages) still win over this,
+# since Netlify always serves an existing static file before checking redirects.
+[[redirects]]
+  from = "/en/*"
+  to = "/:splat"
+  status = 302
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

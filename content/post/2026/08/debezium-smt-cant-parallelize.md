@@ -51,19 +51,18 @@ Test 3이 이 실험의 핵심입니다. SMT 체인 안에서는 안 되지만, 
 
 # Test 3의 구조: TRD1(제출) / TRD2(배출) 분리
 
-```
-TRD1 (Debezium 콜백 스레드)          TRD2 (전담 배출 스레드)
-  submit(record) ─────────┐
-                          ▼
-              워커 풀(8개)에 작업 위임
-              Future를 BlockingQueue에 적재
-              (큐가 가득 찼을 때만 대기 — 백프레셔)
-                          │
-                          ▼                queue.poll()
-                                            future.get()  ← 제출 순서대로 대기
-                                            orderChecker.check(id)
-                                            tracker.increment()
-```
+제출(TRD1)과 배출(TRD2)이 큐 하나로 어떻게 연결되는지 그림으로 정리하면 다음과 같습니다.
+
+{{< mermaid >}}
+flowchart LR
+    TRD1["TRD1 (제출)"] -->|"① submit"| Pool[["Thread Pool"]]
+    TRD1 -->|"② put(future)"| Q[(Queue)]
+    Q -->|"③ poll"| TRD2["TRD2 (배출)"]
+    Pool -.->|"④ future.get()"| TRD2
+
+    style Q fill:#FFF3E0,stroke:#FFA94D,stroke-width:2px
+    style Pool fill:#E6FCF5,stroke:#38D9A9,stroke-width:2px
+{{< /mermaid >}}
 
 TRD1은 워커 풀에 작업을 맡기고 `Future`를 큐에 넣기만 합니다 — `future.get()`을 절대 호출하지 않으므로 큐가 가득 찼을 때의 백프레셔 외에는 블로킹하지 않습니다. `future.get()`은 TRD2에서만 호출되는데, 큐에서 **제출 순서 그대로** 꺼내기 때문에 어느 워커가 언제 끝냈는지와 무관하게 순서가 보장됩니다.
 
