@@ -17,6 +17,6 @@ KTH, 티몬을 거쳐 카카오에서 3.5년 정도 숙성했고, 지금은 카�
 
 결국 아래와 같은 모습의 데이터 생태계를 만들어가는 것이 목표였고, 부족했던 부분들은 하나씩 채워 대부분 갖춰가고 있습니다. 절대 깨지지 않는 시스템 속 선순환 하는 데이터들의 모습!
 
-<img src="/img/data-ecosystem-diagram.jpg" alt="data-ecosystem-diagram" style="max-width: 500px;">
+<img src="/img/data-ecosystem-diagram.jpg" alt="data-ecosystem-diagram" style="width: 500px; max-width: 100%;">
 
 이 블로그엔 그동안 겪은 시행착오와 고민, 기술 선택의 기준, 관심 있게 보고 있는 데이터 기술들을 편하게 기록하고 공유하려고 합니다.
