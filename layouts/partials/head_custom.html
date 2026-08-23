@@ -2,47 +2,6 @@
 If you want to include any custom html just before </head>, put it in this file.
 Or you can delete these file if you don't need it.
 -->
-{{ if .Site.Params.disableDarkMode }}
-<style>
-/* Force light mode: overrides theme's @media (prefers-color-scheme: dark) rules in main.css.
-   Toggle by flipping Params.disableDarkMode in hugo.toml, no theme file edits needed. */
-body { background: #FFF; color: #404040; }
-p a, a { color: #008AFF; }
-blockquote { border-left: none; }
-.navbar-custom { background: #F5F5F5; border-bottom: 1px solid #EAEAEA; }
-.navbar-custom .navbar-brand,
-.navbar-custom .nav li a { color: #404040; }
-.navbar-custom .navbar-brand:hover,
-.navbar-custom .navbar-brand:focus,
-.navbar-custom .nav li a:hover,
-.navbar-custom .nav li a:focus { color: #0085a1; }
-.navbar-custom .nav .navlinks-container .navlinks-children a { background: #f5f5f5; }
-@media only screen and (max-width: 767px) {
-  .navbar-custom .nav .navlinks-container.show-children { background: #eee; }
-}
-@media only screen and (min-width: 768px) {
-  .navbar-custom .nav .navlinks-container:hover { background: #eee; }
-  .navbar-custom .nav .navlinks-container .navlinks-children a { border: 1px solid #eaeaea; }
-}
-footer { background: #F5F5F5; border-top: 1px #EAEAEA solid; }
-footer a { color: #404040; }
-.post-preview a { color: #404040; }
-.pager li a { background: #FFF; color: #404040; }
-table tr { background-color: #ffffff; }
-table tr:nth-child(2n) { background-color: #f8f8f8; }
-code { color: #c7254e; background-color: #f9f2f4; }
-pre code { color: inherit; background-color: transparent; }
-.well { background-color: #f5f5f5; }
-.panel { background-color: #fff; }
-.list-group-item { background-color: #fff; }
-pre.chroma { color: inherit; background-color: transparent; }
-pre.chroma .k,
-pre.chroma .kt,
-pre.chroma .o,
-pre.chroma .nb,
-pre.chroma .ow { color: inherit; }
-</style>
-{{ end }}
 <!-- for example, you could insert this custom css, which makes the bigimg not stretch:
 <style>
 .intro-header.big-img, .intro-header.big-img  .big-img-transition {
