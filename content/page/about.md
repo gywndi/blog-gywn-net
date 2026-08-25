@@ -20,3 +20,7 @@ KTH, 티몬을 거쳐 카카오에서 3.5년 정도 숙성했고, 지금은 카�
 <img src="/img/data-ecosystem-diagram.jpg" alt="data-ecosystem-diagram" style="width: 500px; max-width: 100%;">
 
 이 블로그엔 그동안 겪은 시행착오와 고민, 기술 선택의 기준, 관심 있게 보고 있는 데이터 기술들을 편하게 기록하고 공유하려고 합니다.
+
+---
+
+이 아재가 그동안 뭘 하고 살았는지 궁금하다면? → [커리어 페이지]({{< relref "page/career" >}})에서 스펙(?) 확인 가능. 자소서 아니고 진짜임!
