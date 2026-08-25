@@ -8,7 +8,7 @@ comments: false
 
 Designed and built one of Korea's first large-scale distributed MySQL databases for a financial service, running **tens of thousands of transactions per second across hundreds of production databases** with zero downtime, while automating repetitive operations so that systems handle about 90% of routine work.
 
-Later expanded focus **from storing data to moving it** — building and operating an in-house CDC platform that delivers large-scale change data from Oracle/MySQL/PostgreSQL to services in real time, along with a Kafka-based environment processing up to 1 million messages per second.
+Later expanded focus **from storing data to moving it** - building and operating an in-house CDC platform that delivers large-scale change data from Oracle/MySQL/PostgreSQL to services in real time, along with a Kafka-based environment processing up to 1 million messages per second.
 
 The goal is a data ecosystem that lets data flow reliably and freely to wherever it's needed, without being tied to any specific technology, source, or target.
 
@@ -31,7 +31,7 @@ The goal is a data ecosystem that lets data flow reliably and freely to wherever
 
 ### Database Operations Automation
 - Automated about 90% of routine DB operations
-- Systematized repetitive work — monitoring, alerting, routine checks
+- Systematized repetitive work - monitoring, alerting, routine checks
 - Built a Prometheus / Grafana-based monitoring environment
 - Reduced purely manual repetitive work to about 10%
 
